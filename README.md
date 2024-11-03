@@ -10,3 +10,4 @@ Human depression decremental mobile app
 ![undraw_In_progress_re_m1l6](https://github.com/user-attachments/assets/0bb69192-4157-4be6-bfe1-257b7f5d2732)
 ![undraw_Smartwatch_re_59lx](https://github.com/user-attachments/assets/abe26dac-e357-4e0e-935e-2d5e7c0e0d69)
 ![undraw_Choose_re_7d5a](https://github.com/user-attachments/assets/9e4906d0-4c89-4e0e-946b-024920f76d5a)
+![undraw_Feeling_of_joy_re_cqko](https://github.com/user-attachments/assets/b0f28491-3062-45e4-82ef-9efed6e9896c)
