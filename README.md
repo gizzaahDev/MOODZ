@@ -4,7 +4,8 @@ Human depression decremental mobile app
 
 
 ![Medi (2)](https://github.com/user-attachments/assets/b308d697-fdc1-4f93-bb9d-f12be51ffa2e)
-![4005033](https://github.com/user-attachments/assets/a038d5af-2157-4a72-9eae-b24cb193d9d2)
-![4528963](https://github.com/user-attachments/assets/10a9af23-8e32-4fa3-85b1-85a6fa12fa2a)
-![6264732](https://github.com/user-attachments/assets/1beae3fe-fcdd-43c5-8620-fe504d6b3f6c)
-![11260852](https://github.com/user-attachments/assets/c5bb47cf-e6de-493c-8d28-0eebb5d04602)
+
+![rb_2392](https://github.com/user-attachments/assets/8ccf838c-a663-4460-bc4c-aa58d541128f)
+![rb_14354](https://github.com/user-attachments/assets/0ccb3236-eba1-4be5-b690-31cfb9e8b5d2)
+![rb_28073](https://github.com/user-attachments/assets/69f8b959-fde5-4fc5-a539-8b5e2c5ad424)
+![rb_7788](https://github.com/user-attachments/assets/69d35180-dbac-4d7d-9657-8ce068dff3e4)
