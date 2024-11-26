@@ -1,31 +1,60 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import pickle
 import numpy as np
 
-app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+# Initialize FastAPI app
+app = FastAPI()
+
+# Enable CORS for all origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust origins as needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Load the pre-trained model
 try:
     model = pickle.load(open("EPDSmodel.pkl", "rb"))
 except FileNotFoundError:
     print("Model file not found. Please check if EPDSmodel.pkl exists in the directory.")
+    model = None  # Initialize model as None if loading fails
 
-@app.route('/predict', methods=['POST'])
-def predict():
+# Define the request model
+class PredictionRequest(BaseModel):
+    q1: float
+    q2: float
+    q3: float
+    q4: float
+    q5: float
+    q6: float
+    q7: float
+    q8: float
+    q9: float
+    q10: float
+
+@app.post("/predict")
+async def predict(request: PredictionRequest):
+    if model is None:
+        raise HTTPException(status_code=500, detail="Model is not loaded. Please check the server setup.")
+    
     try:
-        data = request.get_json()
-        input_features = [float(data[q]) for q in ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10']]
+        # Extract input features from the request
+        input_features = [request.q1, request.q2, request.q3, request.q4, request.q5,
+                          request.q6, request.q7, request.q8, request.q9, request.q10]
         features_array = [np.array(input_features)]
 
         # Predict the result
         prediction = model.predict(features_array)
-        return jsonify({'prediction_text': f'Predicted EPDS Total Score: {prediction[0]}'})
+        return {"prediction_text": f"Predicted EPDS Total Score: {prediction[0]}"}
     except Exception as e:
         # Log the error and return a JSON error response
         print(f"Error: {e}")
-        return jsonify({'error': 'An error occurred during prediction.'}), 500
+        raise HTTPException(status_code=500, detail="An error occurred during prediction.")
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')  # Make Flask accessible on the local network
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
