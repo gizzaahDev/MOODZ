@@ -10,7 +10,7 @@ app = FastAPI()
 # Enable CORS for all origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust origins as needed
+    allow_origins=["*"],  # Adjust this to restrict origins in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -57,4 +57,5 @@ async def predict(request: PredictionRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+
