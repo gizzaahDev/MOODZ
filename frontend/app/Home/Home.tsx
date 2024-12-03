@@ -37,14 +37,14 @@ export default function Home() {
         </View>
 
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/Components/EPDS/Questioner')} >
+          <TouchableOpacity style={styles.button} onPress={() => router.push('/Components/EPDS/Questionnaire')} >
           <MaterialCommunityIcons name="mother-nurse" size={35} color="white" />
           </TouchableOpacity>
           <Text style={styles.buttonText}>Postpartum{'\n'}depression</Text>
         </View>
 
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/Components/GDS/Questioner')}>
+          <TouchableOpacity style={styles.button} onPress={() => router.push('/Components/GDS/Questionnaire')}>
           <MaterialIcons name="elderly" size={35} color="white" />
           </TouchableOpacity>
           <Text style={styles.buttonText} >Elder{'\n'}depression</Text>

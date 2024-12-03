@@ -5,8 +5,8 @@ export default function RootLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="OnboardingScreen" options={{ title: 'Onboarding' }} />
       <Stack.Screen name="Home/Home" options={{ title: 'Home' }} />
-      <Stack.Screen name="Components/EPDS/Questioner" options={{ title: 'EPDSQuestioner' }} />
-      <Stack.Screen name="Components/GDS/Questioner" options={{ title: 'GDSQuestioner' }} />
+      <Stack.Screen name="Components/EPDS/Questionnaire" options={{ title: 'EPDSQuestionnaire' }} />
+      <Stack.Screen name="Components/GDS/Questionnaire" options={{ title: 'GDSQuestionnaire' }} />
       
     </Stack>
   );
