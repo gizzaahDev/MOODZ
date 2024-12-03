@@ -95,7 +95,7 @@ const questions = [
   },
 ];
 
-const Questioner = () => {
+const Questionnaire = () => {
   const [answers, setAnswers] = useState(Array(questions.length).fill(null)); // Default all answers to null (unselected)
 
   const handleSelect = (questionKey: number, value: number) => {
@@ -203,4 +203,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Questioner;
+export default Questionnaire;
