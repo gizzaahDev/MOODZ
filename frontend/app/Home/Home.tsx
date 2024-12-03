@@ -30,7 +30,7 @@ export default function Home() {
         </View>
 
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => router.push('/Components/DAS/Questionnaire')}>
           <Entypo name="slideshare" size={35} color="white" />
           </TouchableOpacity>
           <Text style={styles.buttonText}>Marital{'\n'}Depression</Text>

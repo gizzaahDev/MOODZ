@@ -202,10 +202,10 @@ def married_predict(data: MarriedInput):
         prediction = married_model.predict(input_data)
         level_mapping = {0: "Low", 1: "Moderate", 2: "Severe"}
         predicted_level = level_mapping.get(prediction[0], "Unknown")
-        total = sum(input_data[0])
+        total_score = sum(input_data[0])
         
         return {"prediction_text": f"Predicted Depression Level: {predicted_level}", 
-        "total": total}
+        "total_score": total_score}
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
