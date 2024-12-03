@@ -18,10 +18,10 @@ MOODZ uses the following standard depression scales to assess users:
 ## Key Features
 
 ### 1. **Predict and Mitigate Depression**
-- **Children:**  
-- **Marital Partners:**
-- **Postpartum Women:**
-- **Elderly Individuals:** 
+- **Children**  
+- **Marital Partners**
+- **Postpartum Women**
+- **Elderly Individuals** 
 
 ## Nature of solution
 - Our proposed research on human depression aims to address the underlying mechanisms contributing to the decrease of depressive symptoms. Focusing on providing a comprehensive and practical solution, we have identified four key objectives that will form the foundation of our research. Firstly, Predict and mitigate depression in children, Predict and alleviate depression in marital partners, Identify and reduce postpartum depression and detect and decrease depression in elderly person.
@@ -32,12 +32,12 @@ Additionally, we will incorporate Progress Tracking and Future Prediction techni
 ## Versions
 
 ### **Commodity Version** (Basic)
-- **Standard Questionnaire:** 
-- **Depression Level Identification:**
+- **Standard Questionnaire** 
+- **Depression Level Identification**
 
 ### **Premium Version** (Advanced)
-- **Progress Evaluation:**
-- **Personalized Recommendations:**
+- **Progress Evaluation**
+- **Personalized Recommendations**
 
 ## System Overview
 ![System Overview](https://github.com/user-attachments/assets/a02cbf15-861b-439d-8075-2ba6d8f35a07)
