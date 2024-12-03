@@ -125,7 +125,7 @@ const Questionnaire = () => {
     };
 
     try {
-      const response = await axios.post('http://192.168.8.188:8000/predict', payload);
+      const response = await axios.post('http://192.168.8.188:8000/postpartum/predict', payload);
 
       const prediction = response.data.prediction;
       Alert.alert('Prediction', `Predicted Category: ${prediction}`);
@@ -136,36 +136,26 @@ const Questionnaire = () => {
   };
 
   return (
-    <View>
-      <Text style={{marginTop:10, fontSize:20,fontWeight: 'bold', textAlign:"center"}}>Post Partum questionnaire</Text>
-    <ScrollView contentContainerStyle={{ padding: 20,paddingBottom:60 }}>
-      
+    <View style={{ flex: 1, padding: 20 }}>
+    <Text style={styles.title}>Edinburgh Postnatal Depression Questionnaire</Text>
+    <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
       {questions.map((questionObj, questionKey) => (
         <View key={questionKey} style={{ marginBottom: 20 }}>
-          <Text style={{ marginBottom: 10, fontWeight: 'bold' }}>
+          <Text style={styles.question}>
             {questionKey + 1}. {questionObj.question}
           </Text>
           {questionObj.answers.map((choice) => (
             <TouchableOpacity
               key={choice.value}
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 5,
-                padding: 10,
+                ...styles.answerButton,
                 backgroundColor: answers[questionKey] === choice.value ? '#d3d3d3' : '#f0f0f0',
-                borderRadius: 5,
               }}
               onPress={() => handleSelect(questionKey, choice.value)}
             >
               <View
                 style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 10,
-                  borderWidth: 1,
-                  borderColor: '#000',
-                  marginRight: 10,
+                  ...styles.radioCircle,
                   backgroundColor: answers[questionKey] === choice.value ? '#000' : '#fff',
                 }}
               />
@@ -174,33 +164,59 @@ const Questionnaire = () => {
           ))}
         </View>
       ))}
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.textBtn}>SUBMIT</Text>
-      </TouchableOpacity>
+
+      
     </ScrollView>
-    </View>
-
-
-
-
-
-  );
+    <TouchableOpacity
+        style={[styles.submitButton, { backgroundColor: answers.includes(null) ? '#ccc' : '#016A70' }]}
+        onPress={handleSubmit}
+        disabled={answers.includes(null)} 
+      >
+        <Text style={styles.submitButtonText}>SUBMIT</Text>
+      </TouchableOpacity>
+  </View>
+);
 };
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#016A70',
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center', 
-    height: 50, 
-    
-  },
-  textBtn:{
-    color:'#ffffff'
-  },
+title: {
+  fontSize: 25,
+  fontWeight: 'bold',
+  marginBottom: 20,
+  textAlign: 'center',
+  color:'#016A70'
+},
+question: {
+  marginBottom: 10,
+  fontWeight: 'bold',
+},
+answerButton: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: 10,
+  borderRadius: 5,
+  marginBottom: 5,
+},
+radioCircle: {
+  width: 20,
+  height: 20,
+  borderRadius: 10,
+  borderWidth: 1,
+  borderColor: '#000',
+  marginRight: 10,
+},
+submitButton: {
+  paddingVertical: 15,
+  borderRadius: 5,
+  marginTop: 0,
+  alignItems: 'center',
+  marginBottom:10,
+},
+submitButtonText: {
+  color: '#fff',
+  fontSize: 18,
+  fontWeight: 'bold',
+},
 });
 
 export default Questionnaire;
