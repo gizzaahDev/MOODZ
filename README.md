@@ -49,15 +49,75 @@ MOODZ uses the following standard depression scales to assess users:
 ## Dependencies
 
 ### Backend:
-- Libraries for backend operations, data processing, and AI model training:
-  - **FastAPI, scikit-learn, numpy**
-  
-### Frontend:
-- Libraries and frameworks for creating a mobile app frontend:
-  - **React Native, Expo**, and other essential libraries to ensure a smooth and responsive user experience.
+- **annotated-types==0.7.0**
+- **anyio==4.6.2.post1**
+- **certifi==2024.8.30**
+- **click==8.1.7**
+- **colorama==0.4.6**
+- **dnspython==2.7.0**
+- **email_validator==2.2.0**
+- **fastapi==0.115.5**
+- **fastapi-cli==0.0.5**
+- **h11==0.14.0**
+- **httpcore==1.0.7**
+- **httptools==0.6.4**
+- **httpx==0.27.2**
+- **idna==3.10**
+- **Jinja2==3.1.4**
+- **joblib==1.4.2**
+- **markdown-it-py==3.0.0**
+- **MarkupSafe==3.0.2**
+- **mdurl==0.1.2**
+- **numpy==2.1.3**
+- **pydantic==2.10.2**
+- **pydantic_core==2.27.1**
+- **Pygments==2.18.0**
+- **python-dotenv==1.0.1**
+- **python-multipart==0.0.17**
+- **PyYAML==6.0.2**
+- **rich==13.9.4**
+- **scikit-learn==1.5.2**
+- **scipy==1.14.1**
+- **shellingham==1.5.4**
+- **sniffio==1.3.1**
+- **starlette==0.41.3**
+- **threadpoolctl==3.5.0**
+- **typer==0.13.1**
+- **typing_extensions==4.12.2**
+- **uvicorn==0.32.1**
+- **watchfiles==1.0.0**
+- **websockets==14.1**
 
-### Additional Dependencies:
-- For implementing features like gamification, UI transitions, and more.
+### Frontend:
+- **@expo/vector-icons==^14.0.2**
+- **@lottiefiles/dotlottie-react==^0.6.5**
+- **@react-navigation/bottom-tabs==^7.0.0**
+- **@react-navigation/native==^7.0.0**
+- **axios==^1.7.8**
+- **expo==~52.0.14**
+- **expo-blur==~14.0.1**
+- **expo-constants==~17.0.3**
+- **expo-font==~13.0.1**
+- **expo-haptics==~14.0.0**
+- **expo-linear-gradient==~14.0.1**
+- **expo-linking==~7.0.3**
+- **expo-router==~4.0.11**
+- **expo-splash-screen==~0.29.13**
+- **expo-status-bar==~2.0.0**
+- **expo-symbols==~0.2.0**
+- **expo-system-ui==~4.0.5**
+- **expo-web-browser==~14.0.1**
+- **frontend==file:**
+- **lottie-react-native==7.1.0**
+- **react==18.3.1**
+- **react-dom==18.3.1**
+- **react-native==0.76.3**
+- **react-native-gesture-handler==~2.20.2**
+- **react-native-reanimated==~3.16.1**
+- **react-native-safe-area-context==4.12.0**
+- **react-native-screens==~4.1.0**
+- **react-native-web==~0.19.13**
+- **react-native-webview==13.12.2**
 
 ## Team Members:
 - **Tennakoon T.M.Y.N** (IT21358098)
@@ -65,5 +125,3 @@ MOODZ uses the following standard depression scales to assess users:
 - **Thisera K.G** (IT21204166) - *You (Geeshan)*
 - **Sandumina B.N** (IT21282454)
 
-## Conclusion
-MOODZ aims to provide a comprehensive, engaging, and practical solution to reducing depression in various groups, helping individuals take control of their mental health.
