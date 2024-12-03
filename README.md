@@ -7,7 +7,6 @@
 - **Postpartum women**
 - **Elderly people**
 
-The app uses scientifically validated depression scales and combines interactive features to enhance engagement and learning.
 
 ## Depression Scales
 MOODZ uses the following standard depression scales to assess users:
@@ -19,29 +18,26 @@ MOODZ uses the following standard depression scales to assess users:
 ## Key Features
 
 ### 1. **Predict and Mitigate Depression**
-- **Children:** Identify signs of depression early and provide interventions.
-- **Marital Partners:** Address relationship stressors and improve mental well-being.
-- **Postpartum Women:** Detect and reduce postpartum depression.
-- **Elderly Individuals:** Track and alleviate depression in older adults.
+- **Children:**  
+- **Marital Partners:**
+- **Postpartum Women:**
+- **Elderly Individuals:** 
 
-### 2. **Interactive Image Processing and Gamification**
-- Engaging activities for children using interactive face recognition and gamified learning methods to improve emotional health.
-
-### 3. **Cognitive and Behavioral Strategies**
-- Offers various interventions, including cognitive-behavioral strategies, to help users better understand and manage their mental health.
-
-### 4. **Progress Tracking and Future Predictions**
-- Tracks individual progress and predicts future mental health trends to help users take preventive actions.
+### **Nature of solution**
+- Our proposed research on human depression aims to address the underlying mechanisms contributing to the decrease of depressive symptoms. Focusing on providing a comprehensive and practical solution, we have identified four key objectives that will form the foundation of our research. Firstly, Predict and mitigate depression in children, Predict and alleviate depression in marital partners, Identify and reduce postpartum depression and detect and decrease depression in elderly person.
+Moreover, the interactive image processing with children faces gamification are intended to improve client engagement and learning results in the education of programming principles. Two enhance therapeutic approaches, offering various strategies for cognitive and behavioral interventions allows individuals to develop a deeper understanding of their mental health. 
+We are using the exact standard scales to measure the depression levels of each individuals. Except the depression based for marital partners and postpartum people, the data will be gathered from the caregivers and the guardians additionally to the children and elderly people.    
+Additionally, we will incorporate Progress Tracking and Future Prediction techniques to track patients' recovering progress and deliver individualized recommendations. By integrating these four components, our mobile application seeks to decrease Depression level and everyone can get a knowledge, how to escape from depression and stress.
 
 ## Versions
 
 ### **Commodity Version** (Basic)
-- **Standard Questionnaire:** Assesses depression using the selected scale.
-- **Depression Level Identification:** Identifies and categorizes the user’s depression severity.
+- **Standard Questionnaire:** 
+- **Depression Level Identification:**
 
 ### **Premium Version** (Advanced)
-- **Progress Evaluation:** Tracks mental health progress over time.
-- **Personalized Recommendations:** Suggests tailored therapeutic strategies based on progress.
+- **Progress Evaluation:**
+- **Personalized Recommendations:**
 
 ## System Overview
 ![System Overview](https://github.com/user-attachments/assets/a02cbf15-861b-439d-8075-2ba6d8f35a07)
@@ -122,6 +118,6 @@ MOODZ uses the following standard depression scales to assess users:
 ## Team Members:
 - **Tennakoon T.M.Y.N** (IT21358098)
 - **Jayathilaka D.V.G** (IT21360282)
-- **Thisera K.G** (IT21204166) - *You (Geeshan)*
+- **Thisera K.G** (IT21204166)
 - **Sandumina B.N** (IT21282454)
 
