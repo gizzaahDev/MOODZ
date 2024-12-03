@@ -23,7 +23,7 @@ MOODZ uses the following standard depression scales to assess users:
 - **Postpartum Women:**
 - **Elderly Individuals:** 
 
-### **Nature of solution**
+## Nature of solution
 - Our proposed research on human depression aims to address the underlying mechanisms contributing to the decrease of depressive symptoms. Focusing on providing a comprehensive and practical solution, we have identified four key objectives that will form the foundation of our research. Firstly, Predict and mitigate depression in children, Predict and alleviate depression in marital partners, Identify and reduce postpartum depression and detect and decrease depression in elderly person.
 Moreover, the interactive image processing with children faces gamification are intended to improve client engagement and learning results in the education of programming principles. Two enhance therapeutic approaches, offering various strategies for cognitive and behavioral interventions allows individuals to develop a deeper understanding of their mental health. 
 We are using the exact standard scales to measure the depression levels of each individuals. Except the depression based for marital partners and postpartum people, the data will be gathered from the caregivers and the guardians additionally to the children and elderly people.    
