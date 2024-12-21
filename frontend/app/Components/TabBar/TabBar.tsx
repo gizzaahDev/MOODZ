@@ -1,12 +1,17 @@
 import { View, StyleSheet, LayoutChangeEvent } from 'react-native';
 import React, { useState } from 'react';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming, // Use withTiming instead of withSpring
+} from 'react-native-reanimated';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import TabbarButton from './TabbarButton';
+import { useTheme } from "../../ThemeContext";
 
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  
   const [buttonWidths, setButtonWidths] = useState<number[]>([]);
+  const { theme } = useTheme();
   const tabPositionX = useSharedValue(0); // Animated position
 
   // Calculate the total width dynamically
@@ -20,14 +25,15 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     });
   };
 
+  // Smooth Animated Style without damping
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateX: tabPositionX.value }],
+      transform: [{ translateX: withTiming(tabPositionX.value, { duration: 200 }) }], // Smooth linear transition
     };
   });
 
   return (
-    <View style={styles.tabbar}>
+    <View style={[styles.tabbar, { backgroundColor: theme.tabBg }]}>
       {/* Animated background */}
       <Animated.View
         style={[
@@ -35,6 +41,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           styles.animatedBackground,
           {
             width: buttonWidths[state.index] - 10, // Match button width
+            backgroundColor: theme.tabActiveColor,
           },
         ]}
       />
@@ -52,12 +59,12 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
         const onPress = () => {
           // Calculate X position based on widths
-          const positionX = buttonWidths.slice(0, index).reduce((acc, w) => acc + w, 0);
-          tabPositionX.value = withSpring(positionX, { 
-            damping: Math.max(0.1, 35), // Ensure damping is > 0
-            stiffness: 500 
-          });
-          
+          const positionX = buttonWidths
+            .slice(0, index)
+            .reduce((acc, w) => acc + w, 0);
+
+          // Smooth Animation without damping
+          tabPositionX.value = withTiming(positionX, { duration: 50 });
 
           const event = navigation.emit({
             type: 'tabPress',
@@ -84,7 +91,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             onLongPress={onLongPress}
             isFocused={isFocused}
             routeName={route.name}
-            color={isFocused ? '#016A70' : '#222'}
+            color={theme.tabInactive}
             label={label}
             onLayout={onButtonLayout(index)} // Capture button layout
           />
@@ -101,7 +108,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#fff',
     marginHorizontal: 20,
     padding: 15,
     borderRadius: 50,
@@ -116,9 +122,8 @@ const styles = StyleSheet.create({
 
   animatedBackground: {
     position: 'absolute',
-    backgroundColor: '#F3FAF4',
     borderRadius: 30,
-    height: 50, 
+    height: 50,
     marginHorizontal: 20,
   },
 });

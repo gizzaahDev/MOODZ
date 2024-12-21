@@ -2,6 +2,7 @@ import { View, Text, Pressable, StyleSheet, LayoutChangeEvent } from 'react-nati
 import React, { useEffect, useState } from 'react';
 import { icon } from '@/app/constants/icon';
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { useTheme } from "../../ThemeContext";
 
 const TabbarButton = ({
   onPress,
@@ -21,12 +22,13 @@ const TabbarButton = ({
   onLayout: (e: LayoutChangeEvent) => void,
 }) => {
   const scale = useSharedValue(0);
+  const { theme } = useTheme();
 
   // Tooltip State
   const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
-    scale.value = withSpring(isFocused ? 1 : 0, { damping: Math.max(0.1, 35), stiffness: 500 });
+    scale.value = withSpring(isFocused ? 1 : 0, { damping: Math.max(0.1, 50), stiffness: 300 });
   }, [isFocused]);
 
   const animatedIconStyle = useAnimatedStyle(() => {
@@ -70,14 +72,23 @@ const TabbarButton = ({
       {/* Icon */}
       <Animated.View style={animatedIconStyle}>
         {icon[routeName]({
-          color: isFocused ? '#016A70' : '#222',
+          color: isFocused ? theme.tabActiveIcon : theme.tabInactive,
         })}
       </Animated.View>
 
       {/* Label */}
-      <Animated.Text style={[{ color: color, fontSize: 12 }, animatedTextStyle]}>
-        {label}
-      </Animated.Text>
+      <Animated.Text 
+  style={[
+    {
+      color: theme.tabInactive, // Use single text color from theme
+      fontSize: 12,
+    }, 
+    animatedTextStyle
+  ]}
+>
+  {label}
+</Animated.Text>
+
     </Pressable>
   );
 };
