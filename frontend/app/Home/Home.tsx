@@ -1,19 +1,38 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView,Alert } from 'react-native';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from 'react';
+import auth from '@react-native-firebase/auth';
+
 
 export default function Home() {
   const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem("userLoggedIn"); // Clear login status
+      await auth().signOut(); // Sign out from Firebase
+      Alert.alert("Logged Out", "You have been successfully logged out.");
+      router.replace("/Auth/Login"); // Redirect to the login screen
+    } catch (error) {
+      console.error("Error logging out:", error);
+      Alert.alert("Error", "Failed to log out. Please try again.");
+    }
+  };
   return (
     <View style={styles.container}>
       {/* Header Section */}
       <View style={styles.header}>
         <Image source={require('../../assets/images/logo.jpg')} style={styles.logo} />
-        <Image source={require('../../assets/images/user_icon.png')} style={styles.userIcon} />
+        <TouchableOpacity onPress={handleLogout}>
+          <Image
+            source={require("../../assets/images/user_icon.png")}
+            style={styles.userIcon}
+          />
+        </TouchableOpacity>
       </View>
 
       {/* Welcome Text */}
@@ -23,7 +42,7 @@ export default function Home() {
       {/* Horizontal Buttons with labels outside */}
       <View style={styles.buttonContainer}>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)')}>
           <FontAwesome5 name="baby" size={35} color="white" />
           </TouchableOpacity>
           <Text style={styles.buttonText}>Child{'\n'}depression</Text>
