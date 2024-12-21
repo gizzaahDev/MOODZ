@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  ToastAndroid,
 } from "react-native";
 import auth from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
@@ -40,20 +41,28 @@ const ForgotPassword = () => {
 
   const handleResetPassword = async () => {
     if (!email) {
-      Alert.alert("Error", "Please enter a valid email address.");
+      ToastAndroid.show(
+        "Please enter a valid email address.",
+        ToastAndroid.SHORT // or ToastAndroid.LONG for a longer display
+      );
+      
       return;
     }
 
     try {
       await auth().sendPasswordResetEmail(email);
-      Alert.alert(
-        "Success",
-        "Password reset email has been sent. Please check your inbox."
+      ToastAndroid.show(
+        "Password reset email has been sent. Please check your inbox.",
+        ToastAndroid.LONG // or ToastAndroid.LONG for a longer display
       );
       router.replace("./Login"); // Redirect back to Login after success
     } catch (error) {
       console.error("Error sending password reset email:", error.message);
-      Alert.alert("Error", error.message || "Unable to send reset email.");
+      
+      ToastAndroid.show(
+        "Unable to send reset email.",
+        ToastAndroid.LONG // or ToastAndroid.LONG for a longer display
+      );
     }
   };
 
@@ -97,7 +106,7 @@ const ForgotPassword = () => {
 
             <View style={styles.formContainer}>
               <TextInput
-                style={[styles.input, { color: theme.textPrimary,backgroundColor:theme.input_background,borderColor:theme.border }]}
+                style={[styles.input, { color: theme.textPrimary, backgroundColor: theme.input_background, borderColor: theme.border }]}
                 placeholder="Enter your email"
                 placeholderTextColor="#888"
                 value={email}
@@ -181,7 +190,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    
+
     borderRadius: 50,
     padding: 15,
     marginBottom: 20,

@@ -32,7 +32,7 @@ export default function Index() {
           );
 
           // Redirect to Home screen
-          router.replace("/Home/Home");
+          router.replace("/(tabs)");
         } else if (hasSeenOnboarding === "true") {
           // Redirect to Login screen
           router.replace("/Auth/Login");

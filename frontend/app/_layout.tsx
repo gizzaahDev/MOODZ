@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from "react-native";
 import { ThemeProvider, useTheme } from './ThemeContext';
+import React from 'react';
 
 const ThemedStatusBar = () => {
   const { theme } = useTheme(); // Access the current theme from ThemeContext
@@ -28,6 +29,7 @@ export default function RootLayout() {
         <Stack.Screen name="Auth/SignUp" options={{ title: 'SignUpPage' }} />
         <Stack.Screen name="Auth/ForgotPassword" options={{ title: 'ForgotPasswordPage' }} />
         <Stack.Screen name="OnboardingScreen/Onboarding" options={{ title: 'OnboardingPage' }} />
+        <Stack.Screen name='(tabs)' options={{headerShown:false}}/>
 
 
       </Stack>

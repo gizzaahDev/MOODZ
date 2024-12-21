@@ -20,6 +20,7 @@ import { useTheme } from "../ThemeContext";
 import FontLoader from "../../FontLoader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Toast from 'react-native-toast-message';
 
 GoogleSignin.configure({
   webClientId:
@@ -59,14 +60,27 @@ const Login = () => {
 
   const validateInputs = () => {
     if (!emailRegex.test(email)) {
-      Alert.alert("Invalid Email", "Please enter a valid email address.");
+      ToastAndroid.show(
+        "Invalid Email, Please enter a valid email address.",
+        ToastAndroid.SHORT // or ToastAndroid.LONG for a longer display
+        
+      );
+      
       return false;
     }
     if (!passwordRegex.test(password)) {
-      Alert.alert(
+
+      ToastAndroid.show(
         "Invalid Password",
-        "Password must contain at least one number, one uppercase and lowercase letter, and be at least 8 characters long."
+        ToastAndroid.SHORT // or ToastAndroid.LONG for a longer display
+        
       );
+
+      
+      // Alert.alert(
+      //   "Invalid Password",
+      //   "Password must be at least 8 letters, with 1 uppercase, 1 lowercase, and 1 number."
+      // );
       return false;
     }
     return true;
@@ -86,11 +100,15 @@ const Login = () => {
         await AsyncStorage.setItem("userName", user.displayName || "User");
 
         console.log("Signed In");
-        router.push("/Home/Home");
+        router.push("/(tabs)");
       })
       .catch((err) => {
         console.error("Error signing in:", err);
-        Alert.alert("Invalid Credentials", "The email or password is incorrect.");
+        ToastAndroid.show(
+          "Invalid Credentials!, The email or password is incorrect.",
+          ToastAndroid.LONG // or ToastAndroid.LONG for a longer display
+        );
+        
       });
   };
 
@@ -124,11 +142,11 @@ const Login = () => {
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem("userLoggedIn", "true"); // Save login state
       ToastAndroid.show(
-        "Login Successful! Redirecting to Home...",
+        "Login Successful!",
         ToastAndroid.SHORT // or ToastAndroid.LONG for a longer display
       );
       // Route to Home screen
-      router.push("/Home/Home"); // Ensure this path is correct for your setup
+      router.push("/(tabs)"); // Ensure this path is correct for your setup
     } catch (error) {
       console.error("Error signing in with Google:", error);
 
