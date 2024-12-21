@@ -98,6 +98,7 @@ const Login = () => {
         await AsyncStorage.setItem("userLoggedIn", "true");
         await AsyncStorage.setItem("userEmail", user.email);
         await AsyncStorage.setItem("userName", user.displayName || "User");
+        await AsyncStorage.setItem("userPhotoURL", user.photoURL || "");
 
         console.log("Signed In");
         router.push("/(tabs)");
@@ -138,6 +139,7 @@ const Login = () => {
       await AsyncStorage.setItem("userLoggedIn", "true");
       await AsyncStorage.setItem("userEmail", user.email);
       await AsyncStorage.setItem("userName", user.displayName || "User");
+      await AsyncStorage.setItem("userPhotoURL", user.photoURL || ""); 
 
       await auth().signInWithCredential(googleCredential);
       await AsyncStorage.setItem("userLoggedIn", "true"); // Save login state

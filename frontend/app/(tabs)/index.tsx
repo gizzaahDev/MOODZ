@@ -1,128 +1,300 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert, ToastAndroid } from 'react-native';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import Entypo from '@expo/vector-icons/Entypo';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  ToastAndroid,
+} from 'react-native';
 import { useRouter } from 'expo-router';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import auth from '@react-native-firebase/auth';
-
+import { useTheme } from "../ThemeContext";
 
 export default function Home() {
   const router = useRouter();
-  const handleLogout = async () => {
-    try {
-      await AsyncStorage.removeItem("userLoggedIn"); // Clear login status
-      await auth().signOut(); // Sign out from Firebase
-      ToastAndroid.show(
-        "Logged Out, You have been successfully logged out.",
-        ToastAndroid.SHORT // or ToastAndroid.LONG for a longer display
+  const [profileImage, setProfileImage] = useState(null);
+  const [userName, setUserName] = useState("User");
+  const { theme } = useTheme();
 
-      );
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const photoURL = await AsyncStorage.getItem("userPhotoURL");
+        const name = await AsyncStorage.getItem("userName");
 
-      router.replace("/Auth/Login"); // Redirect to the login screen
-    } catch (error) {
-      console.error("Error logging out:", error);
-      ToastAndroid.show(
-        "Error, Failed to log out. Please try again.",
-        ToastAndroid.SHORT // or ToastAndroid.LONG for a longer display
+        setProfileImage(photoURL || null);
+        setUserName(name || "User");
+      } catch (error) {
+        console.error("Failed to load user data:", error);
+      }
+    };
 
-      );
+    loadUserData();
+  }, []);
 
-    }
-  };
-
-  {/* onPress={() => router.push('/Components/DAS/Questionnaire')} */ }
-  {/* onPress={() => router.push('/Components/GDS/Questionnaire')} */ }
   return (
-    
+    <View style={[styles.container,{ backgroundColor: theme.background }]}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.userInfo}>
+          <Image
+            source={
+              profileImage
+                ? { uri: profileImage }
+                : require("../../assets/images/userpic.png")
+            }
+            style={styles.profileImage}
+          />
+          <View style={styles.userText}>
+            <Text style={[styles.greeting,{ color: theme.textPrimary }]}>
+              Hello, <Text style={[styles.userName,{ color: theme.title }]}>{userName}</Text>
+            </Text>
+            <Text style={styles.subtitle}>How can I help you today?</Text>
+          </View>
+        </View>
 
-        
+        {/* Notification Bell */}
+        <View style={styles.iconWrapper}>
+          <MaterialCommunityIcons name="bell" size={28} style={{ color: theme.iconColor }} />
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>3</Text>
+          </View>
+        </View>
+      </View>
 
-        
+      {/* Depression Categories */}
+      <View style={styles.categoryContainer}>
+        <TouchableOpacity style={[styles.categoryBox, { backgroundColor: '#E6E6FA' }]}>
+          <Image source={require('../../assets/images/child.png')} style={styles.categoryImage} />
+          <Text style={styles.categoryText}>Child{"\n"}Depression</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.categoryBox, { backgroundColor: '#FAD2D2' }]} onPress={() => router.push('/Components/DAS/Questionnaire')}>
+          <Image source={require('../../assets/images/marital.png')} style={styles.categoryImage} />
+          <Text style={styles.categoryText}>Marital{"\n"}Depression</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.categoryBox, { backgroundColor: '#D2FAD2' }]} onPress={() => router.push('/Components/EPDS/Questionnaire')}>
+          <Image source={require('../../assets/images/postpartum.png')} style={styles.categoryImage} />
+          <Text style={styles.categoryText}>Postpartum{"\n"}Depression</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.categoryBox, { backgroundColor: '#FADCA2' }]} onPress={() => router.push('/Components/GDS/Questionnaire')}>
+          <Image source={require('../../assets/images/adult.png')} style={styles.categoryImage} />
+          <Text style={styles.categoryText}>Adult{"\n"}Depression</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Articles Section */}
+      <View style={styles.articlesContainer}>
+        <Text style={[styles.articleTitle,{ color: theme.textPrimary }]}>Articles</Text>
+
+        {/* Scrollable Articles */}
+        <ScrollView style={styles.articleScrollView} contentContainerStyle={{ paddingBottom: 220 }}>
+          {/* Article 1 */}
+          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 1</Text>
+            <Text style={[styles.articleText,{ color: theme.dimText}]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/child.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+
+          {/* Article 2 */}
+          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 2</Text>
+              <Text style={[styles.articleText,{ color: theme.dimText}]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 3</Text>
+            <Text style={[styles.articleText,{ color: theme.dimText}]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 4</Text>
+            <Text style={[styles.articleText,{ color: theme.dimText}]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 5</Text>
+            <Text style={[styles.articleText,{ color: theme.dimText}]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 6</Text>
+            <Text style={[styles.articleText,{ color: theme.dimText}]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          
+        </ScrollView>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
-    paddingHorizontal: 20,
+    backgroundColor: '#F6FAF6',
   },
   header: {
     flexDirection: 'row',
+    padding: 20,
+    paddingBottom:5,
+    alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  userInfo: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  logo: {
+  userText: {
+    marginLeft: 10,
+  },
+  greeting: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  userName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#016A70',
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#666',
+  },
+  profileImage: {
     width: 50,
     height: 50,
-    borderRadius: 50,
+    borderRadius: 25,
+    borderColor: '#ccc',
+    borderWidth: 2,
   },
-  userIcon: {
-    width: 40,
-    height: 40,
+  iconWrapper: {
+    position: 'relative',
   },
-  welcomeText: {
-    fontSize: 24,
+  badge: {
+    position: 'absolute',
+    right: -1,
+    top: -1,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    width: 16,
+    height: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 10,
     fontWeight: 'bold',
-    marginTop: 20,
   },
-  Heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginTop: 5,
+  categoryContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 30,
   },
-  subText: {
-    fontSize: 16,
-    color: '#555',
+  categoryBox: {
+    width: 155,
+    height: 150,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginVertical: 10,
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
+  categoryImage: {
+    width: 90,
+    height: 90,
+    marginBottom: 10,
   },
-  buttonWrapper: {
-    alignItems: 'center', // Center the button and text
-  },
-  button: {
-    backgroundColor: '#016A70',
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center', // Center the icon inside the button
-    height: 70, // Adjust button height
-    width: 70,
-  },
-  buttonText: {
-    color: '#555',
-    fontWeight: 'bold',
-    marginTop: 5, // Space between the button and text
+  categoryText: {
     textAlign: 'center',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
-  scrollView: {
-    marginTop: 20,
+  articlesContainer: {
+    paddingLeft: 16,
+    paddingRight:16,
   },
-  paragraphContainer: {
-    marginBottom: 20,
-    padding: 15,
-    backgroundColor: '#f9f9f9',
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-  },
-  paragraphTitle: {
-    fontSize: 20,
+  articleTitle: {
+    fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  paragraphDescription: {
+  articleScrollView: {
+    maxHeight: 500, // Allow scrolling only in articles
+    paddingBottom: 200,
+  },
+  articleBox: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 5,
+    alignItems: 'center',
+  },
+  articleImage: {
+    width: 50,
+    height: 50,
+    marginLeft: 10,
+    borderRadius: 10,
+  },
+  articleContent: {
+    flex: 1,
+  },
+  articleHeading: {
     fontSize: 16,
-    color: '#333',
+    fontWeight: 'bold',
+  },
+  articleText: {
+    fontSize: 14,
+    color: '#666',
   },
 });

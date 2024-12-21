@@ -27,7 +27,7 @@ export default function Index() {
 
           // Show toast with user email
           ToastAndroid.show(
-            `Welcome back, ${userEmail}! Redirecting to Home...`,
+            `Welcome back, ${userEmail}!`,
             ToastAndroid.SHORT
           );
 
