@@ -64,7 +64,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             .reduce((acc, w) => acc + w, 0);
 
           // Smooth Animation without damping
-          tabPositionX.value = withTiming(positionX, { duration: 50 });
+          tabPositionX.value = withTiming(positionX, { duration: 100 });
 
           const event = navigation.emit({
             type: 'tabPress',
