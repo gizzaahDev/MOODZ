@@ -400,7 +400,7 @@ const Questionnaire = () => {
 
     };
     try {
-      const response = await axios.post('', payload); // Replace <server_ip> with your server IP
+      const response = await axios.post('https://moodz.fly.dev/married/predict', payload); // Replace <server_ip> with your server IP
       Alert.alert('Prediction Result', response.data.prediction_text + '\nTotal Score: ' + response.data.total_score);
 
     } catch (error) {
