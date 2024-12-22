@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "models/main.py", 
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      { "src": "/.*", "dest": "models/main.py" }
+    ],
+    "env": {
+      "PORT": "8000"
+    }
+  }
+  
