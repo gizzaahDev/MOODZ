@@ -7,6 +7,7 @@ WORKDIR /app
 # Copy the requirements file from 'models'
 COPY ./models/requirements.txt ./
 
+RUN python -m pip install --upgrade pip
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
