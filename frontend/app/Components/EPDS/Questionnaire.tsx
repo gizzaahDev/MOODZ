@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
-import { View, Text, Button, Alert, ScrollView, TouchableOpacity ,StyleSheet} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  Alert,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import axios from 'axios';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const questions = [
+  // Questions array (same as your original code)
   {
     question: 'I have been able to laugh and see the funny side of things',
     answers: [
@@ -96,127 +106,157 @@ const questions = [
 ];
 
 const Questionnaire = () => {
-  const [answers, setAnswers] = useState(Array(questions.length).fill(null)); // Default all answers to null (unselected)
+  const [answers, setAnswers] = useState(Array(questions.length).fill(null)); // Default all answers to null
+  const [userId, setUserId] = useState(null); // Store user ID
 
-  const handleSelect = (questionKey: number, value: number) => {
+  // Fetch logged-in user's UID
+  useEffect(() => {
+    const fetchUser = () => {
+      const user = auth().currentUser;
+      if (user) {
+        setUserId(user.uid); // Set user UID
+      } else {
+        Alert.alert('Error', 'User not authenticated');
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const handleSelect = (questionKey, value) => {
     const newAnswers = [...answers];
-    newAnswers[questionKey] = value; // Update the answer when user selects an option
+    newAnswers[questionKey] = value;
     setAnswers(newAnswers);
   };
 
   const handleSubmit = async () => {
-    // Check if all questions have been answered
     if (answers.includes(null)) {
       Alert.alert('Validation Error', 'Please answer all the questions before submitting.');
       return;
     }
-
-    const payload = {
-      q1: answers[0],
-      q2: answers[1],
-      q3: answers[2],
-      q4: answers[3],
-      q5: answers[4],
-      q6: answers[5],
-      q7: answers[6],
-      q8: answers[7],
-      q9: answers[8],
-      q10: answers[9],
-    };
-
+  
     try {
-      const response = await axios.post('http://192.168.8.188:8000/postpartum/predict', payload);
-
+      // Send answers to the prediction API
+      const response = await axios.post(
+        'https://vercel.com/geeshan-thiseras-projects/moodz/3jLGykTyjyJCtwAY9mXncYjBYaQv/postpartum/predict',
+        {
+          q1: answers[0],
+          q2: answers[1],
+          q3: answers[2],
+          q4: answers[3],
+          q5: answers[4],
+          q6: answers[5],
+          q7: answers[6],
+          q8: answers[7],
+          q9: answers[8],
+          q10: answers[9],
+        }
+      );
+  
+      // Get prediction result from API
       const prediction = response.data.prediction;
+  
+      // Save answers and prediction to Firestore
+      const payload = {
+        answers, // User answers
+        prediction, // Prediction result
+        timestamp: firestore.FieldValue.serverTimestamp(), // Timestamp
+      };
+  
+      await firestore()
+        .collection('Users') // Main collection
+        .doc(userId) // Document with user UID
+        .collection('Questionnaires') // Sub-collection
+        .add(payload); // Add data to Firestore
+  
+      // Show Prediction to User
       Alert.alert('Prediction', `Predicted Category: ${prediction}`);
     } catch (error) {
-      console.error('Error submitting questionnaire:', error);
-      Alert.alert('Error', 'Failed to connect to the server.');
+      console.error('Error submitting data:', error);
+      Alert.alert('Error', 'Failed to submit data. Please try again.');
     }
   };
+  
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
-    <Text style={styles.title}>Edinburgh Postnatal Depression Questionnaire</Text>
-    <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
-      {questions.map((questionObj, questionKey) => (
-        <View key={questionKey} style={{ marginBottom: 20 }}>
-          <Text style={styles.question}>
-            {questionKey + 1}. {questionObj.question}
-          </Text>
-          {questionObj.answers.map((choice) => (
-            <TouchableOpacity
-              key={choice.value}
-              style={{
-                ...styles.answerButton,
-                backgroundColor: answers[questionKey] === choice.value ? '#d3d3d3' : '#f0f0f0',
-              }}
-              onPress={() => handleSelect(questionKey, choice.value)}
-            >
-              <View
+      <Text style={styles.title}>Edinburgh Postnatal Depression Questionnaire</Text>
+      <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
+        {questions.map((questionObj, questionKey) => (
+          <View key={questionKey} style={{ marginBottom: 20 }}>
+            <Text style={styles.question}>
+              {questionKey + 1}. {questionObj.question}
+            </Text>
+            {questionObj.answers.map((choice) => (
+              <TouchableOpacity
+                key={choice.value}
                 style={{
-                  ...styles.radioCircle,
-                  backgroundColor: answers[questionKey] === choice.value ? '#000' : '#fff',
+                  ...styles.answerButton,
+                  backgroundColor: answers[questionKey] === choice.value ? '#d3d3d3' : '#f0f0f0',
                 }}
-              />
-              <Text>{choice.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      ))}
-
-      
-    </ScrollView>
-    <TouchableOpacity
+                onPress={() => handleSelect(questionKey, choice.value)}
+              >
+                <View
+                  style={{
+                    ...styles.radioCircle,
+                    backgroundColor: answers[questionKey] === choice.value ? '#000' : '#fff',
+                  }}
+                />
+                <Text>{choice.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ))}
+      </ScrollView>
+      <TouchableOpacity
         style={[styles.submitButton, { backgroundColor: answers.includes(null) ? '#ccc' : '#016A70' }]}
         onPress={handleSubmit}
-        disabled={answers.includes(null)} 
+        disabled={answers.includes(null)}
       >
         <Text style={styles.submitButtonText}>SUBMIT</Text>
       </TouchableOpacity>
-  </View>
-);
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-title: {
-  fontSize: 25,
-  fontWeight: 'bold',
-  marginBottom: 20,
-  textAlign: 'center',
-  color:'#016A70'
-},
-question: {
-  marginBottom: 10,
-  fontWeight: 'bold',
-},
-answerButton: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  padding: 10,
-  borderRadius: 5,
-  marginBottom: 5,
-},
-radioCircle: {
-  width: 20,
-  height: 20,
-  borderRadius: 10,
-  borderWidth: 1,
-  borderColor: '#000',
-  marginRight: 10,
-},
-submitButton: {
-  paddingVertical: 15,
-  borderRadius: 5,
-  marginTop: 0,
-  alignItems: 'center',
-  marginBottom:10,
-},
-submitButtonText: {
-  color: '#fff',
-  fontSize: 18,
-  fontWeight: 'bold',
-},
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#016A70',
+  },
+  question: {
+    marginBottom: 10,
+    fontWeight: 'bold',
+  },
+  answerButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  radioCircle: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#000',
+    marginRight: 10,
+  },
+  submitButton: {
+    paddingVertical: 15,
+    borderRadius: 5,
+    marginTop: 0,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  submitButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
 
 export default Questionnaire;
