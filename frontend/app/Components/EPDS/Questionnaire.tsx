@@ -137,7 +137,7 @@ const Questionnaire = () => {
     try {
       // Send answers to the prediction API
       const response = await axios.post(
-        'https://vercel.com/geeshan-thiseras-projects/moodz/3jLGykTyjyJCtwAY9mXncYjBYaQv/postpartum/predict',
+        'https://moodz.fly.dev/postpartum/predict',
         {
           q1: answers[0],
           q2: answers[1],
