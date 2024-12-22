@@ -156,7 +156,7 @@ def child_predict(data: ChildInput):
 
         return {"prediction": int(prediction[0]), "isDepressed": result}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
+        raise HTTPException(status_code=500, detail=f"Prediction err: {e}")
     
 # Postpartum Route
 @app.post("/postpartum/predict")
