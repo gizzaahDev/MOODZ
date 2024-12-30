@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException # type: ignore
 from pydantic import BaseModel # type: ignore
+from fastapi.middleware.cors import CORSMiddleware
 import numpy as np # type: ignore
 import pickle
 import joblib
@@ -19,7 +20,7 @@ except FileNotFoundError:
 postpartum_model_path = "EPDS_model.pkl"
 
 try:
-    postpartum_model = joblib.load(postpartum_model_path)
+    model = joblib.load(postpartum_model_path)
 except FileNotFoundError:
     raise Exception("Model file not found! Please enter the correct path.")
 except Exception as e:
@@ -72,16 +73,16 @@ class ChildInput(BaseModel):
 
 # Postpartum Inputs
 class PostpartumInput(BaseModel):
-    q1: float
-    q2: float
-    q3: float
-    q4: float
-    q5: float
-    q6: float
-    q7: float
-    q8: float
-    q9: float
-    q10: float
+    q1: int
+    q2: int
+    q3: int
+    q4: int
+    q5: int
+    q6: int
+    q7: int
+    q8: int
+    q9: int
+    q10: int
 
 # Adult Inputs
 class AdultInput(BaseModel):
@@ -159,18 +160,37 @@ def child_predict(data: ChildInput):
         raise HTTPException(status_code=500, detail=f"Prediction err: {e}")
     
 # Postpartum Route
-@app.post("/postpartum/predict")
-def postpartum_predict(data: PostpartumInput):
-    input_data = np.array([[data.q1, data.q2, data.q3, data.q4,
-                            data.q5, data.q6, data.q7, data.q8,
-                            data.q9, data.q10]])
-    try:
-        prediction = postpartum_model.predict(input_data)
-        return {"prediction": prediction[0]}
-    
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
+class EPDSResponse(BaseModel):
+    prediction: int
+    prediction_text: str
 
+@app.post("/postpartum/predict", response_model=EPDSResponse)
+async def predict_epds(request: PostpartumInput):
+    try:
+        # Prepare the input features
+        features = np.array([
+            [
+                request.q1, request.q2, request.q3, request.q4, request.q5,
+                request.q6, request.q7, request.q8, request.q9, request.q10
+            ]
+        ])
+
+        # Make prediction
+        prediction = model.predict(features)[0]
+
+        # Map prediction to text
+        if prediction == 0:
+            prediction_text = "Low Risk"
+        elif prediction == 1:
+            prediction_text = "Moderate Risk"
+        else:
+            prediction_text = "High Risk"
+
+        # Return prediction
+        return EPDSResponse(prediction=prediction, prediction_text=prediction_text)
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
     
 # Adult Route
 @app.post("/adult/predict")
