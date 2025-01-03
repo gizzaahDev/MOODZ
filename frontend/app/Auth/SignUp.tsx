@@ -32,7 +32,7 @@ const SignUp = () => {
   const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const router = useRouter();
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
 
 
   useEffect(() => {
@@ -433,13 +433,14 @@ const styles = StyleSheet.create({
     marginTop: 25, // Add spacing from other elements
   },
   normalText: {
-    fontSize: 19, // Adjust font size if needed
+    fontSize: 14, // Adjust font size if needed
     textAlign: "center",
   },
   linkText: {
     fontWeight: "bold", // Bold styling for emphasis
-    fontSize: 19, // Match the font size of normalText
+    fontSize: 14, // Match the font size of normalText
     textAlign: "center",
+    top: 5,
   },
   guideTextContainer: {
     marginBottom: 10,

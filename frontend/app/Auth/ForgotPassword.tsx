@@ -22,7 +22,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const router = useRouter();
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
 
   // Handle keyboard visibility
   useEffect(() => {
@@ -57,7 +57,11 @@ const ForgotPassword = () => {
       );
       router.replace("./Login"); // Redirect back to Login after success
     } catch (error) {
-      console.error("Error sending password reset email:", error.message);
+      if (error instanceof Error) {
+        console.error("Error sending password reset email:", error.message);
+      } else {
+        console.error("Error sending password reset email:", error);
+      }
       
       ToastAndroid.show(
         "Unable to send reset email.",

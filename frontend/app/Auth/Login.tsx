@@ -20,7 +20,7 @@ import { useTheme } from "../ThemeContext";
 import FontLoader from "../../FontLoader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import Toast from 'react-native-toast-message';
+
 
 GoogleSignin.configure({
   webClientId:
@@ -37,7 +37,7 @@ const Login = () => {
 
 
   const router = useRouter();
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", () =>
@@ -96,7 +96,7 @@ const Login = () => {
 
         // Save login state and user details in AsyncStorage
         await AsyncStorage.setItem("userLoggedIn", "true");
-        await AsyncStorage.setItem("userEmail", user.email);
+        await AsyncStorage.setItem("userEmail", user.email || "");
         await AsyncStorage.setItem("userName", user.displayName || "User");
         await AsyncStorage.setItem("userPhotoURL", user.photoURL || "");
 
@@ -129,7 +129,7 @@ const Login = () => {
       const googleSignInResult = await GoogleSignin.signIn();
 
       const googleCredential = auth.GoogleAuthProvider.credential(
-        googleSignInResult.data?.idToken
+        googleSignInResult.data?.idToken ?? null
       );
 
       const userCredential = await auth().signInWithCredential(googleCredential);
@@ -137,7 +137,7 @@ const Login = () => {
 
       // Save login details to AsyncStorage
       await AsyncStorage.setItem("userLoggedIn", "true");
-      await AsyncStorage.setItem("userEmail", user.email);
+      await AsyncStorage.setItem("userEmail", user.email || "");
       await AsyncStorage.setItem("userName", user.displayName || "User");
       await AsyncStorage.setItem("userPhotoURL", user.photoURL || ""); 
 
@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 60,
   },
   startButtonText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     fontFamily: "poppins",
     textAlign: "center",
@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   googleStartButtonText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     fontFamily: "poppins",
     textAlign: "center",
@@ -427,13 +427,14 @@ const styles = StyleSheet.create({
     marginTop: 25, // Add spacing from other elements
   },
   normalText: {
-    fontSize: 19, // Adjust font size if needed
+    fontSize: 14, // Adjust font size if needed
     textAlign: "center",
   },
   linkText: {
     fontWeight: "bold", // Bold styling for emphasis
-    fontSize: 19, // Match the font size of normalText
+    fontSize: 14, // Match the font size of normalText
     textAlign: "center",
+    top: 5,
   },
 });
 

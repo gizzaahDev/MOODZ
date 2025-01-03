@@ -6,7 +6,7 @@ import FontLoader from '../../FontLoader';
 
 const GettingstartScreen = () => {
   
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
   const router = useRouter();
 
   const handleLogin = () => {
