@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "414852162412",
+    "project_id": "moodz-45fd9",
+    "storage_bucket": "moodz-45fd9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414852162412:android:ec22c9d679a1c0342f0949",
+        "android_client_info": {
+          "package_name": "com.gizzahdev.moodz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414852162412-mlmjcgf9ao4v85e89epe82m0j4riakcq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gizzahdev.moodz",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "414852162412-rf4mu49gbeu6858inh8e5m4fdeich57q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNTR4EqWR4GmtgAAMs9f_r1wo7WqAPRyU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414852162412-rf4mu49gbeu6858inh8e5m4fdeich57q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

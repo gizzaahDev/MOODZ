@@ -57,7 +57,7 @@ const handleSubmit = async () => {
 
   try {
     // Make POST request to the backend
-    const response = await axios.post('http://192.168.8.188:8000/adult/predict', payload);
+    const response = await axios.post('https://moodz.fly.dev/adult/predict', payload);
     
     // Extract and display the predicted depression level
     const prediction = response.data.predicted_depression_level;
