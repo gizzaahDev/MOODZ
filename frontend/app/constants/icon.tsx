@@ -9,3 +9,4 @@ export const icon = {
     progress: (props: any) => <FontAwesome name="paper-plane-o" size={24}  {...props} />,
     userProfile: (props: any) => <Feather name="user" size={24} {...props} />,
   }
+  export default icon;

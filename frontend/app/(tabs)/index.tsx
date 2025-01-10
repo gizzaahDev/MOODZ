@@ -7,18 +7,58 @@ import {
   StyleSheet,
   ScrollView,
   ToastAndroid,
+  BackHandler,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import auth from '@react-native-firebase/auth';
 import { useTheme } from "../ThemeContext";
+import LottieView from 'lottie-react-native';
+import Article1 from '../Articles/EPDSArticle1';
+
 
 export default function Home() {
   const router = useRouter();
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [userName, setUserName] = useState("User");
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
+  const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const handlePress = (category: string, route: string) => {
+    setSelectedCategory(category); 
+    setLoading(true); 
+    
+    
+    setTimeout(() => {
+      router.push(route as any); 
+      setLoading(false); 
+    }, 1500); 
+  };
+
+  
+  const handleBackPress = () => {
+    if (loading) {
+      
+      setLoading(false); 
+      setSelectedCategory(null); 
+      return true; 
+    }
+    return false; 
+  };
+
+  
+  useEffect(() => {
+    
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, [loading]); 
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -37,7 +77,7 @@ export default function Home() {
   }, []);
 
   return (
-    <View style={[styles.container,{ backgroundColor: theme.background }]}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.userInfo}>
@@ -50,8 +90,8 @@ export default function Home() {
             style={styles.profileImage}
           />
           <View style={styles.userText}>
-            <Text style={[styles.greeting,{ color: theme.textPrimary }]}>
-              Hello, <Text style={[styles.userName,{ color: theme.title }]}>{userName}</Text>
+            <Text style={[styles.greeting, { color: theme.textPrimary, flexWrap: 'wrap', maxWidth: 250 }]}>
+              Hello, <Text style={[styles.userName, { color: theme.title, }]}>{userName}</Text>
             </Text>
             <Text style={styles.subtitle}>How can I help you today?</Text>
           </View>
@@ -68,109 +108,170 @@ export default function Home() {
 
       {/* Depression Categories */}
       <View style={styles.categoryContainer}>
-        <TouchableOpacity style={[styles.categoryBox, { backgroundColor: '#E6E6FA' }]}>
-          <Image source={require('../../assets/images/child.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Child{"\n"}Depression</Text>
-        </TouchableOpacity>
+      {/* Child Depression */}
+      <TouchableOpacity
+        style={[styles.categoryBox, { backgroundColor: '#E6E6FA' }]}
+        onPress={() => handlePress('child', '/Components/ChildDepression/Questionnaire')}
+      >
+        {loading && selectedCategory === 'child' ? (
+          <LottieView
+            source={require('../../assets/lottie/LoadingElepGre.json')}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+        ) : (
+          <>
+            <Image source={require('../../assets/images/child.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Child{"\n"}Depression</Text>
+          </>
+        )}
+      </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.categoryBox, { backgroundColor: '#FAD2D2' }]} onPress={() => router.push('/Components/DAS/Questionnaire')}>
-          <Image source={require('../../assets/images/marital.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Marital{"\n"}Depression</Text>
-        </TouchableOpacity>
+      {/* Marital Depression */}
+      <TouchableOpacity
+        style={[styles.categoryBox, { backgroundColor: '#FAD2D2' }]}
+        onPress={() => handlePress('marital', '/Components/DAS/Questionnaire')}
+      >
+        {loading && selectedCategory === 'marital' ? (
+          <LottieView
+            source={require('../../assets/lottie/LoadingElepGre.json')}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+        ) : (
+          <>
+            <Image source={require('../../assets/images/marital.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Marital{"\n"}Depression</Text>
+          </>
+        )}
+      </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.categoryBox, { backgroundColor: '#D2FAD2' }]} onPress={() => router.push('/Components/EPDS/Questionnaire')}>
-          <Image source={require('../../assets/images/postpartum.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Postpartum{"\n"}Depression</Text>
-        </TouchableOpacity>
+      {/* Postpartum Depression */}
+      <TouchableOpacity
+        style={[styles.categoryBox, { backgroundColor: '#D2FAD2' }]}
+        onPress={() => handlePress('postpartum', '/Components/EPDS/Questionnaire')}
+      >
+        {loading && selectedCategory === 'postpartum' ? (
+          <LottieView
+            source={require('../../assets/lottie/LoadingElepGre.json')}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+        ) : (
+          <>
+            <Image source={require('../../assets/images/postpartum.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Postpartum{"\n"}Depression</Text>
+          </>
+        )}
+      </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.categoryBox, { backgroundColor: '#FADCA2' }]} onPress={() => router.push('/Components/GDS/Questionnaire')}>
-          <Image source={require('../../assets/images/adult.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Adult{"\n"}Depression</Text>
-        </TouchableOpacity>
-      </View>
+      {/* Adult Depression */}
+      <TouchableOpacity
+        style={[styles.categoryBox, { backgroundColor: '#FADCA2' }]}
+        onPress={() => handlePress('adult', '/Components/GDS/Questionnaire')}
+      >
+        {loading && selectedCategory === 'adult' ? (
+          <LottieView
+            source={require('../../assets/lottie/LoadingElepGre.json')}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+        ) : (
+          <>
+            <Image source={require('../../assets/images/adult.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Adult{"\n"}Depression</Text>
+          </>
+        )}
+      </TouchableOpacity>
+    </View>
 
       {/* Articles Section */}
       <View style={styles.articlesContainer}>
-        <Text style={[styles.articleTitle,{ color: theme.textPrimary }]}>Articles</Text>
+        <Text style={[styles.articleTitle, { color: theme.textPrimary }]}>Articles</Text>
 
         {/* Scrollable Articles */}
         <ScrollView style={styles.articleScrollView} contentContainerStyle={{ paddingBottom: 220 }}>
           {/* Article 1 */}
-          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]} onPress={() => setModalVisible(true)}>
             <View style={styles.articleContent}>
-            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 1</Text>
-            <Text style={[styles.articleText,{ color: theme.dimText}]}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Postpartum Depression : </Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                A Comprehensive Overview of Causes, Symptoms, Diagnosis, and Treatment
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/postpartum.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <Article1 modalVisible={modalVisible} setModalVisible={setModalVisible} />
+
+          {/* Article 2 */}
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </Text>
             </View>
             <Image
-              source={require('../../assets/images/child.png')}
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 3</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 4</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 5</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 6</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
               style={styles.articleImage}
             />
           </TouchableOpacity>
 
-          {/* Article 2 */}
-          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
-            <View style={styles.articleContent}>
-              <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 2</Text>
-              <Text style={[styles.articleText,{ color: theme.dimText}]}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </Text>
-            </View>
-            <Image
-              source={require('../../assets/images/marital.png')}
-              style={styles.articleImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
-            <View style={styles.articleContent}>
-            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 3</Text>
-            <Text style={[styles.articleText,{ color: theme.dimText}]}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </Text>
-            </View>
-            <Image
-              source={require('../../assets/images/marital.png')}
-              style={styles.articleImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
-            <View style={styles.articleContent}>
-            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 4</Text>
-            <Text style={[styles.articleText,{ color: theme.dimText}]}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </Text>
-            </View>
-            <Image
-              source={require('../../assets/images/marital.png')}
-              style={styles.articleImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
-            <View style={styles.articleContent}>
-            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 5</Text>
-            <Text style={[styles.articleText,{ color: theme.dimText}]}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </Text>
-            </View>
-            <Image
-              source={require('../../assets/images/marital.png')}
-              style={styles.articleImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.articleBox,{ backgroundColor: theme.semi_container }]}>
-            <View style={styles.articleContent}>
-            <Text style={[styles.articleHeading,{ color: theme.textPrimary}]}>Article 6</Text>
-            <Text style={[styles.articleText,{ color: theme.dimText}]}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </Text>
-            </View>
-            <Image
-              source={require('../../assets/images/marital.png')}
-              style={styles.articleImage}
-            />
-          </TouchableOpacity>
-          
         </ScrollView>
       </View>
     </View>
@@ -185,7 +286,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     padding: 20,
-    paddingBottom:5,
+    paddingBottom: 5,
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -261,7 +362,7 @@ const styles = StyleSheet.create({
   },
   articlesContainer: {
     paddingLeft: 16,
-    paddingRight:16,
+    paddingRight: 16,
   },
   articleTitle: {
     fontSize: 18,
@@ -296,5 +397,18 @@ const styles = StyleSheet.create({
   articleText: {
     fontSize: 14,
     color: '#666',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -50 }, { translateY: -50 }],
+    zIndex: 1,
+    width: 100, // Adjust the size of the animation
+    height: 100, // Adjust the size of the animation
+  },
+  lottie: {
+    width: 150, // Adjust to your desired size
+    height: 150, // Adjust to your desired size
   },
 });

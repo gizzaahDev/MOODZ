@@ -8,7 +8,7 @@ import { useTheme } from './ThemeContext';
 
 export default function Index() {
   const router = useRouter();
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -52,7 +52,7 @@ export default function Index() {
     <View style={[styles.container,{ backgroundColor: theme.background }]}>
       {/* Custom Loading Animation */}
       <LottieView
-        source={require("../assets/lottie/LoadAnime.json")} // Path to your animation file
+        source={require("../assets/lottie/SplashLoading.json")} // Path to your animation file
         autoPlay
         loop
         style={styles.animation}
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     
   },
   animation: {
-    width: 200,
-    height: 200, // Adjust size as needed
+    width: 300,
+    height: 300, // Adjust size as needed
   },
 });

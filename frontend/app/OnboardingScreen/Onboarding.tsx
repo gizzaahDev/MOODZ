@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import LottieView from 'lottie-react-native';
 import { useTheme } from '../ThemeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
 
 
 const { width } = Dimensions.get('window');
@@ -48,12 +49,12 @@ const onboardingData = [
 ];
 
 export default function OnboardingScreen() {
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
   const [currentScreen, setCurrentScreen] = useState(0);
   const router = useRouter();
-  const scrollViewRef = useRef(null);
+  const scrollViewRef = useRef<ScrollView>(null);
 
-  const handleScrollEnd = (event) => {
+  const handleScrollEnd = (event: { nativeEvent: { contentOffset: { x: any; }; }; }) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
     const newIndex = Math.round(contentOffsetX / width);
     setCurrentScreen(newIndex);
@@ -64,7 +65,7 @@ export default function OnboardingScreen() {
       router.replace('../Gettingstart/GettingstartScreen');
     } else {
       const nextScreenIndex = currentScreen + 1;
-      scrollViewRef.current.scrollTo({ x: nextScreenIndex * width, animated: true });
+      scrollViewRef.current?.scrollTo({ x: nextScreenIndex * width, animated: true });
       setCurrentScreen(nextScreenIndex);
     }
   };
@@ -73,8 +74,8 @@ export default function OnboardingScreen() {
     router.replace('../Gettingstart/GettingstartScreen');
   };
 
-  const handleDotPress = (index) => {
-    scrollViewRef.current.scrollTo({ x: index * width, animated: true });
+  const handleDotPress = (index: number) => {
+    scrollViewRef.current?.scrollTo({ x: index * width, animated: true });
     setCurrentScreen(index);
   };
 
@@ -246,7 +247,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-function auth() {
-    throw new Error('Function not implemented.');
-}
 

@@ -12,6 +12,7 @@ import {
   Platform,
   Keyboard,
   Button,
+  ToastAndroid,
 } from "react-native";
 import auth from "@react-native-firebase/auth";
 import { useRouter } from "expo-router";
@@ -32,7 +33,7 @@ const SignUp = () => {
   const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const router = useRouter();
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
 
 
   useEffect(() => {
@@ -58,19 +59,54 @@ const SignUp = () => {
   // Password validation regex
   const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
+
+  const checkServerConnection = async () => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 1500);  // Set a timeout for the request
+
+    try {
+      const response = await fetch('https://moodz.fly.dev/', {
+        method: 'GET',  // Use GET method to check server
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+
+      if (response.ok) {
+        return true;  // Return true if the server is reachable
+      } else {
+        return false; // Return false if the server is unreachable
+      }
+    } catch (error) {
+      clearTimeout(timeout);
+      return false;  // Return false if an error or timeout occurs
+    }
+  };
   // Handle Sign-Up
   const handleSignUp = async () => {
+
+
+    
+
     if (!emailRegex.test(email)) {
-      Alert.alert("Invalid Email", "Please enter a valid email address.");
+      ToastAndroid.show(
+        "Please enter a valid email address.",
+        ToastAndroid.SHORT
+      );
+      
       return;
     }
 
     if (!phoneRegex.test(phone)) {
-      Alert.alert("Invalid Phone Number", "Please enter a valid phone number.");
+      ToastAndroid.show(
+        "Please enter a valid phone number.",
+        ToastAndroid.SHORT
+      );
+      
       return;
     }
 
     if (!passwordRegex.test(password)) {
+      
       Alert.alert(
         "Invalid Password",
         "Password must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters."
@@ -79,16 +115,33 @@ const SignUp = () => {
     }
 
     if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match.");
+      ToastAndroid.show(
+        "Passwords do not match.",
+        ToastAndroid.SHORT
+      );
+      
       return;
     }
+
+    const isServerConnected = await checkServerConnection();
+    
+        if (!isServerConnected) {
+          ToastAndroid.show(
+            "No internet connection. Please check your connection.",
+            ToastAndroid.SHORT
+          );
+          return; // Exit early if server is not reachable
+        }
 
     try {
       const userCredential = await auth().createUserWithEmailAndPassword(email, password);
       const user = userCredential.user;
 
       console.log("User created successfully:", user.uid);
-
+      ToastAndroid.show(
+        "Account created successfully!",
+        ToastAndroid.SHORT
+      );
       // Update user's display name and phone number in Firebase Authentication
       await user.updateProfile({
         displayName: fullName,
@@ -99,8 +152,12 @@ const SignUp = () => {
       console.log("Success", "User signed up successfully!");
       router.push("./Login");
     } catch (error) {
-      console.error("Error signing up:", error);
-      Alert.alert("Error", "The email address in use by another account!");
+      // console.error("Error signing up:", error);
+      ToastAndroid.show(
+        "The email address in use by another account!",
+        ToastAndroid.SHORT
+      );
+      // Alert.alert("Error", "The email address in use by another account!");
     }
   };
 
@@ -433,13 +490,14 @@ const styles = StyleSheet.create({
     marginTop: 25, // Add spacing from other elements
   },
   normalText: {
-    fontSize: 19, // Adjust font size if needed
+    fontSize: 14, // Adjust font size if needed
     textAlign: "center",
   },
   linkText: {
     fontWeight: "bold", // Bold styling for emphasis
-    fontSize: 19, // Match the font size of normalText
+    fontSize: 14, // Match the font size of normalText
     textAlign: "center",
+    top: 5,
   },
   guideTextContainer: {
     marginBottom: 10,

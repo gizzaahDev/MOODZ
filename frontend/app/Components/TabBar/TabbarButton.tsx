@@ -1,6 +1,8 @@
-import { View, Text, Pressable, StyleSheet, LayoutChangeEvent } from 'react-native';
+import { View, Text, Pressable, StyleSheet, LayoutChangeEvent, GestureResponderEvent } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { icon } from '@/app/constants/icon';
+
+type IconKeys = 'index' | 'ongoingTask' | 'progress' | 'userProfile';
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { useTheme } from "../../ThemeContext";
 
@@ -13,8 +15,8 @@ const TabbarButton = ({
   label,
   onLayout,
 }: {
-  onPress: Function,
-  onLongPress: Function,
+  onPress: (event: GestureResponderEvent) => void,
+  onLongPress: (event: GestureResponderEvent) => void,
   isFocused: boolean,
   routeName: string,
   color: string,
@@ -22,7 +24,7 @@ const TabbarButton = ({
   onLayout: (e: LayoutChangeEvent) => void,
 }) => {
   const scale = useSharedValue(0);
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
 
   // Tooltip State
   const [showTooltip, setShowTooltip] = useState(false);
@@ -69,9 +71,8 @@ const TabbarButton = ({
         </View>
       )}
 
-      {/* Icon */}
       <Animated.View style={animatedIconStyle}>
-        {icon[routeName]({
+        {icon[routeName as IconKeys]({
           color: isFocused ? theme.tabActiveIcon : theme.tabInactive,
         })}
       </Animated.View>

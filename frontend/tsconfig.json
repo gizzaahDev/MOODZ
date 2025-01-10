@@ -14,5 +14,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "FontLoader.js"  ]
+, "FontLoader.js", "app/Components/EPDS/SubComponents/ResultsSheet"  ]
 }

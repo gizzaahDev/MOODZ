@@ -20,7 +20,7 @@ import { useTheme } from "../ThemeContext";
 import FontLoader from "../../FontLoader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import Toast from 'react-native-toast-message';
+
 
 GoogleSignin.configure({
   webClientId:
@@ -37,7 +37,7 @@ const Login = () => {
 
 
   const router = useRouter();
-  const { theme } = useTheme();
+  const { theme } = useTheme() as { theme: any };
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", () =>
@@ -86,7 +86,18 @@ const Login = () => {
     return true;
   };
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
+
+
+    const isServerConnected = await checkServerConnection();
+
+    if (!isServerConnected) {
+      ToastAndroid.show(
+        "No internet connection. Please check your connection.",
+        ToastAndroid.SHORT
+      );
+      return; // Exit early if server is not reachable
+    }
     if (!validateInputs()) return;
 
     auth()
@@ -96,11 +107,15 @@ const Login = () => {
 
         // Save login state and user details in AsyncStorage
         await AsyncStorage.setItem("userLoggedIn", "true");
-        await AsyncStorage.setItem("userEmail", user.email);
+        await AsyncStorage.setItem("userEmail", user.email || "");
         await AsyncStorage.setItem("userName", user.displayName || "User");
         await AsyncStorage.setItem("userPhotoURL", user.photoURL || "");
 
         console.log("Signed In");
+        ToastAndroid.show(
+          "Login Successful!",
+          ToastAndroid.SHORT // or ToastAndroid.LONG for a longer display
+        );
         router.push("/(tabs)");
       })
       .catch((err) => {
@@ -122,14 +137,49 @@ const Login = () => {
     router.replace("./ForgotPassword");
   };
 
+
+  const checkServerConnection = async () => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 1500);  // Set a timeout for the request
+
+    try {
+      const response = await fetch('https://moodz.fly.dev/', {
+        method: 'GET',  // Use GET method to check server
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+
+      if (response.ok) {
+        return true;  // Return true if the server is reachable
+      } else {
+        return false; // Return false if the server is unreachable
+      }
+    } catch (error) {
+      clearTimeout(timeout);
+      return false;  // Return false if an error or timeout occurs
+    }
+  };
+
+
   const onGoogleButtonPress = async () => {
+
+    const isServerConnected = await checkServerConnection();
+
+    if (!isServerConnected) {
+      ToastAndroid.show(
+        "No internet connection. Please check your connection.",
+        ToastAndroid.SHORT
+      );
+      return; // Exit early if server is not reachable
+    }
+
     try {
       await GoogleSignin.signOut();
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       const googleSignInResult = await GoogleSignin.signIn();
 
       const googleCredential = auth.GoogleAuthProvider.credential(
-        googleSignInResult.data?.idToken
+        googleSignInResult.data?.idToken ?? null
       );
 
       const userCredential = await auth().signInWithCredential(googleCredential);
@@ -137,7 +187,7 @@ const Login = () => {
 
       // Save login details to AsyncStorage
       await AsyncStorage.setItem("userLoggedIn", "true");
-      await AsyncStorage.setItem("userEmail", user.email);
+      await AsyncStorage.setItem("userEmail", user.email || "");
       await AsyncStorage.setItem("userName", user.displayName || "User");
       await AsyncStorage.setItem("userPhotoURL", user.photoURL || ""); 
 
@@ -377,7 +427,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 60,
   },
   startButtonText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     fontFamily: "poppins",
     textAlign: "center",
@@ -414,7 +464,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   googleStartButtonText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     fontFamily: "poppins",
     textAlign: "center",
@@ -427,13 +477,14 @@ const styles = StyleSheet.create({
     marginTop: 25, // Add spacing from other elements
   },
   normalText: {
-    fontSize: 19, // Adjust font size if needed
+    fontSize: 14, // Adjust font size if needed
     textAlign: "center",
   },
   linkText: {
     fontWeight: "bold", // Bold styling for emphasis
-    fontSize: 19, // Match the font size of normalText
+    fontSize: 14, // Match the font size of normalText
     textAlign: "center",
+    top: 5,
   },
 });
 
