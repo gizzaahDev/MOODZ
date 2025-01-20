@@ -255,10 +255,10 @@ const Questionnaire = () => {
       router.replace("/(tabs)");
     }
   };
-  const handleHomePress = () => {
+  const handleAboutPress = () => {
 
-    router.replace("/(tabs)");
-    // Navigate to Home
+    router.replace("/Components/GDS/About");
+    // Navigate to About
   };
 
   const handlePreviousModel = () => {
@@ -459,8 +459,8 @@ const Questionnaire = () => {
 
               </View>
               <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={handleHomePress}>
-                  <Text style={styles.buttonText}>Home</Text>
+                <TouchableOpacity style={styles.button} onPress={handleAboutPress}>
+                  <Text style={styles.buttonText}>About</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
