@@ -6,7 +6,7 @@ import React from "react";
 const Questionnaire = () => {
     return (
         <View>
-            <Text>Questionnaire</Text>
+            <Text>Nethma's Questionnaire</Text>
         </View>
     );
 };
