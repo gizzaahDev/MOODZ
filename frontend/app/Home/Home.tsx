@@ -42,7 +42,7 @@ export default function Home() {
       {/* Horizontal Buttons with labels outside */}
       <View style={styles.buttonContainer}>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)')}>
+          <TouchableOpacity style={styles.button} onPress={() => router.push('/Components/Child/Questionnaire')}>
           <FontAwesome5 name="baby" size={35} color="white" />
           </TouchableOpacity>
           <Text style={styles.buttonText}>Child{'\n'}depression</Text>
