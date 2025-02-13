@@ -40,5 +40,5 @@ export default {
 
   bgColorPopup:'rgba(15, 15, 15, 0.95)',
   warningText:'#eb0000',
-
+  
 };

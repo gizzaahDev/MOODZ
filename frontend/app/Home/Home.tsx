@@ -5,12 +5,66 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useRouter } from 'expo-router';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
 
 
 export default function Home() {
   const router = useRouter();
+
+
+  const [userId, setUserId] = useState<string | null>(null);
+
+  // Fetch current user ID on component mount
+
+  useEffect(() => {
+    const fetchUser = () => {
+      const user = auth().currentUser;
+      if (user) {
+        setUserId(user.uid);
+      } else {
+        Alert.alert('Error', 'User not authenticated');
+      }
+    };
+    fetchUser();
+  }, []);
+  
+  const handlePress = async (depressionType: 'Child Depression' | 'Marital Depression' | 'Postpartum Depression' | 'Elder Depression') => {
+    if (!userId) {
+      Alert.alert("Error", "User not authenticated");
+      return;
+    }
+
+    // Map depressionType to corresponding values
+    const depressionValues = {
+      'Child Depression': 0,
+      'Marital Depression': 1,
+      'Postpartum Depression': 2,
+      'Elder Depression': 3,
+    };
+
+    const depressionValue = depressionValues[depressionType];
+
+    try {
+      // Save depression type to Firestore
+      await firestore()
+        .collection('DepressionType')
+        .doc(userId) // Use userId as the document ID
+        .set(
+          { depressionType: depressionValue },
+          { merge: true } // Merge with existing data
+        );
+      console.log(`${depressionType} saved successfully`);
+    } catch (error) {
+      console.error("Error saving depression type:", error);
+      Alert.alert("Error", "Failed to save depression type. Please try again.");
+    }
+  };
+
+
+
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("userLoggedIn"); // Clear login status
@@ -22,6 +76,10 @@ export default function Home() {
       Alert.alert("Error", "Failed to log out. Please try again.");
     }
   };
+
+
+  
+
   return (
     <View style={styles.container}>
       {/* Header Section */}
@@ -41,34 +99,58 @@ export default function Home() {
 
       {/* Horizontal Buttons with labels outside */}
       <View style={styles.buttonContainer}>
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)')}>
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            handlePress('Child Depression');
+            router.push('/(tabs)');
+          }}
+        >
           <FontAwesome5 name="baby" size={35} color="white" />
-          </TouchableOpacity>
-          <Text style={styles.buttonText}>Child{'\n'}depression</Text>
-        </View>
-
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/Components/DAS/Questionnaire')}>
-          <Entypo name="slideshare" size={35} color="white" />
-          </TouchableOpacity>
-          <Text style={styles.buttonText}>Marital{'\n'}Depression</Text>
-        </View>
-
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/Components/EPDS/Questionnaire')} >
-          <MaterialCommunityIcons name="mother-nurse" size={35} color="white" />
-          </TouchableOpacity>
-          <Text style={styles.buttonText}>Postpartum{'\n'}depression</Text>
-        </View>
-
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/Components/GDS/Questionnaire')}>
-          <MaterialIcons name="elderly" size={35} color="white" />
-          </TouchableOpacity>
-          <Text style={styles.buttonText} >Elder{'\n'}depression</Text>
-        </View>
+        </TouchableOpacity>
+        <Text style={styles.buttonText}>Child{'\n'}depression</Text>
       </View>
+
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            handlePress('Marital Depression');
+            router.push('/Components/DAS/Questionnaire');
+          }}
+        >
+          <Entypo name="slideshare" size={35} color="white" />
+        </TouchableOpacity>
+        <Text style={styles.buttonText}>Marital{'\n'}Depression</Text>
+      </View>
+
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            handlePress('Postpartum Depression');
+            router.push('/Components/EPDS/Questionnaire');
+          }}
+        >
+          <MaterialCommunityIcons name="mother-nurse" size={35} color="white" />
+        </TouchableOpacity>
+        <Text style={styles.buttonText}>Postpartum{'\n'}depression</Text>
+      </View>
+
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            handlePress('Elder Depression');
+            router.push('/Components/GDS/Questionnaire');
+          }}
+        >
+          <MaterialIcons name="elderly" size={35} color="white" />
+        </TouchableOpacity>
+        <Text style={styles.buttonText}>Elder{'\n'}depression</Text>
+      </View>
+    </View>
 
       {/* ScrollView with paragraphs */}
       <ScrollView style={styles.scrollView}>

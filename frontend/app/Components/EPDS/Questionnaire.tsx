@@ -247,21 +247,22 @@ const Questionnaire = () => {
       // Proceed with submission if server is reachable
       const response = await axios.post(
         'https://moodz.fly.dev/postpartum/predict',
+        // 'http://192.168.8.188:8000/postpartum/predict', 
         {
-          q1: answers[0],
-          q2: answers[1],
-          q3: answers[2],
-          q4: answers[3],
-          q5: answers[4],
-          q6: answers[5],
-          q7: answers[6],
-          q8: answers[7],
-          q9: answers[8],
-          q10: answers[9],
+          Q1: answers[0],
+          Q2: answers[1],
+          Q3: answers[2],
+          Q4: answers[3],
+          Q5: answers[4],
+          Q6: answers[5],
+          Q7: answers[6],
+          Q8: answers[7],
+          Q9: answers[8],
+          Q10: answers[9],
         }
       );
 
-      const prediction = response.data.prediction_text;
+      const prediction = response.data.depression_level; // Get the predicted depression level
 
       if (userId) {
         const payload = {
@@ -298,7 +299,8 @@ const Questionnaire = () => {
         );
       }, 3000); // Wait for 3 seconds before hiding the loading animation
     }
-  };
+};
+
 
 
 
@@ -320,12 +322,14 @@ const Questionnaire = () => {
         .catch(err => console.error('Failed to open URL:', err));
     } else {
 
-      router.replace("/(tabs)");
+      router.replace("/Components/EPDS/SubComponents/EPDSWelcome");
     }
   };
+
+  
   const handleHomePress = () => {
 
-    router.replace("/(tabs)");
+    router.replace("/Components/EPDS/SubComponents/EPDSWelcome");
     // Navigate to Home
   };
 
@@ -825,7 +829,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     elevation: 15,
-
+    
     height: 650,
     width: 1200, // Height of the curve
     backgroundColor: '#fff', // Match the background color of the container

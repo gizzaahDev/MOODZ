@@ -16,6 +16,7 @@ import auth from '@react-native-firebase/auth';
 import { useTheme } from "../ThemeContext";
 import LottieView from 'lottie-react-native';
 import Article1 from '../Articles/EPDSArticle1';
+import firestore from '@react-native-firebase/firestore';
 
 
 export default function Home() {
@@ -27,9 +28,32 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const handlePress = (category: string, route: string) => {
-    setSelectedCategory(category); 
-    setLoading(true); 
+  const depressionCollection = firestore().collection('DepressionType');
+
+  const handlePress = async (category: string, route: string) => {
+    setSelectedCategory(category);
+    setLoading(true);
+
+    // Get the current user ID
+    const user = auth().currentUser;
+
+    if (user) {
+      const userId = user.uid;
+
+      // Save the selected category to Firestore
+      try {
+        await depressionCollection.doc(userId).set(
+          {
+            selectedCategory: category,
+            depressionTypeId: getCategoryId(category), // Save the depression type id
+          },
+          { merge: true } // Merge to update the document without overwriting it
+        );
+        console.log('Depression type saved to Firestore');
+      } catch (error) {
+        console.error('Error saving depression type:', error);
+      }
+    }
     
     
     setTimeout(() => {
@@ -38,7 +62,22 @@ export default function Home() {
     }, 1500); 
   };
 
-  
+  const getCategoryId = (category: string) => {
+    switch (category) {
+      case 'child':
+        return 0;
+      case 'marital':
+        return 1;
+      case 'postpartum':
+        return 2;
+      case 'adult':
+        return 3;
+      default:
+        return -1; // If category is unknown
+    }
+  };
+
+
   const handleBackPress = () => {
     if (loading) {
       
@@ -129,6 +168,7 @@ export default function Home() {
       </TouchableOpacity>
 
       {/* Marital Depression */}
+      
       <TouchableOpacity
         style={[styles.categoryBox, { backgroundColor: '#FAD2D2' }]}
         onPress={() => handlePress('marital', '/Components/DAS/Questionnaire')}
@@ -149,6 +189,10 @@ export default function Home() {
       </TouchableOpacity>
 
       {/* Postpartum Depression */}
+      {/* <TouchableOpacity
+        style={[styles.categoryBox, { backgroundColor: '#D2FAD2' }]}
+        onPress={() => handlePress('postpartum', '/Components/EPDS/SubComponents/EPDSWelcome')}
+      > */}
       <TouchableOpacity
         style={[styles.categoryBox, { backgroundColor: '#D2FAD2' }]}
         onPress={() => handlePress('postpartum', '/Components/EPDS/Questionnaire')}
