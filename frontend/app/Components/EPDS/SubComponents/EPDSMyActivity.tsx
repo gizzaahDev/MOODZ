@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert, ScrollView, Animated, ToastAndroid } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert, ScrollView, Animated, ToastAndroid, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -16,6 +16,48 @@ export default function EPDSMyActivity() {
     const [selectedMood, setSelectedMood] = useState<{ emoji: string; label: string } | null>(null);
     const [moodSaved, setMoodSaved] = useState(false);
     const [todayMoodSaved, setTodayMoodSaved] = useState(false);
+    const [hearts, setHearts] = useState(0);
+    const [leaves, setLeaves] = useState(0);
+    const [animatedHearts, setAnimatedHearts] = useState<Animated.Value[]>([]); // For heart animation
+    const heartAnimations = useRef<Animated.Value[]>([]).current; // Store animations
+    const [heartScale] = useState(new Animated.Value(1));
+    const [leafScale] = useState(new Animated.Value(1));
+    const [activity, setActivity] = useState(null);
+    const [activities, setActivities] = useState([]);
+
+
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const userId = auth().currentUser?.uid;
+            if (!userId) return;
+
+            const today = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+            const userRef = firestore()
+                .collection('UsersEpds')
+                .doc(userId)
+                .collection('CompletedActivities')
+                .doc(today);
+
+            try {
+                const userDoc = await userRef.get();
+                const data = userDoc.data();
+                if (data) {
+                    setHearts(data.hearts || 0);
+                    setLeaves(data.leaves || 0);
+                }
+
+                if (userDoc.exists) {
+                    const data = userDoc.data();
+                    setActivity(data?.activityType ?? null);
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     // Function to fetch the activities from Firestore
     const fetchActivities = async () => {
@@ -25,7 +67,7 @@ export default function EPDSMyActivity() {
             try {
                 // Fetch activities from Firestore
                 const activitiesSnapshot = await firestore()
-                    .collection('DepressionActivities')
+                    .collection('EPDSDepressionActivities')
                     .doc(userId)
                     .get();
 
@@ -66,8 +108,22 @@ export default function EPDSMyActivity() {
         fetchActivities();
     }, []);
 
+
+    const progressWidth = useRef(new Animated.Value(hearts)).current;
+
+    useEffect(() => {
+        Animated.timing(progressWidth, {
+            toValue: hearts,
+            duration: 500,
+            useNativeDriver: false,
+        }).start();
+    }, [hearts]);
+
+
+
+
     const renderActivity = ({ item }: { item: { id: string; title: string; description: string; } }) => (
-        <TouchableOpacity onPress={() => handleNavigate(item.id)}>
+        <TouchableOpacity onPress={() => { handleNavigate(item.id); }}>
             <View style={styles.activityCard}>
                 <View style={styles.activityDetails}>
                     <Text style={styles.activityTitle}>{item.title}</Text>
@@ -86,6 +142,8 @@ export default function EPDSMyActivity() {
         [{ nativeEvent: { contentOffset: { y: scrollY } } }],
         { useNativeDriver: false }
     );
+
+
 
     useEffect(() => {
         const listenerId = scrollY.addListener(({ value }) => {
@@ -112,18 +170,16 @@ export default function EPDSMyActivity() {
         };
     }, [scrollY, showButton]);
 
-
-
     const router = useRouter();
 
     const handleNavigate = (id: string) => {
         // Map activity id to the correct page
         switch (id) {
             case '1':
-                router.replace('/Components/EPDS/SubComponents/ActivityPages/Id01');
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity01/Id01');
                 break;
             case '2':
-                router.replace('/Components/EPDS/SubComponents/ActivityPages/Id02');
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity02/Id02');
                 break;
             // Add more cases for other activity pages
             default:
@@ -184,14 +240,17 @@ export default function EPDSMyActivity() {
             const uid = user.uid;
             const today = new Date().toISOString().split('T')[0];
 
+            // Save the mood in a subcollection for the user
             await firestore()
-                .collection('MoodToday')
+                .collection('UsersEpds')
                 .doc(uid)
+                .collection('Moods') // Subcollection for moods
+                .doc(today)
                 .set({
                     mood: mood.label,
                     emoji: mood.emoji,
                     timestamp: firestore.FieldValue.serverTimestamp(),
-                    date: today,
+                    date: today
                 });
 
             await AsyncStorage.setItem('moodSavedDate', today);
@@ -204,7 +263,6 @@ export default function EPDSMyActivity() {
         }
     };
 
-
     return (
         <View style={styles.container}>
             {/* Date and Progress Bar */}
@@ -212,14 +270,71 @@ export default function EPDSMyActivity() {
                 <View style={styles.dateBox}>
                     <Text style={styles.dateText}>{currentDate}</Text>
                 </View>
-                <View style={styles.progressContainer}>
-                    <FontAwesome name="leaf" size={18} color="#008080" />
-                    <Text style={styles.progressText}> 18 </Text>
+                <View style={styles.container}>
+                    <View style={styles.progressContainer}>
+
+                        <Text style={styles.progressText}>
+                            <Animated.View style={{ transform: [{ scale: leafScale }] }}>
+                                <FontAwesome name="leaf" size={18} color="#008080" />
+                            </Animated.View>
+                            {' '}{leaves}
+                        </Text>
+                        <View style={styles.progressBar}>
+                            <Animated.View style={[
+                                styles.progressFill,
+                                { width: progressWidth.interpolate({ inputRange: [0, 100], outputRange: ['0%', '100%'] }) }
+                            ]} />
+                        </View>
+                        <Text style={styles.progressText}>
+                            <Animated.View style={{ transform: [{ scale: heartScale }] }}>
+                                <FontAwesome name="heart" size={16} color="#ff1493" />
+                            </Animated.View>
+                            {' '}{hearts}%
+                        </Text>
+                    </View>
                 </View>
             </View>
 
-             {/* Mood Selection */}
-             {!moodSaved && (
+            {/* Animated Hearts */}
+            {animatedHearts.map((anim, index) => (
+                <Animated.View
+                    key={index}
+                    style={[
+                        styles.animatedHeart,
+                        {
+                            transform: [
+                                {
+                                    translateY: anim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, -100], // Move hearts upward
+                                    }),
+                                },
+                                {
+                                    translateX: anim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, -Dimensions.get('window').width / 2], // Move hearts to the left
+                                    }),
+                                },
+                                {
+                                    scale: anim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [1, 0.5], // Shrink hearts
+                                    }),
+                                },
+                            ],
+                            opacity: anim.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [1, 0], // Fade out hearts
+                            }),
+                        },
+                    ]}
+                >
+                    <FontAwesome name="heart" size={16} color="#ff1493" />
+                </Animated.View>
+            ))}
+
+            {/* Mood Selection */}
+            {!moodSaved && (
                 <View style={styles.moodSection}>
                     <Text style={styles.moodTitle}>My Mood Today</Text>
                     <View style={styles.moodIcons}>
@@ -242,9 +357,7 @@ export default function EPDSMyActivity() {
                     </View>
                 </View>
             )}
-            {/* {moodSaved && (
-        <Text style={styles.savedMessage}>Your mood has been saved for today.</Text>
-      )} */}
+
             <FlatList
                 data={[]}
                 ListHeaderComponent={
@@ -253,7 +366,7 @@ export default function EPDSMyActivity() {
                         <View style={styles.sectionHeader}>
                             <Text style={styles.sectionTitle}>My Tracking Habits</Text>
                             <TouchableOpacity>
-                                <Text style={styles.addNew}>ADD NEW ➜</Text>
+                                <Text style={styles.addNew} onPress={() => router.push("/Components/EPDS/SubComponents/ChooseActivities")}>Edit Activity ➜</Text>
                             </TouchableOpacity>
                         </View>
 
@@ -270,14 +383,24 @@ export default function EPDSMyActivity() {
                             </View>
                         ))}
 
-                        {/* Done for Today */}
-                        <Text style={styles.sectionTitle}>Done For Today</Text>
-                        <View style={styles.completedCard}>
-                            <View style={styles.activityDetails}>
-                                <Text style={styles.activityTitle}>Tit</Text>
-                                <Text style={styles.activityDescription}>desc</Text>
-                            </View>
-                            <FontAwesome name="check-circle" size={20} color="green" />
+                        <View>
+                            {/* Done for Today */}
+                            <Text style={styles.sectionTitle}>Done For Today</Text>
+                            {activity ? (
+                                <View style={styles.categorySection}>
+                                    <Text style={styles.categoryTitle}>{activity.category}</Text>
+
+                                    <View style={styles.completedCard}>
+                                        <View style={styles.activityDetails}>
+                                            <Text style={styles.activityTitle}>{activity.title}</Text>
+                                            <Text style={styles.activityDescription}>{activity.description}</Text>
+                                        </View>
+                                        <FontAwesome name="check-circle" size={20} color="green" />
+                                    </View>
+                                </View>
+                            ) : (
+                                <Text style={styles.noActivityText}>No completed activities today.</Text>
+                            )}
                         </View>
                     </>
                 }
@@ -287,6 +410,7 @@ export default function EPDSMyActivity() {
                 renderItem={null}
                 keyExtractor={() => 'dummy'}
             />
+
             {/* Home Navigation Button */}
             {showButton && (
                 <TouchableOpacity style={styles.homeButton} onPress={() => router.push("/(tabs)")} >
@@ -305,7 +429,6 @@ const styles = StyleSheet.create({
     },
     containerA: {
         flexGrow: 1,
-
         backgroundColor: '#f5f5f5',
     },
     progressSection: {
@@ -325,6 +448,18 @@ const styles = StyleSheet.create({
     dateText: {
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    progressBar: {
+        flex: 1,
+        height: 10,
+        backgroundColor: '#e0e0e0',
+        borderRadius: 5,
+        marginHorizontal: 10,
+    },
+    progressFill: {
+        height: '100%',
+        backgroundColor: '#ff1493',
+        borderRadius: 5,
     },
     progressContainer: {
         flexDirection: 'row',
@@ -381,7 +516,6 @@ const styles = StyleSheet.create({
     },
     activityDetails: {
         flex: 1,
-
     },
     activityTitle: {
         fontSize: 16,
@@ -390,10 +524,6 @@ const styles = StyleSheet.create({
     activityDescription: {
         fontSize: 12,
         color: '#666',
-    },
-    activityCategory: {
-        fontSize: 12,
-        color: '#777',
     },
     activityPoints: {
         flexDirection: 'row',
@@ -407,7 +537,6 @@ const styles = StyleSheet.create({
     },
     categorySection: {
         marginBottom: 20,
-
     },
     completedCard: {
         backgroundColor: '#dff0d8',
@@ -431,5 +560,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 20,
         alignSelf: 'center',
+    },
+    animatedHeart: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
     },
 });

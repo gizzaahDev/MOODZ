@@ -122,7 +122,7 @@ export default function ChooseActivities() {
     
             // Save all selected activities (with details) to Firestore
             await firestore()
-                .collection('DepressionActivities')
+                .collection('EPDSDepressionActivities')
                 .doc(user.uid)
                 .set(activitiesDetails);
         }

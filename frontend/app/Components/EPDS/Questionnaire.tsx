@@ -222,7 +222,7 @@ const Questionnaire = () => {
   const handleSubmit = async () => {
     // Immediately check connectivity to the backend server
     const isServerConnected = await checkServerConnection();
-
+  
     if (!isServerConnected) {
       ToastAndroid.show(
         "No internet connection. Please check your connection.",
@@ -230,7 +230,7 @@ const Questionnaire = () => {
       );
       return; // Exit early if server is not reachable
     }
-
+  
     // Validate answers before submitting
     if (answers.includes(null)) {
       ToastAndroid.show(
@@ -239,10 +239,10 @@ const Questionnaire = () => {
       );
       return; // Exit early if there are unanswered questions
     }
-
+  
     // Show loading animation
     setIsLoading(true);
-
+  
     try {
       // Proceed with submission if server is reachable
       const response = await axios.post(
@@ -261,35 +261,37 @@ const Questionnaire = () => {
           Q10: answers[9],
         }
       );
-
+  
       const prediction = response.data.depression_level; // Get the predicted depression level
-
+  
       if (userId) {
         const payload = {
           answers,
           prediction,
+          category: 'postpartum', // Add the category field
           timestamp: firestore.FieldValue.serverTimestamp(),
         };
-
+  
+        // Save the questionnaire data to Firestore
         await firestore()
-          .collection('Users')
+          .collection('UsersEpds')
           .doc(userId)
           .collection('Questionnaires')
           .add(payload);
       } else {
         throw new Error('User ID is null');
       }
-
+  
       // Hide loading animation and show success message after submission
       setTimeout(() => {
         setIsLoading(false); // Stop loading animation
         setPrediction(prediction);
         setShowModal(true);
       }, 3500); // Wait for 3 seconds before hiding the loading animation
-
+  
     } catch (error) {
       console.error('Error submitting data:', error);
-
+  
       // Handle error by stopping the loading animation and showing the error message
       setTimeout(() => {
         setIsLoading(false); // Stop loading animation in case of error
@@ -299,7 +301,7 @@ const Questionnaire = () => {
         );
       }, 3000); // Wait for 3 seconds before hiding the loading animation
     }
-};
+  };
 
 
 
