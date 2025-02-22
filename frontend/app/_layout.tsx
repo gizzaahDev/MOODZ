@@ -22,26 +22,27 @@ export default function RootLayout() {
   // Handle hardware back button
   useEffect(() => {
     const handleBackPress = () => {
-      if (pathname === '/Auth/SignUp') { // If currently on the Signup page
-        router.replace('/Auth/Login'); // Replace with Login page
-        return true; // Prevent default behavior
-      } else if (router.canGoBack()) { // For other pages, go back normally
-        router.back(); // Navigate back
+      if (pathname.startsWith('/Components/EPDS/SubComponents/ActivityPages/')) {
+        router.replace('/Components/EPDS/SubComponents/EPDSMyActivity'); // Send back to EPDSMyActivity
         return true;
-      } else {
-        BackHandler.exitApp(); // Exit app if no previous page
+      } 
+      else if (pathname === '/Auth/SignUp') {
+        router.replace('/Auth/Login'); 
+        return true;
+      } 
+      else if (router.canGoBack()) {
+        router.back();
+        return true;
+      } 
+      else {
+        BackHandler.exitApp();
         return true;
       }
     };
-
-    // Add back button listener
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      handleBackPress
-    );
-
-    return () => backHandler.remove(); // Cleanup listener
-  }, [pathname, router]); // Depend on pathname and router changes
+  
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () => backHandler.remove();
+  }, [pathname, router]);
 
   return (
     <ThemeProvider>
@@ -49,16 +50,22 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
-          gestureEnabled: true, // Enable swipe gestures for smooth transitions
-          animation: 'slide_from_right', // Default animation for forward navigation
+          gestureEnabled: true, // Enable swipe gestures
+          animation: 'flip', // Default forward animation
+          animationDuration: 300, // Smooth transition speed
         }}
       >
         {/* Screens */}
         <Stack.Screen name="Gettingstart/GettingstartScreen" options={{ title: 'Gettingstart' }} />
-        <Stack.Screen name="Home/Home" options={{ title: 'Home' }} />
-        <Stack.Screen name="Components/EPDS/Questionnaire" options={{ title: 'EPDSQuestionnaire' }}/>
+        <Stack.Screen name="Home/Home" options={{ title: 'Home', }} />
+        <Stack.Screen name="Components/EPDS/Questionnaire" options={{ title: 'EPDSQuestionnaire', }}/>
         <Stack.Screen name="Components/GDS/Questionnaire" options={{ title: 'GDSQuestionnaire' }}/>
         <Stack.Screen name="Components/DAS/Questionnaire" options={{ title: 'DASQuestionnaire' }}/>
+
+        <Stack.Screen name="Components/EPDS/SubComponents/EPDSWelcome" options={{ title: 'EPDSWelcome' }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ChooseActivities" options={{ title: 'ChooseActivities' }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/EPDSMyActivity" options={{ title: 'EPDSMyActivity' }}/>
+
         <Stack.Screen name="Components/GDS/About" options={{ title: 'GDSAbout' }}/>
         <Stack.Screen name="Components/GDS/GDSHome" options={{ title: 'GDSHome' }}/>
         <Stack.Screen name="Components/GDS/GDSDay1" options={{ title: 'GDSDay1' }}/>
@@ -77,6 +84,14 @@ export default function RootLayout() {
       
 
 
+
+        {/* EPDS Activities */}
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity01/Id01" options={{title: 'Id01', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity01/Meditaion" options={{title: 'Meditaion', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity02/Id02" options={{title: 'Id02',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity02/BreathingEx" options={{title: 'BreathingEx', }}/>
+        
+      </Stack>
     </ThemeProvider>
   );
 }
