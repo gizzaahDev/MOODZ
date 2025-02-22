@@ -80,11 +80,11 @@ export default function RootLayout() {
         <Stack.Screen  name="OnboardingScreen/Onboarding" options={{ title: 'OnboardingPage' }} />
         <Stack.Screen name="(tabs)"  options={{ headerShown: false }} />
         {/* <Stack.Screen name="Components/EPDS/SubComponents/ResultsSheet" options={{ title: 'ResultsSheet' }}/> */}
-      </Stack>
+   
       
 
 
-
+        
         {/* EPDS Activities */}
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity01/Id01" options={{title: 'Id01', }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity01/Meditaion" options={{title: 'Meditaion', }}/>
@@ -92,6 +92,7 @@ export default function RootLayout() {
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity02/BreathingEx" options={{title: 'BreathingEx', }}/>
         
       </Stack>
+
     </ThemeProvider>
   );
 }
