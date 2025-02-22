@@ -193,7 +193,7 @@ export default GDSHome;
 
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
@@ -210,6 +210,12 @@ const GDSHome = ({ navigation }: { navigation: any }) => {
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleAboutPress = () => {
+
+    router.replace("/Components/GDS/GDSDay1");
+    // Navigate to About
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -240,54 +246,75 @@ const GDSHome = ({ navigation }: { navigation: any }) => {
         </View>
 
         <ScrollView style={styles.scrollView1}>
+
           <View style={styles.buttonContainerraw}>
+            <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'}  1</Text>
             </View>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'}  2</Text>
             </View>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.buttonContainerraw}>
+          <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'}  3</Text>
             </View>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'}  4</Text>
             </View>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.buttonContainerraw}>
+          <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'}  5</Text>
             </View>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'}  6</Text>
             </View>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.buttonContainerraw}>
+          <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'}  7</Text>
             </View>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'}  8</Text>
             </View>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.buttonContainerraw}>
+          <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'}  9</Text>
             </View>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={handleAboutPress}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Day{'\n'} 10</Text>
             </View>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
@@ -315,7 +342,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden', // Ensures rounded corners if used
     borderRadius: 10,
     borderColor: "#016A70",
-    borderWidth: 3,
+    borderWidth: 0.9,
   },
   startImage: {
     width: '100%',
@@ -339,7 +366,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 160,
     height: 100,
-    marginLeft: '5%',
+    marginLeft: '8%',
     marginRight: '5%',
     alignItems: 'center', // Center the button and text
     backgroundColor: '#016A70',

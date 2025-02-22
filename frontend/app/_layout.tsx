@@ -61,6 +61,10 @@ export default function RootLayout() {
         <Stack.Screen name="Components/DAS/Questionnaire" options={{ title: 'DASQuestionnaire' }}/>
         <Stack.Screen name="Components/GDS/About" options={{ title: 'GDSAbout' }}/>
         <Stack.Screen name="Components/GDS/GDSHome" options={{ title: 'GDSHome' }}/>
+        <Stack.Screen name="Components/GDS/GDSDay1" options={{ title: 'GDSDay1' }}/>
+        <Stack.Screen name="Components/GDS/Music1" options={{ title: 'Music1' }}/>
+        <Stack.Screen name="Components/GDS/PositiveT" options={{ title: 'PositiveT' }}/>
+
 
         
         <Stack.Screen name="Auth/Login" options={{ title: 'LoginPage',animation: 'slide_from_left', }}/>
