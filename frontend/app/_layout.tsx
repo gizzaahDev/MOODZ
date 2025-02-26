@@ -61,14 +61,29 @@ export default function RootLayout() {
         <Stack.Screen name="Components/EPDS/Questionnaire" options={{ title: 'EPDSQuestionnaire', }}/>
         <Stack.Screen name="Components/GDS/Questionnaire" options={{ title: 'GDSQuestionnaire' }}/>
         <Stack.Screen name="Components/DAS/Questionnaire" options={{ title: 'DASQuestionnaire' }}/>
-        <Stack.Screen name="Auth/Login" options={{ title: 'LoginPage', }}/>
-        <Stack.Screen name="Auth/SignUp" options={{ title: 'SignUpPage', }} />
-        <Stack.Screen name="Auth/ForgotPassword" options={{ title: 'ForgotPasswordPage' }}/>
-        <Stack.Screen name="OnboardingScreen/Onboarding" options={{ title: 'OnboardingPage' }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
         <Stack.Screen name="Components/EPDS/SubComponents/EPDSWelcome" options={{ title: 'EPDSWelcome' }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ChooseActivities" options={{ title: 'ChooseActivities' }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/EPDSMyActivity" options={{ title: 'EPDSMyActivity' }}/>
+
+        <Stack.Screen name="Components/GDS/About" options={{ title: 'GDSAbout' }}/>
+        <Stack.Screen name="Components/GDS/GDSHome" options={{ title: 'GDSHome' }}/>
+        <Stack.Screen name="Components/GDS/GDSDay1" options={{ title: 'GDSDay1' }}/>
+        <Stack.Screen name="Components/GDS/Music1" options={{ title: 'Music1' }}/>
+        <Stack.Screen name="Components/GDS/PositiveT" options={{ title: 'PositiveT' }}/>
+
+
+        
+        <Stack.Screen name="Auth/Login" options={{ title: 'LoginPage',animation: 'slide_from_left', }}/>
+        <Stack.Screen name="Auth/SignUp" options={{  title: 'SignUpPage',  animation: 'slide_from_right', }} />
+        <Stack.Screen  name="Auth/ForgotPassword" options={{ title: 'ForgotPasswordPage' }}/>
+        <Stack.Screen  name="OnboardingScreen/Onboarding" options={{ title: 'OnboardingPage' }} />
+        <Stack.Screen name="(tabs)"  options={{ headerShown: false }} />
+        {/* <Stack.Screen name="Components/EPDS/SubComponents/ResultsSheet" options={{ title: 'ResultsSheet' }}/> */}
+      </Stack>
+      
+
+
 
         {/* EPDS Activities */}
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity01/Id01" options={{title: 'Id01', }}/>
