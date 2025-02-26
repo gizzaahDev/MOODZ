@@ -80,7 +80,7 @@ export default function RootLayout() {
         <Stack.Screen  name="OnboardingScreen/Onboarding" options={{ title: 'OnboardingPage' }} />
         <Stack.Screen name="(tabs)"  options={{ headerShown: false }} />
         {/* <Stack.Screen name="Components/EPDS/SubComponents/ResultsSheet" options={{ title: 'ResultsSheet' }}/> */}
-      </Stack>
+      
       
 
 
@@ -90,6 +90,20 @@ export default function RootLayout() {
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity01/Meditaion" options={{title: 'Meditaion', }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity02/Id02" options={{title: 'Id02',}}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity02/BreathingEx" options={{title: 'BreathingEx', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity03/Id03" options={{title: 'Id03',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity03/ProgressiveMuscleEX" options={{title: 'ProgressiveMuscleEX', }}/>
+
+
+
+
+
+
+
+
+
+
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity11/Id11" options={{title: 'Id11',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity11/PositiveThought" options={{title: 'PositiveThought', }}/>
         
       </Stack>
     </ThemeProvider>
