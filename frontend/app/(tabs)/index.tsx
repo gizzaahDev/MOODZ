@@ -65,19 +65,29 @@ export default function Home() {
   // Function to check if the user has submitted the questionnaire at least once
   const hasUserSubmittedQuestionnaire = async (userId: string, category: string) => {
     try {
-      const querySnapshot = await firestore()
+      const epdsQuery = firestore()
         .collection('UsersEpds')
         .doc(userId)
         .collection('Questionnaires')
         .where('category', '==', category)
         .get();
-
-      return !querySnapshot.empty; // Returns true if at least one document exists
+  
+      const gdsQuery = firestore()
+        .collection('UsersGDS')
+        .doc(userId)
+        .collection('Questionnaires')
+        .where('category', '==', category)
+        .get();
+  
+      const [epdsSnapshot, gdsSnapshot] = await Promise.all([epdsQuery, gdsQuery]);
+  
+      return !epdsSnapshot.empty || !gdsSnapshot.empty; // Returns true if at least one document exists in either collection
     } catch (error) {
       console.error('Error checking questionnaire submission:', error);
       return false;
     }
   };
+  
 
   const handlePress = async (category: string) => {
     setSelectedCategory(category);
@@ -217,7 +227,7 @@ export default function Home() {
     >
       {loading && selectedCategory === 'child' ? (
         <LottieView
-          source={require('../../assets/lottie/LoadingElepGre.json')}
+          source={require('../../assets/lottie/LoadingAAA.json')}
           autoPlay
           loop
           style={styles.lottie}
@@ -237,7 +247,7 @@ export default function Home() {
     >
       {loading && selectedCategory === 'marital' ? (
         <LottieView
-          source={require('../../assets/lottie/LoadingElepGre.json')}
+          source={require('../../assets/lottie/LoadingAAA.json')}
           autoPlay
           loop
           style={styles.lottie}
@@ -257,7 +267,7 @@ export default function Home() {
     >
       {loading && selectedCategory === 'postpartum' ? (
         <LottieView
-          source={require('../../assets/lottie/LoadingElepGre.json')}
+          source={require('../../assets/lottie/LoadingAAA.json')}
           autoPlay
           loop
           style={styles.lottie}
@@ -277,7 +287,7 @@ export default function Home() {
     >
       {loading && selectedCategory === 'adult' ? (
         <LottieView
-          source={require('../../assets/lottie/LoadingElepGre.json')}
+          source={require('../../assets/lottie/LoadingAAA.json')}
           autoPlay
           loop
           style={styles.lottie}
