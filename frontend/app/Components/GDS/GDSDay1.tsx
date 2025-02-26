@@ -24,7 +24,13 @@ const GDSDay1 = ({ navigation }: { navigation: any }) => {
   const handlePositiveTPress = () => {
 
     router.replace("/Components/GDS/PositiveT");
-    // Navigate to Music1
+    // Navigate to Positive Thiught
+  };
+
+  const handleYoga1Press = () => {
+
+    router.replace("/Components/GDS/Yoga1");
+    // Navigate to Yoga1
   };
 
 
@@ -59,7 +65,7 @@ const GDSDay1 = ({ navigation }: { navigation: any }) => {
             </TouchableOpacity>
 
             
-            <TouchableOpacity onPress={handleMusicPress}>
+            <TouchableOpacity onPress={handleYoga1Press}>
             <View style={styles.buttonWrapper}>
               <Text style={styles.buttonText1}>Yoga</Text>
             </View>

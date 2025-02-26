@@ -16,6 +16,7 @@ import auth from '@react-native-firebase/auth';
 import { useTheme } from "../ThemeContext";
 import LottieView from 'lottie-react-native';
 import Article1 from '../Articles/EPDSArticle1';
+import Article2 from '../Articles/GDSArticle1';
 import firestore from '@react-native-firebase/firestore';
 
 
@@ -313,18 +314,21 @@ export default function Home() {
       <Article1 modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
       {/* Article 2 */}
-      <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+      <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]} onPress={() => setModalVisible(true)}>
         <View style={styles.articleContent}>
-          <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>
+          <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Elderly Depression : </Text>
           <Text style={[styles.articleText, { color: theme.dimText }]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            A Comprehensive Overview of Causes, Symptoms, Diagnosis, and Treatment
           </Text>
         </View>
         <Image
-          source={require('../../assets/images/marital.png')}
+          source={require('../../assets/images/adult.png')}
           style={styles.articleImage}
         />
       </TouchableOpacity>
+      <Article2 modalVisible={modalVisible} setModalVisible={setModalVisible} />
+
+      {/* Article 3 */}
       <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
         <View style={styles.articleContent}>
           <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>

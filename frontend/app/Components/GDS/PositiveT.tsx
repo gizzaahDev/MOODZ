@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { useTheme } from '../../ThemeContext';
-//import { Audio } from 'expo-av';
 import LottieView from 'lottie-react-native';
 import FontLoader from '../../../FontLoader';
 import { useRouter } from 'expo-router';
@@ -9,10 +8,10 @@ import { useRouter } from 'expo-router';
 
 const PositiveT = () => {
   const { theme } = useTheme();
-    const router = useRouter();
+  const router = useRouter();
   
 
-  const handleHomePress = () => {
+  const handleGDSHomePress = () => {
 
     router.replace("/Components/GDS/GDSHome");
     // Navigate to GDS Home page
@@ -40,7 +39,7 @@ const PositiveT = () => {
         </View>
 
                 <View >
-                    <TouchableOpacity  onPress={handleHomePress}>
+                    <TouchableOpacity  onPress={handleGDSHomePress}>
                         <Text >BACK</Text>
                             </TouchableOpacity>
                 </View>

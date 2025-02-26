@@ -70,6 +70,7 @@ export default function RootLayout() {
         <Stack.Screen name="Components/GDS/GDSHome" options={{ title: 'GDSHome' }}/>
         <Stack.Screen name="Components/GDS/GDSDay1" options={{ title: 'GDSDay1' }}/>
         <Stack.Screen name="Components/GDS/Music1" options={{ title: 'Music1' }}/>
+        <Stack.Screen name="Components/GDS/Yoga1" options={{ title: 'Yoga1' }}/>
         <Stack.Screen name="Components/GDS/PositiveT" options={{ title: 'PositiveT' }}/>
 
 
