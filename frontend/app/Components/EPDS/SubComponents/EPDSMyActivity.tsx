@@ -130,7 +130,7 @@ export default function EPDSMyActivity() {
                     <Text style={styles.activityDescription}>{item.description}</Text>
                 </View>
                 <View style={styles.activityPoints}>
-                    <FontAwesome name="heart" size={16} color="#ff1493" />
+                    <FontAwesome name="heart" size={16} color="#FB5454" />
                     <Text style={styles.pointsText}>+10 </Text>
                     <Entypo name="chevron-thin-right" size={18} color="#008080" />
                 </View>
@@ -180,6 +180,12 @@ export default function EPDSMyActivity() {
                 break;
             case '2':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity02/Id02');
+                break;
+            case '3':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity03/Id03');
+                break;
+            case '11':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity11/Id11');
                 break;
             // Add more cases for other activity pages
             default:
@@ -279,6 +285,7 @@ export default function EPDSMyActivity() {
                             </Animated.View>
                             {' '}{leaves}
                         </Text>
+                        
                         <View style={styles.progressBar}>
                             <Animated.View style={[
                                 styles.progressFill,
@@ -287,7 +294,7 @@ export default function EPDSMyActivity() {
                         </View>
                         <Text style={styles.progressText}>
                             <Animated.View style={{ transform: [{ scale: heartScale }] }}>
-                                <FontAwesome name="heart" size={16} color="#ff1493" />
+                                <FontAwesome name="heart" size={16} color="#FB5454" />
                             </Animated.View>
                             {' '}{hearts}%
                         </Text>
@@ -329,7 +336,7 @@ export default function EPDSMyActivity() {
                         },
                     ]}
                 >
-                    <FontAwesome name="heart" size={16} color="#ff1493" />
+                    <FontAwesome name="heart" size={16} color="#FB5454" />
                 </Animated.View>
             ))}
 
@@ -458,7 +465,7 @@ const styles = StyleSheet.create({
     },
     progressFill: {
         height: '100%',
-        backgroundColor: '#ff1493',
+        backgroundColor: '#FB5454',
         borderRadius: 5,
     },
     progressContainer: {
@@ -533,7 +540,7 @@ const styles = StyleSheet.create({
     pointsText: {
         fontSize: 14,
         marginLeft: 5,
-        color: '#ff1493',
+        color: '#FB5454',
     },
     categorySection: {
         marginBottom: 20,
