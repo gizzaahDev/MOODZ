@@ -199,7 +199,7 @@ const Questionnaire = () => {
         const payload = {
           answers,
           prediction,
-          category: "GDS",
+          category: "adult",
           timestamp: firestore.FieldValue.serverTimestamp(),
         };
 
