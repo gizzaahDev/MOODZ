@@ -72,6 +72,8 @@ export default function RootLayout() {
         <Stack.Screen name="Components/GDS/Music1" options={{ title: 'Music1' }}/>
         <Stack.Screen name="Components/GDS/PositiveT" options={{ title: 'PositiveT' }}/>
 
+        <Stack.Screen name="Components/DAS/DASAbout" options={{ title: 'DASAbout' }}/>
+
 
         
         <Stack.Screen name="Auth/Login" options={{ title: 'LoginPage',animation: 'slide_from_left', }}/>
@@ -80,7 +82,7 @@ export default function RootLayout() {
         <Stack.Screen  name="OnboardingScreen/Onboarding" options={{ title: 'OnboardingPage' }} />
         <Stack.Screen name="(tabs)"  options={{ headerShown: false }} />
         {/* <Stack.Screen name="Components/EPDS/SubComponents/ResultsSheet" options={{ title: 'ResultsSheet' }}/> */}
-      </Stack>
+      
       
 
 
