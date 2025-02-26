@@ -75,7 +75,7 @@ export default function Home() {
       const gdsQuery = firestore()
         .collection('UsersGDS')
         .doc(userId)
-        .collection('Questionnaires')
+        .collection('QuestionnairesGDS')
         .where('category', '==', category)
         .get();
   
