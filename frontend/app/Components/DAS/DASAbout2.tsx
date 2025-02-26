@@ -26,10 +26,10 @@ const DASAbout2 = ({ navigation }: { navigation: any }) => {
             Evaluate Your Progress
             </Text>
             <Text style={[styles.textParagraph, { color: theme.textSecondary }]}>
-              Cultivate a Peacefull and Balanced state of MIND
+              Smaller steps leads to bigger Changers over TIME
             </Text>
             <Text style={[styles.textParagraph, { color: theme.textSecondary }]}>
-              Complete Daily Tasks to find Calm and BALANCE
+              Celebrate your Acheivements and stay MOTIVATED
             </Text>
           </View>
 
