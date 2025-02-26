@@ -57,7 +57,7 @@ export default function Home() {
       case 'postpartum':
         return '/Components/EPDS/SubComponents/EPDSMyActivity';
       case 'adult':
-        return '/Components/GDS/SubComponents/GDSMyActivity';
+        return '/Components/GDS/GDSHome';
       default:
         return '/'; // Default route if category is unknown
     }
