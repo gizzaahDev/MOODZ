@@ -14,7 +14,7 @@ const DASday4 = ({ navigation }: { navigation: any }) => {
   };
 
   const handleMusicPress = () => {
-    //router.replace("/Components/DAS/Music4");
+    router.replace("/Components/DAS/Music4");
   };
  
   const handleDancePress = () => {
