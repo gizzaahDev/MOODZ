@@ -4,29 +4,35 @@ import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
 
-const DASday2 = ({ navigation }: { navigation: any }) => {
+const DASYoga = ({ navigation }: { navigation: any }) => {
   const { theme } = useTheme() as { theme: any };
   const router = useRouter();
   const buttonScale = new Animated.Value(1);
 
   const handleHomePress = () => {
-    router.replace("/Components/DAS/DASHome");
+    router.replace("/Components/DAS/DASday7");
   };
 
-  const handleMusicPress = () => {
-    router.replace("/Components/DAS/Music2");
+  const handleAct1Press = () => {
+    //router.replace("/Components/DAS/Music3");
   };
  
-  const handleDancePress = () => {
-    //router.replace("/Components/DAS/Dance2");
+  const handleAct2Press = () => {
+    //router.replace("/Components/DAS/Dance3");
   };
 
-  const handleSmileTPress = () => {
-    //router.replace("/Components/DAS/Smile2");
+  const handleAct3Press = () => {
+    //router.replace("/Components/DAS/Smile3");
   };
 
-  const handleGratTPress = () => {
-    //router.replace("/Components/DAS/Grat2");
+  const handleAct4Press = () => {
+    //router.replace("/Components/DAS/Grat3");
+  };
+  const handleAct5Press = () => {
+    //router.replace("/Components/DAS/Grat3");
+  };
+  const handleAct6Press = () => {
+    //router.replace("/Components/DAS/Grat3");
   };
 
   
@@ -51,7 +57,7 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
       <View style={[styles.startcontainer, { backgroundColor: '#9DC183' }]}>
         <View style={styles.textcontainer}>
           <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>
-            Choose as you Prefered
+            Try All 6 Workouts
           </Text>
 
           <View style={styles.imgcontainerday1}>
@@ -64,27 +70,39 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
 
         <ScrollView style={styles.scrollView1}>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleMusicPress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleAct1Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Music{'\n'}Player</Text>
+                <Text style={styles.buttonText1}>ACT{'\n'}1</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleMusicPress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleAct2Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Dance{'\n'}Therapy</Text>
+                <Text style={styles.buttonText1}>ACT{'\n'}2</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleMusicPress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleAct3Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Smile{'\n'}Therapy</Text>
+                <Text style={styles.buttonText1}>ACT{'\n'}3</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleMusicPress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleAct4Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Gratitude{'\n'}Sharing</Text>
+                <Text style={styles.buttonText1}>ACT{'\n'}4</Text>
+              </Animated.View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handleAct5Press} onPressIn={animateButton}>
+              <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
+                <Text style={styles.buttonText1}>ACT{'\n'}5</Text>
+              </Animated.View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handleAct6Press} onPressIn={animateButton}>
+              <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
+                <Text style={styles.buttonText1}>ACT{'\n'}6</Text>
               </Animated.View>
             </TouchableOpacity>
           </View>
@@ -189,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DASday2;
+export default DASYoga;
