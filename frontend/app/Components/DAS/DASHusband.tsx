@@ -14,7 +14,7 @@ const DASHusband = ({ navigation }: { navigation: any }) => {
   };
 
   const handleLeaderPress = () => {
-    //router.replace("/Components/DAS/Music1");
+    router.replace("/Components/DAS/Husband1");
   };
  
   const handleLovePress = () => {
