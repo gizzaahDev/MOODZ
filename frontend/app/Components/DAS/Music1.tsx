@@ -1,10 +1,11 @@
-import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { useTheme } from '../../ThemeContext';
 import LottieView from 'lottie-react-native';
 import FontLoader from '../../../FontLoader';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import React, { useState, useEffect } from 'react';
+import { Audio } from 'expo-av';
 
 const { width, height } = Dimensions.get('window');
 
@@ -16,6 +17,39 @@ const Music1 = () => {
     router.replace("/Components/DAS/DASday1");
   };
 
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  async function playSound() {
+    if (sound) {
+      await sound.playAsync();
+      setIsPlaying(true);
+      return;
+    }
+    const { sound: newSound } = await Audio.Sound.createAsync(
+      require('../../../assets/songs/das_music1.mp3'),
+      { shouldPlay: true }
+    );
+    setSound(newSound);
+    setIsPlaying(true);
+  }
+
+  async function stopSound() {
+    if (sound) {
+      await sound.stopAsync();
+      setIsPlaying(false);
+    }
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
+
   return (
     <FontLoader>
       <LinearGradient
@@ -25,7 +59,7 @@ const Music1 = () => {
          
         <View style={styles.animationContainer}>
           <LottieView 
-            source={require('../../../assets/lottie/MusicTheraphy.json')} 
+            source={require('../../../assets/lottie/dasMusic.json')} 
             autoPlay 
             loop 
             style={styles.animation} 
@@ -40,8 +74,8 @@ const Music1 = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={[styles.button, { backgroundColor: 'orange' }]}>
-            <Text style={styles.buttonText}>PLAY</Text>
+        <TouchableOpacity style={styles.MusicPlayer} onPress={isPlaying ? stopSound : playSound}>
+            <Text style={styles.buttonText1}>{isPlaying ? 'Stop' : 'Play'}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
@@ -104,6 +138,17 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
+  MusicPlayer: {
+    borderRadius: 30, // Matches the back button's borderRadius
+    width: 200,      // Matches the back button's width
+    height: 60,      // Matches the back button's height
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#016A70', // Color code of the play button
+    marginBottom: 20, // Adds space between the play button and the back button
+  },
+  buttonText1: { color: 'white', fontSize: 30, fontWeight: 'bold' },
+
   button: {
     width: 200,
     height: 60,

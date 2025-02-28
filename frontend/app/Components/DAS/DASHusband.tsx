@@ -18,11 +18,11 @@ const DASHusband = ({ navigation }: { navigation: any }) => {
   };
  
   const handleLovePress = () => {
-    //router.replace("/Components/DAS/Dance1");
+    router.replace("/Components/DAS/Husband2");
   };
 
   const handleGrowthPress = () => {
-    //router.replace("/Components/DAS/Smile1");
+    router.replace("/Components/DAS/Husband3");
   };
 
 

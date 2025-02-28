@@ -18,14 +18,14 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
   };
  
   const handleDancePress = () => {
-    //router.replace("/Components/DAS/Dance1");
+    router.replace("/Components/DAS/Dance1");
   };
 
-  const handleSmileTPress = () => {
+  const handleSmilePress = () => {
     //router.replace("/Components/DAS/Smile1");
   };
 
-  const handleGratTPress = () => {
+  const handleGratPress = () => {
     //router.replace("/Components/DAS/Grat1");
   };
 
@@ -70,19 +70,19 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleMusicPress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleDancePress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
                 <Text style={styles.buttonText1}>Dance{'\n'}Therapy</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleMusicPress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleSmilePress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
                 <Text style={styles.buttonText1}>Smile{'\n'}Therapy</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleMusicPress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleGratPress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
                 <Text style={styles.buttonText1}>Gratitude{'\n'}Sharing</Text>
               </Animated.View>
