@@ -14,15 +14,15 @@ const DASWife = ({ navigation }: { navigation: any }) => {
   };
 
   const handleSelfPress = () => {
-    //router.replace("/Components/DAS/Music1");
+    router.replace("/Components/DAS/Wife1");
   };
  
   const handleMarryPress = () => {
-    //router.replace("/Components/DAS/Dance1");
+    router.replace("/Components/DAS/Wife2");
   };
 
   const handleStrengthPress = () => {
-    //router.replace("/Components/DAS/Smile1");
+    router.replace("/Components/DAS/Wife3");
   };
   
 

@@ -79,7 +79,7 @@ const DASHome = () => {
 const styles = StyleSheet.create({
   startcontainer: {
     flex: 1,
-    backgroundColor: '#9DC183', // Background color for the entire screen
+    backgroundColor: '#016A70', // Background color for the entire screen
   },
   textcontainer: {
     marginTop: 70,
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     fontFamily: 'asul',
     fontSize: 35,
     marginBottom: 20,
-    color: 'black',
+    color: 'white',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'orange',
+    backgroundColor: '#9DC183',
     marginBottom: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   buttonText1: {
-    color: 'black',
+    color: 'white',
     fontSize: 28,
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
