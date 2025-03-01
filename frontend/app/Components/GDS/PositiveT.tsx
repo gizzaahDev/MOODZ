@@ -28,21 +28,26 @@ const PositiveT = () => {
           <LottieView source={require('../../../assets/lottie/PositiveT.json')} autoPlay loop style={styles.animation} />
         </View>
 
+        <TextInput style={[styles.PositiveInput, { fontSize: 24 }]} placeholder="Positive Thought" />
+
+
           <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>Please Write Your Strength</Text>
-          <TextInput style={styles.PositiveInput}>
-            Positive Thought
-          </TextInput>
+
         </View>
 
-        <View style={styles.PlayerButton}>
-        <Text style={styles.buttonText1}>SAVE</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.SaveButton}>
+            <Text style={styles.buttonText1}>SAVE</Text>
+          </TouchableOpacity>
         </View>
 
-                <View >
-                    <TouchableOpacity  onPress={handleGDSHomePress}>
-                        <Text >BACK</Text>
-                            </TouchableOpacity>
-                </View>
+
+        <View style={styles.backButtonContainer}>
+          <TouchableOpacity style={styles.backButton} onPress={handleGDSHomePress}>
+            <Text style={styles.backButtonText}>BACK</Text>
+          </TouchableOpacity>
+        </View>
+
 
       </View>
     </FontLoader>
@@ -90,6 +95,43 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: 'white',
   },
+
+  buttonContainer: {
+  alignItems: 'center', // Centers the button horizontally
+  marginVertical: 10, // Adds some space
+},
+
+SaveButton: {
+  borderRadius: 40,
+  width: 140,
+  height: 60,
+  alignItems: 'center', 
+  justifyContent: 'center', // Centers the text inside the button
+  backgroundColor: '#016A70',
+},
+
+backButtonContainer: {
+  alignItems: 'center',
+  marginTop: 20,
+},
+
+backButton: {
+  borderRadius: 10,
+  width: 120,
+  height: 50,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '#D9534F', // Red color
+  borderWidth: 1,
+  borderColor: '#B52B27',
+},
+
+backButtonText: {
+  color: 'white',
+  fontSize: 20,
+  fontWeight: 'bold',
+},
+
 });
 
 export default PositiveT;

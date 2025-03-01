@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '../../ThemeContext';
+import { useTheme } from '../../../ThemeContext';
 import { useRouter } from 'expo-router';
-import FontLoader from '../../../FontLoader';
+import FontLoader from '../../../../FontLoader';
 
-const GDSDay1 = ({ navigation }: { navigation: any }) => {
+const GDSDay2 = ({ navigation }: { navigation: any }) => {
   const { theme } = useTheme() as { theme: any };
   const router = useRouter();
 
@@ -40,12 +40,12 @@ const GDSDay1 = ({ navigation }: { navigation: any }) => {
       <View style={[styles.startcontainer, { backgroundColor: theme.background }]}>
         <View style={styles.textcontainer}>
           <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>
-            Day 01
+            Day 02
           </Text>
 
           <View style={styles.imgcontainerday1}>
             <Image
-              source={require('../../../assets/images/icon.png')}
+              source={require('../../../../assets/images/icon.png')}
               style={[styles.startImage1, theme.imageStyle]} // Apply imageStyle from theme
             />
           </View>
@@ -181,4 +181,4 @@ marginTop: 30,
   },
 });
 
-export default GDSDay1;
+export default GDSDay2;
