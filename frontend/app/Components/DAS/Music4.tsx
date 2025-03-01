@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+/*import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { useTheme } from '../../ThemeContext';
 import LottieView from 'lottie-react-native';
 import FontLoader from '../../../FontLoader';
@@ -170,3 +170,4 @@ const styles = StyleSheet.create({
 });
 
 export default Music4;
+*/

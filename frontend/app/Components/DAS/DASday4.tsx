@@ -13,23 +13,17 @@ const DASday4 = ({ navigation }: { navigation: any }) => {
     router.replace("/Components/DAS/DASHome");
   };
 
-  const handleMusicPress = () => {
-    router.replace("/Components/DAS/Music4");
+  const handleQuiz1Press = () => {
+    router.replace("/Components/DAS/DASquiz1");
   };
  
-  const handleDancePress = () => {
+  const handleQuiz2Press = () => {
     //router.replace("/Components/DAS/Dance4");
   };
 
-  const handleSmilePress = () => {
+  const handleQuiz3Press = () => {
     //router.replace("/Components/DAS/Smile4");
   };
-
-  const handleGratPress = () => {
-    //router.replace("/Components/DAS/Grat4");
-  };
-
-  
 
   const animateButton = () => {
     Animated.sequence([
@@ -64,19 +58,19 @@ const DASday4 = ({ navigation }: { navigation: any }) => {
 
         <ScrollView style={styles.scrollView1}>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleMusicPress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleQuiz1Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Quiz{'\n'}1</Text>
+                <Text style={styles.buttonText1}>Love Wisdom{'\n'}Quiz</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleDancePress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleQuiz2Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
                 <Text style={styles.buttonText1}>Quiz{'\n'}2</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleSmilePress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleQuiz3Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
                 <Text style={styles.buttonText1}>Quiz{'\n'}3</Text>
               </Animated.View>
@@ -144,12 +138,12 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     borderRadius: 20,
-    width: 250, // Increased width for better visibility
-    height: 80, // Reduced height for vertical alignment
-    marginBottom: 15, // Added margin between buttons
+    width: 250, 
+    height: 80, 
+    marginBottom: 15, 
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'orange',
+    backgroundColor: '#016A70',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -157,7 +151,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonText1: {
-    color: 'black',
+    color: 'white',
     fontSize: 20, // Reduced font size
     fontWeight: 'bold',
     textAlign: 'center',

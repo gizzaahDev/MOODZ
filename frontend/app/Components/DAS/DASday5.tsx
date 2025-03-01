@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    alignSelf: 'center', // Center the button horizontally
-    marginBottom: 20, // Add some margin at the bottom
+    alignSelf: 'center', 
+    marginBottom: 20, 
   },
   backButtonText: {
     fontSize: 16,
