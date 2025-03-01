@@ -51,7 +51,7 @@ const DASday4 = ({ navigation }: { navigation: any }) => {
       <View style={[styles.startcontainer, { backgroundColor: '#9DC183' }]}>
         <View style={styles.textcontainer}>
           <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>
-            Choose as you Prefered
+            Choose a Quiz
           </Text>
 
           <View style={styles.imgcontainerday1}>
@@ -66,27 +66,22 @@ const DASday4 = ({ navigation }: { navigation: any }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleMusicPress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Music{'\n'}Player</Text>
+                <Text style={styles.buttonText1}>Quiz{'\n'}1</Text>
               </Animated.View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleDancePress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Dance{'\n'}Therapy</Text>
+                <Text style={styles.buttonText1}>Quiz{'\n'}2</Text>
               </Animated.View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleSmilePress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Smile{'\n'}Therapy</Text>
+                <Text style={styles.buttonText1}>Quiz{'\n'}3</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleGratPress} onPressIn={animateButton}>
-              <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Gratitude{'\n'}Sharing</Text>
-              </Animated.View>
-            </TouchableOpacity>
           </View>
 
           <View style={styles.buttonContainer}>

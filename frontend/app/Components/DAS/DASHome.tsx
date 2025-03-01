@@ -24,7 +24,7 @@ const DASHome = () => {
         router.replace('/Components/DAS/DASday3'); 
         break;
       case 4:
-        router.replace('/Components/DAS/DASday4'); 
+        router.replace('/Components/DAS/DASact4'); 
         break;
       case 5:
         router.replace('/Components/DAS/DASday5'); 

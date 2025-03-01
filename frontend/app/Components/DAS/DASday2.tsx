@@ -82,11 +82,7 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleGratPress} onPressIn={animateButton}>
-              <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Gratitude{'\n'}Sharing</Text>
-              </Animated.View>
-            </TouchableOpacity>
+            
           </View>
 
           <View style={styles.buttonContainer}>
