@@ -92,7 +92,7 @@ const DASMeditation = ({ navigation }: { navigation: any }) => {
 const styles = StyleSheet.create({
   startcontainer: {
     flex: 1,
-    backgroundColor: '#9DC183', // Updated background color
+    backgroundColor: '#9DC183',
   },
   textcontainer: {
     marginTop: 70,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   buttonText1: {
     color: 'white',
-    fontSize: 20, // Reduced font size
+    fontSize: 20, 
     fontWeight: 'bold',
     textAlign: 'center',
   },

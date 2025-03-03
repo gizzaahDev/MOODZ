@@ -15,7 +15,7 @@ const DASday6 = ({ navigation }: { navigation: any }) => {
   };
 
   const handleBack = () => {
-    router.replace('/Components/DAS/DASHome'); // Navigate back to the previous screen
+    router.replace('/Components/DAS/DASHome'); 
   };
 
   return (
@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingVertical: 16,
     paddingHorizontal: 60,
-    elevation: 3, // Add shadow for better depth
-    shadowColor: '#000', // Shadow for iOS
+    elevation: 3, 
+    shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '100%',
-    height: height * 0.4, // Adjust image height dynamically
+    height: height * 0.4, 
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    alignSelf: 'center', // Center the button horizontally
-    marginBottom: 20, // Add some margin at the bottom
+    alignSelf: 'center', 
+    marginBottom: 20, 
   },
   backButtonText: {
     fontSize: 16,

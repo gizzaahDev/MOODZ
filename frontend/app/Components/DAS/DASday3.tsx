@@ -22,12 +22,10 @@ const DASday3 = ({ navigation }: { navigation: any }) => {
   };
 
   const handleSmilePress = () => {
-    //router.replace("/Components/DAS/Smile3");
+    router.replace("/Components/DAS/DASSmile3");
   };
 
-  const handleGratPress = () => {
-    //router.replace("/Components/DAS/Grat3");
-  };
+  
 
   
 
