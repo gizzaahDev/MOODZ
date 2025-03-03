@@ -18,11 +18,11 @@ const DASday4 = ({ navigation }: { navigation: any }) => {
   };
  
   const handleQuiz2Press = () => {
-    //router.replace("/Components/DAS/Dance4");
+    router.replace("/Components/DAS/DASquiz2");
   };
 
   const handleQuiz3Press = () => {
-    //router.replace("/Components/DAS/Smile4");
+    router.replace("/Components/DAS/DASquiz3");
   };
 
   const animateButton = () => {
@@ -66,13 +66,13 @@ const DASday4 = ({ navigation }: { navigation: any }) => {
 
             <TouchableOpacity onPress={handleQuiz2Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Quiz{'\n'}2</Text>
+                <Text style={styles.buttonText1}>Gratitude Moment{'\n'}Quiz</Text>
               </Animated.View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleQuiz3Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Quiz{'\n'}3</Text>
+                <Text style={styles.buttonText1}>Couple Edition{'\n'}Quiz</Text>
               </Animated.View>
             </TouchableOpacity>
 
@@ -92,7 +92,7 @@ const DASday4 = ({ navigation }: { navigation: any }) => {
 const styles = StyleSheet.create({
   startcontainer: {
     flex: 1,
-    backgroundColor: '#9DC183', // Updated background color
+    backgroundColor: '#9DC183', 
   },
   textcontainer: {
     marginTop: 70,
