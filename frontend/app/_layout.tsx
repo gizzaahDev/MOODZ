@@ -92,7 +92,10 @@ export default function RootLayout() {
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity02/BreathingEx" options={{title: 'BreathingEx', }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity03/Id03" options={{title: 'Id03',}}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity03/ProgressiveMuscleEX" options={{title: 'ProgressiveMuscleEX', }}/>
-
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity04/Id04" options={{title: 'Id04',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity04/GratitudeMeditatio" options={{title: 'GratitudeMeditation', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity05/Id05" options={{title: 'Id05',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity05/SleepRelaxationAudio" options={{title: 'SleepRelaxationAudio', }}/>
 
 
 

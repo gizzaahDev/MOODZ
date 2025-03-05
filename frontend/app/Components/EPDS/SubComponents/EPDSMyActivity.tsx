@@ -184,6 +184,12 @@ export default function EPDSMyActivity() {
             case '3':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity03/Id03');
                 break;
+            case '4':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity04/Id04');
+                break;
+                case '5':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity05/Id05');
+                break;
             case '11':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity11/Id11');
                 break;
@@ -285,7 +291,7 @@ export default function EPDSMyActivity() {
                             </Animated.View>
                             {' '}{leaves}
                         </Text>
-                        
+
                         <View style={styles.progressBar}>
                             <Animated.View style={[
                                 styles.progressFill,
