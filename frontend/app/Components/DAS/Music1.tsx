@@ -139,13 +139,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   MusicPlayer: {
-    borderRadius: 30, // Matches the back button's borderRadius
-    width: 200,      // Matches the back button's width
-    height: 60,      // Matches the back button's height
+    borderRadius: 30, 
+    width: 200,      
+    height: 60,      
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#016A70', // Color code of the play button
-    marginBottom: 20, // Adds space between the play button and the back button
+    backgroundColor: '#016A70', 
+    marginBottom: 20, 
   },
   buttonText1: { color: 'white', fontSize: 30, fontWeight: 'bold' },
 

@@ -17,19 +17,13 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
     router.replace("/Components/DAS/Music2");
   };
  
-  const handleDancePress = () => {
-    //router.replace("/Components/DAS/Dance2");
+  const handleLovePress = () => {
+    router.replace("/Components/DAS/Date1");
   };
 
   const handleSmilePress = () => {
-    //router.replace("/Components/DAS/Smile2");
+    router.replace("/Components/DAS/DASSmile2");
   };
-
-  const handleGratPress = () => {
-    //router.replace("/Components/DAS/Grat2");
-  };
-
-  
 
   const animateButton = () => {
     Animated.sequence([
@@ -70,9 +64,9 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleDancePress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleLovePress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Dance{'\n'}Therapy</Text>
+                <Text style={styles.buttonText1}>Memo Love{'\n'}Board</Text>
               </Animated.View>
             </TouchableOpacity>
 

@@ -19,7 +19,7 @@ const DASday5 = ({ navigation }: { navigation: any }) => {
   };
 
   const handleBack = () => {
-    router.replace('/Components/DAS/DASHome'); // Navigate back to the previous screen
+    router.replace('/Components/DAS/DASHome'); 
   };
 
   return (

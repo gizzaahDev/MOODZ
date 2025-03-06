@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'orange',
+    backgroundColor: '#016A70',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     padding: 10, 
   },
   buttonText1: {
-    color: 'black',
+    color: 'white',
     fontSize: 16, 
     fontWeight: 'bold',
     textAlign: 'center',

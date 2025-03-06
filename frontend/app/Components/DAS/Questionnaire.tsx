@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Alert,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  ToastAndroid,
-  Modal,
-  Linking,
-  useColorScheme,
-} from 'react-native';
+import {View,Text,Alert,TouchableOpacity, StyleSheet,Image,ToastAndroid,Modal,Linking,useColorScheme,} from 'react-native';
 import axios from 'axios';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -448,8 +437,6 @@ const Questionnaire = () => {
     }
 
   };
-
-
 
   const checkServerConnection = async () => {
     const controller = new AbortController();
