@@ -18,16 +18,16 @@ const DASYoga = ({ navigation }: { navigation: any }) => {
   };
  
   const handleAct2Press = () => {
-    //router.replace("/Components/DAS/DYoga2");
+    router.replace("/Components/DAS/DYoga2");
   };
   const handleAct3Press = () => {
-    //router.replace("/Components/DAS/DYoga");
+    router.replace("/Components/DAS/DYoga3");
   };
   const handleAct4Press = () => {
-    //router.replace("/Components/DAS/DYoga4");
+    router.replace("/Components/DAS/DYoga4");
   };
   const handleAct5Press = () => {
-    //router.replace("/Components/DAS/DYoga5");
+    router.replace("/Components/DAS/DYoga5");
   };
   
 

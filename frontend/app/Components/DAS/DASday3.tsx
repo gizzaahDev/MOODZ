@@ -76,7 +76,7 @@ const DASday3 = ({ navigation }: { navigation: any }) => {
 
             <TouchableOpacity onPress={handleSmilePress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Smile{'\n'}Therapy</Text>
+                <Text style={styles.buttonText1}>Memes{'\n'}Corner</Text>
               </Animated.View>
             </TouchableOpacity>
 
