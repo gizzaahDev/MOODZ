@@ -73,7 +73,7 @@ const DASMeditation = ({ navigation }: { navigation: any }) => {
 
             <TouchableOpacity onPress={handleGuidePress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Guided{'\n'}Meditation</Text>
+                <Text style={styles.buttonText1}>Heart Clearing &{'\n'}Healing</Text>
               </Animated.View>
             </TouchableOpacity>
           </View>

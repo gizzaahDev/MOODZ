@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'react-native';
-import LottieView from 'lottie-react-native';
-import { Audio } from 'expo-av'; // For music playback
+import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView, Image } from 'react-native';
+import { Audio } from 'expo-av'; 
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
@@ -15,7 +14,7 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
       id: 1,
       heading: "Freestyle Dance",
       subheading: "Dance With Your Partner",
-      lottieSource: require('../../../assets/lottie/dasMusic.json'),
+      imageSource: require('../../../assets/images/dasd.jpg'),
       timer: 194,
       music: require('../../../assets/songs/DASdance1.mp3'),
     },
@@ -23,7 +22,7 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
       id: 2,
       heading: "Slow Dance",
       subheading: "Dance with Your Partner",
-      lottieSource: require('../../../assets/lottie/dasMusic.json'),
+      imageSource: require('../../../assets/images/dasd.jpg'),
       timer: 267,
       music: require('../../../assets/songs/DASdance2.mp3'),
     },
@@ -31,7 +30,7 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
       id: 3,
       heading: "Couple Dance",
       subheading: "Dance With Your Partner",
-      lottieSource: require('../../../assets/lottie/dasMusic.json'),
+      imageSource: require('../../../assets/images/dasd.jpg'),
       timer: 247,
       music: require('../../../assets/songs/DASdance3.mp3'),
     },
@@ -126,11 +125,10 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
         {/* Cards */}
         {cards.map((card) => (
           <View key={card.id} style={styles.card}>
-            <LottieView
-              source={card.lottieSource}
-              autoPlay
-              loop
-              style={styles.lottie}
+            <Image 
+              source={card.imageSource}
+              style={styles.cardImage}
+              resizeMode="cover"
             />
             <Text style={[styles.heading, { color: "white" }]}>{card.heading}</Text>
             <Text style={[styles.subheading, { color: "white" }]}>{card.subheading}</Text>
@@ -162,11 +160,10 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
           >
             <View style={styles.popupOverlay}>
               <View style={[styles.popup, { backgroundColor: theme.backgroundColor }]}>
-                <LottieView
-                  source={card.lottieSource}
-                  autoPlay
-                  loop
-                  style={styles.popupLottie}
+              <Image 
+                  source={card.imageSource}
+                  style={styles.popupImage}
+                  resizeMode="cover"
                 />
                 <Text style={[styles.popupTimer, { color: theme.textColor }]}>
                   {Math.floor(timer / 60)}:{timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
@@ -210,9 +207,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
   },
-  lottie: {
-    width: 150,
+  cardImage: {
+    width: '50%',
     height: 150,
+    borderRadius: 10,
+    marginBottom: 15,
   },
   heading: {
     fontSize: 20,
@@ -259,9 +258,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
-  popupLottie: {
+  popupImage: {
     width: 200,
     height: 200,
+    borderRadius: 10,
+    marginBottom: 15,
   },
   popupTimer: {
     fontSize: 26,

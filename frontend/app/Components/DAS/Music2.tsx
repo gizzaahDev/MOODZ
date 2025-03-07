@@ -53,7 +53,7 @@ const Music2 = () => {
   return (
     <FontLoader>
       <LinearGradient
-        colors={['#9DC183', '#9DC183']}
+        colors={['#016A70', '#9DC183']}
         style={styles.container}
       >
          
