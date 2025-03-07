@@ -14,27 +14,21 @@ const DASYoga = ({ navigation }: { navigation: any }) => {
   };
 
   const handleAct1Press = () => {
-    //router.replace("/Components/DAS/Music3");
+    router.replace("/Components/DAS/DYoga1");
   };
  
   const handleAct2Press = () => {
-    //router.replace("/Components/DAS/Dance3");
+    //router.replace("/Components/DAS/DYoga2");
   };
-
   const handleAct3Press = () => {
-    //router.replace("/Components/DAS/Smile3");
+    //router.replace("/Components/DAS/DYoga");
   };
-
   const handleAct4Press = () => {
-    //router.replace("/Components/DAS/Grat3");
+    //router.replace("/Components/DAS/DYoga4");
   };
   const handleAct5Press = () => {
-    //router.replace("/Components/DAS/Grat3");
+    //router.replace("/Components/DAS/DYoga5");
   };
-  const handleAct6Press = () => {
-    //router.replace("/Components/DAS/Grat3");
-  };
-
   
 
   const animateButton = () => {
@@ -57,7 +51,7 @@ const DASYoga = ({ navigation }: { navigation: any }) => {
       <View style={[styles.startcontainer, { backgroundColor: '#9DC183' }]}>
         <View style={styles.textcontainer}>
           <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>
-            Try All 6 Workouts
+            Best Yoga Workouts
           </Text>
 
           <View style={styles.imgcontainerday1}>
@@ -72,39 +66,34 @@ const DASYoga = ({ navigation }: { navigation: any }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleAct1Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>ACT{'\n'}1</Text>
+                <Text style={styles.buttonText1}>MOODZ Yoga{'\n'}Challenge</Text>
               </Animated.View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleAct2Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>ACT{'\n'}2</Text>
+                <Text style={styles.buttonText1}>Partner Yoga -{'\n'}Beginners</Text>
               </Animated.View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleAct3Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>ACT{'\n'}3</Text>
+                <Text style={styles.buttonText1}>Mobility Based{'\n'}Yoga</Text>
               </Animated.View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleAct4Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>ACT{'\n'}4</Text>
+                <Text style={styles.buttonText1}>Fitness Based{'\n'}Yoga</Text>
               </Animated.View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handleAct5Press} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>ACT{'\n'}5</Text>
+                <Text style={styles.buttonText1}>Partner Yoga -{'\n'}Advanced</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleAct6Press} onPressIn={animateButton}>
-              <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>ACT{'\n'}6</Text>
-              </Animated.View>
-            </TouchableOpacity>
           </View>
 
           <View style={styles.buttonContainer}>

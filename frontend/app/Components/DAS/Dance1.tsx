@@ -13,24 +13,24 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
   const cards = [
     {
       id: 1,
-      heading: "Slow Dance",
-      subheading: "Romantic and calming",
+      heading: "Freestyle Dance",
+      subheading: "Dance With Your Partner",
       lottieSource: require('../../../assets/lottie/dasMusic.json'),
       timer: 194,
       music: require('../../../assets/songs/DASdance1.mp3'),
     },
     {
       id: 2,
-      heading: "Party Dance",
-      subheading: "Energetic and fun",
+      heading: "Slow Dance",
+      subheading: "Dance with Your Partner",
       lottieSource: require('../../../assets/lottie/dasMusic.json'),
       timer: 267,
       music: require('../../../assets/songs/DASdance2.mp3'),
     },
     {
       id: 3,
-      heading: "Freestyle Dance",
-      subheading: "Let loose and enjoy",
+      heading: "Couple Dance",
+      subheading: "Dance With Your Partner",
       lottieSource: require('../../../assets/lottie/dasMusic.json'),
       timer: 247,
       music: require('../../../assets/songs/DASdance3.mp3'),
@@ -107,7 +107,7 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
   };
 
   const handleHomePress = () => {
-    router.replace("/Components/DAS/DASHome");
+    router.replace("/Components/DAS/DASday1");
   };
 
   // Cleanup sound on unmount
@@ -132,10 +132,11 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
               loop
               style={styles.lottie}
             />
-            <Text style={[styles.heading, { color: theme.textColor }]}>{card.heading}</Text>
-            <Text style={[styles.subheading, { color: theme.textColor }]}>{card.subheading}</Text>
+            <Text style={[styles.heading, { color: "white" }]}>{card.heading}</Text>
+            <Text style={[styles.subheading, { color: "white" }]}>{card.subheading}</Text>
+
             <TouchableOpacity
-              style={[styles.continueButton, { backgroundColor: 'black' }]}
+              style={[styles.continueButton, { backgroundColor: '#9DC183' }]}
               onPress={() => handleContinue(card.id)}
             >
               <Text style={styles.continueButtonText}>Continue</Text>
@@ -143,7 +144,7 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
           </View>
         ))}
 
-        {/* Back Button */}
+        
         <TouchableOpacity
           style={[styles.homeButton, { backgroundColor: 'black' }]}
           onPress={handleHomePress}
@@ -170,6 +171,7 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
                 <Text style={[styles.popupTimer, { color: theme.textColor }]}>
                   {Math.floor(timer / 60)}:{timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
                 </Text>
+
                 <TouchableOpacity
                   style={[styles.playButton, { backgroundColor: '#016A70' }]}
                   onPress={handlePlayPause}
@@ -178,6 +180,7 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
                     {isPlaying ? 'Pause' : 'Play'}
                   </Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   style={[styles.popupBackButton, { backgroundColor: 'black' }]}
                   onPress={handleClosePopup}
@@ -228,7 +231,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   continueButtonText: {
-    color: '#FFF',
+    color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -237,9 +240,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
+    width: '80%',
   },
   homeButtonText: {
-    color: '#FFF',
+    color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
   },
