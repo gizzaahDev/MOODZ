@@ -7,13 +7,13 @@ import FontLoader from '../../../FontLoader';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-const DYoga2 = () => {
+const Dmed3 = () => {
   const { theme } = useTheme();
   const router = useRouter();
   const videoRef = useRef<Video>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const videoUri = 'https://firebasestorage.googleapis.com/v0/b/testdb-8ea15.firebasestorage.app/o/MOODZ%2FDAS%2Fvideoplayback.mp4?alt=media&token=e68f14d3-da06-4eb7-a5b8-78cd0a047f20';
+  const videoUri = 'https://firebasestorage.googleapis.com/v0/b/testdb-8ea15.firebasestorage.app/o/MOODZ%2FDAS%2FHeart%20Chakra%20Energy%20Healing%20(10%20Minute%20Guided%20Meditation).mp4.mp4?alt=media&token=3ecdc7c5-4a32-480a-9dca-78f4f8bb4c2c';
 
   const togglePlayPause = async () => {
     if (videoRef.current) {
@@ -27,7 +27,7 @@ const DYoga2 = () => {
   };
 
   const handleDASPress = () => {
-    router.replace('/Components/DAS/DASYoga');
+    router.replace('/Components/DAS/DASMeditation');
   };
 
   return (
@@ -38,8 +38,8 @@ const DYoga2 = () => {
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
       >
-        <Text style={styles.title}>Partner Yoga - Beginners</Text>
-        <Text style={styles.subtitle}>Start your day with positive energy</Text>
+        <Text style={styles.title}>Heart Clearing & Healing Meditation</Text>
+        <Text style={styles.subtitle}>Begin your day with a calm</Text>
 
         <View style={styles.videoContainer}>
         <Video
@@ -58,10 +58,10 @@ const DYoga2 = () => {
         </View>
 
         <View style={styles.infoBox}>
-          <Text style={styles.infoTitle}>Benefits of This Routine:</Text>
-          <Text style={styles.infoText}>• Improves focus and concentration</Text>
-          <Text style={styles.infoText}>• Reduces stress and anxiety</Text>
-          <Text style={styles.infoText}>• Enhances physical flexibility</Text>
+          <Text style={styles.infoTitle}>Benefits :</Text>
+          <Text style={styles.infoText}>• Creates a deeper bond </Text>
+          <Text style={styles.infoText}>• Reduces negative energy</Text>
+          <Text style={styles.infoText}>• Releases emotional wounds </Text>
         </View>
 
         <TouchableOpacity 
@@ -174,4 +174,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DYoga2;
+export default Dmed3;

@@ -26,7 +26,7 @@ const DYoga5 = () => {
     }
   };
 
-  const handleGDSHomePress = () => {
+  const handleDASPress = () => {
     router.replace('/Components/DAS/DASYoga');
   };
 
@@ -66,7 +66,7 @@ const DYoga5 = () => {
 
         <TouchableOpacity 
           style={styles.backButton} 
-          onPress={handleGDSHomePress}
+          onPress={handleDASPress}
         >
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>

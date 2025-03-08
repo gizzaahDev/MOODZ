@@ -14,15 +14,15 @@ const DASMeditation = ({ navigation }: { navigation: any }) => {
   };
 
   const handleMindPress = () => {
-    //router.replace("/Components/DAS/Music1");
+    router.replace("/Components/DAS/Dmed1");
   };
  
   const handleKindPress = () => {
-    //router.replace("/Components/DAS/Dance1");
+    router.replace("/Components/DAS/Dmed2");
   };
 
   const handleGuidePress = () => {
-    //router.replace("/Components/DAS/Smile1");
+    router.replace("/Components/DAS/Dmed3");
   };
 
 
