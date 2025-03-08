@@ -804,9 +804,9 @@ const styles = StyleSheet.create({
     color: '#016A70',
   },
   bluranime: {
-    width: 350,  // Fixed width
+    width: 350,  
     height: 130,
-    borderRadius: 10,  // Rounded corners for BlurView
+    borderRadius: 10, 
     alignItems: "center",
     justifyContent: "center",
     position: 'relative',
@@ -822,13 +822,13 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 20,
 
-    overflow: "hidden", // Ensures rounded corners if used
+    overflow: "hidden", 
     padding: 20,
   },
   bgcontainer: {
     flex: 1,
-    position: 'relative', // Ensure the View's position is relative
-    backgroundColor: '#F3FAF4', // Optional: Set a background color if needed
+    position: 'relative', 
+    backgroundColor: '#F3FAF4', 
     alignItems: 'center',
     justifyContent: "center",
   },
@@ -844,8 +844,8 @@ const styles = StyleSheet.create({
 
   },
   answerText: {
-    flex: 1, // Allow text to take as much space as needed
-    marginRight: 10, // Add space between text and radio circle
+    flex: 1, 
+    marginRight: 10, 
 
   },
   answerButton: {
@@ -937,7 +937,7 @@ const styles = StyleSheet.create({
   },
   circularProgress: {
     backgroundColor: '#ddebed',
-    borderRadius: 50, // Round the circular progress
+    borderRadius: 50, 
     transform: [{ scale: 1.1 }],
   },
   progressText: {
@@ -964,7 +964,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   highButton: {
-    backgroundColor: '#FF6347', // Different color for "Get Professional Help"
+    backgroundColor: '#FF6347', 
   },
   buttonText: {
     color: '#fff',
@@ -1027,9 +1027,9 @@ const styles = StyleSheet.create({
     elevation: 15,
 
     height: 650,
-    width: 1200, // Height of the curve
-    backgroundColor: '#fff', // Match the background color of the container
-    borderBottomLeftRadius: 1000, // Large radius to make it an ellipse shape
+    width: 1200, 
+    backgroundColor: '#fff', 
+    borderBottomLeftRadius: 1000, 
     borderBottomRightRadius: 1000,
 
   },

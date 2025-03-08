@@ -17,11 +17,11 @@ const DASday3 = ({ navigation }: { navigation: any }) => {
     router.replace("/Components/DAS/Music3");
   };
  
-  const handleDancePress = () => {
-    //router.replace("/Components/DAS/Dance3");
+  const handleStoryPress = () => {
+    router.replace("/Components/DAS/DASStory");
   };
 
-  const handleSmilePress = () => {
+  const handleMemesPress = () => {
     router.replace("/Components/DAS/DASSmile3");
   };
 
@@ -68,13 +68,13 @@ const DASday3 = ({ navigation }: { navigation: any }) => {
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleDancePress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleStoryPress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Dance{'\n'}Therapy</Text>
+                <Text style={styles.buttonText1}>Story{'\n'}Teller</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleSmilePress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleMemesPress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
                 <Text style={styles.buttonText1}>Memes{'\n'}Corner</Text>
               </Animated.View>
