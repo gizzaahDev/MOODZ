@@ -1,47 +1,25 @@
-
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet,Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
+import LottieView from 'lottie-react-native';
 import FontLoader from '../../../FontLoader';
 
-const GDSDay1 = ({ navigation }: { navigation: any }) => {
-  const { theme } = useTheme() as { theme: any };
+const GDSDay1 = () => {
+  const { theme } = useTheme();
   const router = useRouter();
 
-
-  const handleHomePress = () => {
-
-    router.replace("/Components/GDS/GDSHome");
-    // Navigate to GDS Home page
+  const navigateTo = (path: string) => {
+    router.replace(path);
   };
-  const handleMusicPress = () => {
-
-    router.replace("/Components/GDS/Music1");
-    // Navigate to Music1
-  };
-
-  const handlePositiveTPress = () => {
-
-    router.replace("/Components/GDS/PositiveT");
-    // Navigate to Positive Thiught
-  };
-
-  const handleYoga1Press = () => {
-
-    router.replace("/Components/GDS/Yoga1");
-    // Navigate to Yoga1
-  };
-
-
 
   return (
     <FontLoader>
-      <View style={[styles.startcontainer, { backgroundColor: theme.background }]}>
-        <View style={styles.textcontainer}>
-          <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>
-            Day 01
-          </Text>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
+        
+        {/* Title */}
+        <View style={styles.textContainer}>
+          <Text style={[styles.heading, { color: theme.textPrimary }]}>Day 01</Text>
 
           <View style={styles.imgcontainerday1}>
             <Image
@@ -50,51 +28,68 @@ const GDSDay1 = ({ navigation }: { navigation: any }) => {
             />
           </View>
 
-          <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>
-            How are you feeling today?
-          </Text>
+
+          <Text style={[styles.subHeading, { color: theme.textPrimary }]}>How are you feeling today?</Text>
         </View>
 
-        <ScrollView style={styles.scrollView1}>
+        <ScrollView style={styles.scrollView}>
 
-          <View style={styles.buttonContainerraw}>
-          <TouchableOpacity onPress={handleMusicPress}>
-            <View style={styles.buttonWrapper}>
-              <Text style={styles.buttonText1}>  Music{'\n'}Therapy</Text>
-            </View>
+          {/* First Row */}
+          <View style={styles.buttonRow}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Music1")}>
+              <View style={styles.buttonWrapper}>
+                <LottieView 
+                  source={require('../../../assets/lottie/musicGDS.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
+                <Text style={styles.buttonText}>Music Therapy</Text>
+              </View>
             </TouchableOpacity>
 
-            
-            <TouchableOpacity onPress={handleYoga1Press}>
-            <View style={styles.buttonWrapper}>
-            <Text style={styles.buttonText1}>Yoga</Text>
-            <Text style={styles.buttonText1}>Exercises</Text>
-
-            </View>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.buttonContainerraw}>
-          <TouchableOpacity onPress={handleMusicPress}>
-            <View style={styles.buttonWrapper}>
-              <Text style={styles.buttonText1}>Smiling</Text>
-              <Text style={styles.buttonText1}>Activity</Text>
-            </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={handlePositiveTPress}>
-            <View style={styles.buttonWrapper}>
-              <Text style={styles.buttonText1}>Positive{'\n'}Thought</Text>
-            </View>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Yoga1")}>
+              <View style={styles.buttonWrapper}>
+                <LottieView 
+                  source={require('../../../assets/lottie/yogaGDS.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
+                <Text style={styles.buttonText}>Yoga Exercises</Text>
+              </View>
             </TouchableOpacity>
           </View>
 
-                        <View style={styles.buttonContainer}>
-                          <TouchableOpacity style={styles.button} onPress={handleHomePress}>
-                            <Text style={styles.buttonText}>BACK</Text>
-                          </TouchableOpacity>
-                        </View>
+          {/* Second Row */}
+          <View style={styles.buttonRow}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/SmilingActivity")}>
+              <View style={styles.buttonWrapper}>
+                <LottieView 
+                  source={require('../../../assets/lottie/smileGDS.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
+                <Text style={styles.buttonText}>Smiling Activity</Text>
+              </View>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/PositiveT")}>
+              <View style={styles.buttonWrapper}>
+                <LottieView 
+                  source={require('../../../assets/lottie/PositiveT.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
+                <Text style={styles.buttonText}>Positive Thought</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* Back Button */}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigateTo("/Components/GDS/GDSHome")}>
+              <Text style={styles.backButtonText}>BACK</Text>
+            </TouchableOpacity>
+          </View>
 
         </ScrollView>
       </View>
@@ -103,16 +98,44 @@ const GDSDay1 = ({ navigation }: { navigation: any }) => {
 };
 
 const styles = StyleSheet.create({
-  startcontainer: {
-    flex: 1,
-  },
-  textcontainer: {
-    marginTop: 70,
-    padding: 16,
-    marginBottom: 0,
+  container: { flex: 1 },
+  textContainer: { marginTop: 50, alignItems: 'center', marginBottom: 20 },
+  heading: { fontSize: 32, fontWeight: 'bold' },
+  subHeading: { fontSize: 22, fontWeight: '500', marginTop: 10 },
+
+  scrollView: { paddingHorizontal: 20 },
+
+  buttonRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
+
+  buttonWrapper: {
+    width: 160,
+    height: 120,
+    borderRadius: 15,
+    backgroundColor: '#016A70',
+    alignItems: 'center',
     justifyContent: 'center',
+    padding: 10,
+    marginHorizontal: 5,
+  },
+
+  lottie: { width: 80, height: 80, marginBottom: 5 },
+
+  buttonText: { color: 'white', fontSize: 18, fontWeight: 'bold', textAlign: 'center' },
+
+  buttonContainer: { alignItems: 'center', marginTop: 30 },
+
+  backButton: {
+    backgroundColor: '#D9534F',
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#B52B27',
     alignItems: 'center',
   },
+
+  backButtonText: { color: 'white', fontSize: 20, fontWeight: 'bold' },
+
   imgcontainerday1: {
     width: 200,
     height: 200,
@@ -128,56 +151,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-  },
-  text_welcome: {
-    fontFamily: 'roboto',
-    fontSize: 30,
-    marginBottom: 20,
-  },
-  scrollView1: {
-    marginTop: 0,
-  },
-  buttonContainerraw: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  buttonWrapper: {
-    borderRadius: 10,
-    width: 160,
-    height: 100,
-    marginLeft: '5%',
-    marginRight: '5%',
-    alignItems: 'center', // Center the button and text
-    backgroundColor: '#016A70',
-    marginBottom: 10,
-  },
-  buttonText1: {
-    color: 'white',
-    fontSize: 30,
-    fontWeight: 'bold',
-
-  },
-  button: {
-    backgroundColor: '#272727',
-    padding: 15,
-    borderRadius: 50,
-    width: 350,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  buttonContainer: {
-marginTop: 30,
-    alignItems: 'center',  // Center the button horizontally
-    justifyContent: 'center',  // Center the button vertically (if needed)
-
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    width: '100%',
-    textAlign: 'center',
   },
 });
 

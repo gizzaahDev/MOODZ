@@ -43,7 +43,7 @@ const PositiveT = () => {
         <View style={styles.textcontainer}>
           <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>Positive Thought</Text>
           <View style={styles.imgcontainerday1}>
-            <LottieView source={require('../../../assets/lottie/PositiveT.json')} autoPlay loop style={styles.animation} />
+            <LottieView source={require('../../../assets/lottie/positiveGDS.json')} autoPlay loop style={styles.animation} />
           </View>
 
           <TextInput
