@@ -61,7 +61,7 @@ const GDSDay1 = () => {
 
           {/* Second Row */}
           <View style={styles.buttonRow}>
-            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/SmilingActivity")}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/SmileGDS")}>
               <View style={styles.buttonWrapper}>
                 <LottieView 
                   source={require('../../../assets/lottie/smileGDS.json')} 
