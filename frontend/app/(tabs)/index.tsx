@@ -111,7 +111,7 @@ export default function Home() {
       {/* Child Depression */}
       <TouchableOpacity
         style={[styles.categoryBox, { backgroundColor: '#E6E6FA' }]}
-        onPress={() => handlePress('child', '/Components/ChildDepression/Questionnaire')}
+        onPress={() => handlePress('child', '/Components/Child/Landing')}
       >
         {loading && selectedCategory === 'child' ? (
           <LottieView
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     padding: 20,
-    paddingBottom: 5,
+    paddingBottom: 25,
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -341,6 +341,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     paddingHorizontal: 30,
+    paddingBottom: 25
   },
   categoryBox: {
     width: 155,
@@ -376,9 +377,9 @@ const styles = StyleSheet.create({
   articleBox: {
     flexDirection: 'row',
     backgroundColor: '#fff',
-    padding: 15,
+    padding: 20,
     borderRadius: 10,
-    marginBottom: 5,
+    marginBottom: 8,
     alignItems: 'center',
   },
   articleImage: {
@@ -393,6 +394,7 @@ const styles = StyleSheet.create({
   articleHeading: {
     fontSize: 16,
     fontWeight: 'bold',
+    paddingBottom: 2
   },
   articleText: {
     fontSize: 14,
