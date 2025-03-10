@@ -43,7 +43,7 @@ const GDSHome = ({ navigation }: { navigation: any }) => {
             <TouchableOpacity 
               key={i + 1} 
               style={styles.dayButton} 
-              onPress={() => navigateTo(i === 0 ? "/Components/GDS/GDSDay1" : i === 1 ? "/Components/GDS/Day2/GDSDay2" : "/Components/GDS/GDSDay1")}
+              onPress={() => navigateTo(i === 0 ? "/Components/GDS/GDSDay1" : i === 1 ? "/Components/GDS/Day2/GDSDay2" : i === 2 ? "/Components/GDS/Day2/GDSDay3" : "/Components/GDS/GDSDay1")}
             >
               <Text style={styles.dayText}>Day {i + 1}</Text>
             </TouchableOpacity>

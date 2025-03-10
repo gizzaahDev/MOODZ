@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import LottieView from 'lottie-react-native';
 import FontLoader from '../../../../FontLoader';
 
-const GDSDay2 = () => {
+const GDSDay3 = () => {
   const { theme } = useTheme();
   const router = useRouter();
 
@@ -19,7 +19,7 @@ const GDSDay2 = () => {
         
         {/* Title */}
         <View style={styles.textContainer}>
-          <Text style={[styles.heading, { color: theme.textPrimary }]}>Day 02</Text>
+          <Text style={[styles.heading, { color: theme.textPrimary }]}>Day 03</Text>
 
           <View style={styles.imgcontainerday1}>
             <Image
@@ -36,25 +36,25 @@ const GDSDay2 = () => {
 
           {/* First Row */}
           <View style={styles.buttonRow}>
-            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/BreathGDS")}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/MealPlan")}>
               <View style={styles.buttonWrapper}>
                 <LottieView 
                   source={require('../../../../assets/lottie/musicGDS.json')} 
                   autoPlay loop 
                   style={styles.lottie} 
                 />
-                <Text style={styles.buttonText}>Music Therapy</Text>
+                <Text style={styles.buttonText}>Meal Plan</Text>
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/MeditationGDS")}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Story1GDS")}>
               <View style={styles.buttonWrapper}>
                 <LottieView 
                   source={require('../../../../assets/lottie/MeditationGDS.json')} 
                   autoPlay loop 
                   style={styles.lottie} 
                 />
-                <Text style={styles.buttonText}>Meditation</Text>
+                <Text style={styles.buttonText}>STORY</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -154,4 +154,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GDSDay2;
+export default GDSDay3;
