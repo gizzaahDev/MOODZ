@@ -6,21 +6,28 @@ import {
     Animated,
     Easing,
     View,
+    Modal,
+    Button,
+    TouchableWithoutFeedback, // Add this import
 } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FontLoader from "../../../FontLoader";
 import { useRouter } from "expo-router";
 import { useTheme } from "../../ThemeContext";
 import LottieView from "lottie-react-native";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import iconSet from "@expo/vector-icons/build/FontAwesome5";
 
 const UploadPhoto = () => {
     const router = useRouter();
     const { theme } = useTheme() as { theme: any };
 
+    const [modalVisible, setModalVisible] = useState(false);
+
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideUpAnim = useRef(new Animated.Value(100)).current;
     const scaleAnim = useRef(new Animated.Value(0)).current;
-    const zoomAnim = useRef(new Animated.Value(1)).current; // Initial scale value is 1
+    const zoomAnim = useRef(new Animated.Value(1)).current;
 
     useEffect(() => {
         Animated.timing(fadeAnim, {
@@ -46,16 +53,14 @@ const UploadPhoto = () => {
     useEffect(() => {
         Animated.loop(
             Animated.sequence([
-                // Zoom in
                 Animated.timing(zoomAnim, {
-                    toValue: 0.9, // Scale up to 120%
-                    duration: 1500, // Duration for zoom-in
-                    useNativeDriver: true, // Use native driver for better performance
+                    toValue: 0.9,
+                    duration: 1500,
+                    useNativeDriver: true,
                 }),
-                // Zoom out
                 Animated.timing(zoomAnim, {
-                    toValue: 1, // Scale back to 100%
-                    duration: 1500, // Duration for zoom-out
+                    toValue: 1,
+                    duration: 1500,
                     useNativeDriver: true,
                 }),
             ])
@@ -131,15 +136,103 @@ const UploadPhoto = () => {
                         style={{ transform: [{ scale: scaleAnim }] }}
                     >
                         <TouchableOpacity
-                            onPress={() =>
-                                router.push("/Components/Child/UploadPhoto")
-                            }
+                            onPress={() => setModalVisible(true)}
                             style={styles.startButton}
                         >
                             <Text style={styles.startButtonText}>Upload</Text>
                         </TouchableOpacity>
                     </Animated.View>
                 </ImageBackground>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <TouchableWithoutFeedback
+                        onPress={() => setModalVisible(false)}
+                    >
+                        <View style={styles.modalContainer}>
+                            <LottieView
+                                source={require("../../../assets/lottie/Owl.json")}
+                                autoPlay
+                                loop
+                                style={styles.lottie}
+                            />
+                            <TouchableWithoutFeedback>
+                                <View
+                                    style={[
+                                        styles.modalContent,
+                                        { backgroundColor: theme.childModal },
+                                    ]}
+                                >
+                                    <Text
+                                        style={[
+                                            styles.modalText,
+                                            { color: theme.landingInstruction },
+                                        ]}
+                                    >
+                                        Upload Photo
+                                    </Text>
+                                    <View style={styles.iconContainer}>
+                                        <TouchableOpacity
+                                            style={{
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            <MaterialCommunityIcons
+                                                name="camera-outline"
+                                                style={[
+                                                    styles.icons,
+                                                    {
+                                                        backgroundColor:
+                                                            theme.selectedTab,
+                                                    },
+                                                ]}
+                                            />
+                                            <Text
+                                                style={{
+                                                    marginLeft: 8,
+                                                    marginTop: 10,
+                                                }}
+                                            >
+                                                Take Photo
+                                            </Text>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity
+                                            style={{
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            <MaterialCommunityIcons
+                                                name="image-outline"
+                                                style={[
+                                                    styles.icons,
+                                                    {
+                                                        backgroundColor:
+                                                            theme.selectedTab,
+                                                    },
+                                                ]}
+                                            />
+                                            <Text
+                                                style={{
+                                                    marginLeft: 8,
+                                                    marginTop: 10,
+                                                }}
+                                            >
+                                                From Gallery
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </Modal>
             </View>
         </FontLoader>
     );
@@ -151,13 +244,13 @@ const styles = StyleSheet.create({
     },
     bg: {
         flex: 1,
-        justifyContent:"center",
+        justifyContent: "center",
         alignItems: "center",
     },
     lottieContainer: {
         width: 350,
         height: 350,
-        borderRadius: "50%",
+        borderRadius: 175,
         alignItems: "center",
         alignSelf: "center",
         marginTop: 25,
@@ -176,7 +269,7 @@ const styles = StyleSheet.create({
     mainText: {
         textTransform: "capitalize",
         fontSize: 26,
-        fontWeight: 600,
+        fontWeight: "600",
         fontFamily: "robotoBold",
     },
     subTextContainer: {
@@ -196,7 +289,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontFamily: "roboto",
         fontSize: 16,
-        fontWeight: "800",
+        fontWeight: "800", // Use string for fontWeight
         marginBottom: 15,
         lineHeight: 24,
     },
@@ -213,6 +306,36 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
         fontFamily: "poppinsSemiBold",
+    },
+    modalContainer: {
+        flex: 1,
+        paddingTop: 50,
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.9)",
+    },
+    modalContent: {
+        alignItems: "center",
+        alignSelf: "center",
+        width: 300,
+        padding: 20,
+        borderRadius: 10,
+    },
+    modalText: {
+        fontFamily: "robotoMedium",
+        fontSize: 22,
+        marginBottom: 35,
+    },
+    iconContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 50,
+    },
+    icons: {
+        color: "#016A70",
+        fontSize: 35,
+        borderRadius: 10,
+        padding: 8,
     },
 });
 
