@@ -22,14 +22,8 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
   };
 
   const handleSmilePress = () => {
-    //router.replace("/Components/DAS/Smile1");
+    router.replace("/Components/DAS/DAScam");
   };
-
-  const handleGratPress = () => {
-    //router.replace("/Components/DAS/Grat1");
-  };
-
-  
 
   const animateButton = () => {
     Animated.sequence([
@@ -78,7 +72,7 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
 
             <TouchableOpacity onPress={handleSmilePress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Smile{'\n'}Therapy</Text>
+                <Text style={styles.buttonText1}>Happiness{'\n'}Together</Text>
               </Animated.View>
             </TouchableOpacity>
 

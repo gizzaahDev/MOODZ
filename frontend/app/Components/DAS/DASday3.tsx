@@ -70,7 +70,7 @@ const DASday3 = ({ navigation }: { navigation: any }) => {
 
             <TouchableOpacity onPress={handleStoryPress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Story{'\n'}Teller</Text>
+                <Text style={styles.buttonText1}>Story{'\n'}Board</Text>
               </Animated.View>
             </TouchableOpacity>
 
