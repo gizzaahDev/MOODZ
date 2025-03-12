@@ -1,7 +1,10 @@
-from fastapi import FastAPI, HTTPException # type: ignore
+from fastapi import FastAPI, File, UploadFile, HTTPException # type: ignore
 from pydantic import BaseModel # type: ignore
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np # type: ignore
+from ultralytics import YOLO
+from PIL import Image
+import io
 import pickle
 import joblib
 import uvicorn
@@ -141,6 +144,44 @@ class MarriedInput(BaseModel):
 @app.get("/")
 def read_root():
     return {"message": "Wellcome to MOODZ!"}
+
+# Child Image Classifier
+# Load models
+face_detector = YOLO("Face_Detector.pt")
+emotion_classifier = YOLO("Emotion_Classifier.pt")
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this to specific origins if needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.post("/child/classify/")
+async def classify_emotion(file: UploadFile = File(...)):
+    try:
+        # Read image
+        image = Image.open(io.BytesIO(await file.read())).convert("RGB")
+        
+        # Run face detection (Child/Non-child)
+        face_results = face_detector(image)
+        face_class_idx = face_results[0].probs.top1  # Get top prediction index
+        face_class_name = face_results[0].names[face_class_idx]  # Get class name
+
+        if face_class_name.lower() == "child":
+            # Perform emotion classification
+            emotion_results = emotion_classifier(image)
+            emotion_class_idx = emotion_results[0].probs.top1  # Get top prediction index
+            emotion_class_name = emotion_results[0].names[emotion_class_idx]  # Get class name
+            
+            return {"status": "success", "emotion": emotion_class_name}
+        else:
+            raise HTTPException(status_code=400, detail="Invalid input. Please upload an image containing a child's face.")
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Child Route
 @app.post("/child/predict")
