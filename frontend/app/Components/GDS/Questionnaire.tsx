@@ -199,11 +199,12 @@ const Questionnaire = () => {
         const payload = {
           answers,
           prediction,
+          category: 'adult',
           timestamp: firestore.FieldValue.serverTimestamp(),
         };
 
         await firestore()
-          .collection('Users')
+          .collection('UsersGDS')
           .doc(userId)
           .collection('QuestionnairesGDS')
           .add(payload);

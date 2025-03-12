@@ -66,11 +66,19 @@ export default function RootLayout() {
         <Stack.Screen name="Components/EPDS/SubComponents/ChooseActivities" options={{ title: 'ChooseActivities' }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/EPDSMyActivity" options={{ title: 'EPDSMyActivity' }}/>
 
+        <Stack.Screen name="Components/GDS/GDSDay1" options={{ title: 'GDSDay1' }}/>
+        <Stack.Screen name="Components/GDS/Day2/GDSDay2" options={{ title: 'GDSDay2' }}/>
+        <Stack.Screen name="Components/GDS/Day2/GDSDay3" options={{ title: 'GDSDay3' }}/>
         <Stack.Screen name="Components/GDS/About" options={{ title: 'GDSAbout' }}/>
         <Stack.Screen name="Components/GDS/GDSHome" options={{ title: 'GDSHome' }}/>
-        <Stack.Screen name="Components/GDS/GDSDay1" options={{ title: 'GDSDay1' }}/>
         <Stack.Screen name="Components/GDS/Music1" options={{ title: 'Music1' }}/>
+        <Stack.Screen name="Components/GDS/Yoga1" options={{ title: 'Yoga1' }}/>
         <Stack.Screen name="Components/GDS/PositiveT" options={{ title: 'PositiveT' }}/>
+        <Stack.Screen name="Components/GDS/SmileGDS" options={{ title: 'SmileGDS' }}/>
+        <Stack.Screen name="Components/GDS/MeditationGDS" options={{ title: 'MeditationGDS' }}/>
+        <Stack.Screen name="Components/GDS/BreathGDS" options={{ title: 'BreathGDS' }}/>
+        <Stack.Screen name="Components/GDS/MealPlan" options={{ title: 'MealPlan' }}/>
+        <Stack.Screen name="Components/GDS/Story1GDS" options={{ title: 'Story1GDS' }}/>
 
 
         
@@ -80,18 +88,33 @@ export default function RootLayout() {
         <Stack.Screen  name="OnboardingScreen/Onboarding" options={{ title: 'OnboardingPage' }} />
         <Stack.Screen name="(tabs)"  options={{ headerShown: false }} />
         {/* <Stack.Screen name="Components/EPDS/SubComponents/ResultsSheet" options={{ title: 'ResultsSheet' }}/> */}
-      </Stack>
+      
       
 
 
-
+        
         {/* EPDS Activities */}
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity01/Id01" options={{title: 'Id01', }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity01/Meditaion" options={{title: 'Meditaion', }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity02/Id02" options={{title: 'Id02',}}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity02/BreathingEx" options={{title: 'BreathingEx', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity03/Id03" options={{title: 'Id03',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity03/ProgressiveMuscleEX" options={{title: 'ProgressiveMuscleEX', }}/>
+
+
+
+
+
+
+
+
+
+
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity11/Id11" options={{title: 'Id11',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity11/PositiveThought" options={{title: 'PositiveThought', }}/>
         
       </Stack>
+
     </ThemeProvider>
   );
 }

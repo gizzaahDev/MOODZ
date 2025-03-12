@@ -16,6 +16,7 @@ import auth from '@react-native-firebase/auth';
 import { useTheme } from "../ThemeContext";
 import LottieView from 'lottie-react-native';
 import Article1 from '../Articles/EPDSArticle1';
+import Article2 from '../Articles/GDSArticle1';
 import firestore from '@react-native-firebase/firestore';
 
 
@@ -56,7 +57,7 @@ export default function Home() {
       case 'postpartum':
         return '/Components/EPDS/SubComponents/EPDSMyActivity';
       case 'adult':
-        return '/Components/GDS/SubComponents/GDSMyActivity';
+        return '/Components/GDS/GDSHome';
       default:
         return '/'; // Default route if category is unknown
     }
@@ -65,19 +66,29 @@ export default function Home() {
   // Function to check if the user has submitted the questionnaire at least once
   const hasUserSubmittedQuestionnaire = async (userId: string, category: string) => {
     try {
-      const querySnapshot = await firestore()
+      const epdsQuery = firestore()
         .collection('UsersEpds')
         .doc(userId)
         .collection('Questionnaires')
         .where('category', '==', category)
         .get();
-
-      return !querySnapshot.empty; // Returns true if at least one document exists
+  
+      const gdsQuery = firestore()
+        .collection('UsersGDS')
+        .doc(userId)
+        .collection('QuestionnairesGDS')
+        .where('category', '==', category)
+        .get();
+  
+      const [epdsSnapshot, gdsSnapshot] = await Promise.all([epdsQuery, gdsQuery]);
+  
+      return !epdsSnapshot.empty || !gdsSnapshot.empty; // Returns true if at least one document exists in either collection
     } catch (error) {
       console.error('Error checking questionnaire submission:', error);
       return false;
     }
   };
+  
 
   const handlePress = async (category: string) => {
     setSelectedCategory(category);
@@ -217,7 +228,7 @@ export default function Home() {
     >
       {loading && selectedCategory === 'child' ? (
         <LottieView
-          source={require('../../assets/lottie/LoadingElepGre.json')}
+          source={require('../../assets/lottie/LoadingAAA.json')}
           autoPlay
           loop
           style={styles.lottie}
@@ -237,7 +248,7 @@ export default function Home() {
     >
       {loading && selectedCategory === 'marital' ? (
         <LottieView
-          source={require('../../assets/lottie/LoadingElepGre.json')}
+          source={require('../../assets/lottie/LoadingAAA.json')}
           autoPlay
           loop
           style={styles.lottie}
@@ -257,7 +268,7 @@ export default function Home() {
     >
       {loading && selectedCategory === 'postpartum' ? (
         <LottieView
-          source={require('../../assets/lottie/LoadingElepGre.json')}
+          source={require('../../assets/lottie/LoadingAAA.json')}
           autoPlay
           loop
           style={styles.lottie}
@@ -277,7 +288,7 @@ export default function Home() {
     >
       {loading && selectedCategory === 'adult' ? (
         <LottieView
-          source={require('../../assets/lottie/LoadingElepGre.json')}
+          source={require('../../assets/lottie/LoadingAAA.json')}
           autoPlay
           loop
           style={styles.lottie}
@@ -313,18 +324,21 @@ export default function Home() {
       <Article1 modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
       {/* Article 2 */}
-      <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+      <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]} onPress={() => setModalVisible(true)}>
         <View style={styles.articleContent}>
-          <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>
+          <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Elderly Depression : </Text>
           <Text style={[styles.articleText, { color: theme.dimText }]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            A Comprehensive Overview of Causes, Symptoms, Diagnosis, and Treatment
           </Text>
         </View>
         <Image
-          source={require('../../assets/images/marital.png')}
+          source={require('../../assets/images/adult.png')}
           style={styles.articleImage}
         />
       </TouchableOpacity>
+      <Article2 modalVisible={modalVisible} setModalVisible={setModalVisible} />
+
+      {/* Article 3 */}
       <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
         <View style={styles.articleContent}>
           <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>
