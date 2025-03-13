@@ -81,6 +81,8 @@ export default function RootLayout() {
         <Stack.Screen name="Components/GDS/MealPlan" options={{ title: 'MealPlan' }}/>
         <Stack.Screen name="Components/GDS/Story1GDS" options={{ title: 'Story1GDS' }}/>
 
+        <Stack.Screen name="Components/DAS/DASAbout" options={{ title: 'DASAbout' }}/>
+
 
         
         <Stack.Screen name="Auth/Login" options={{ title: 'LoginPage',animation: 'slide_from_left', }}/>
