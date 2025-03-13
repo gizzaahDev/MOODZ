@@ -191,22 +191,201 @@ export default function Home() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-  {/* Header */}
-  <View style={styles.header}>
-    <View style={styles.userInfo}>
-      <Image
-        source={
-          profileImage
-            ? { uri: profileImage }
-            : require("../../assets/images/userpic.png")
-        }
-        style={styles.profileImage}
-      />
-      <View style={styles.userText}>
-        <Text style={[styles.greeting, { color: theme.textPrimary, flexWrap: 'wrap', maxWidth: 250 }]}>
-          Hello, <Text style={[styles.userName, { color: theme.title, }]}>{userName}</Text>
-        </Text>
-        <Text style={styles.subtitle}>How can I help you today?</Text>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.userInfo}>
+          <Image
+            source={
+              profileImage
+                ? { uri: profileImage }
+                : require("../../assets/images/userpic.png")
+            }
+            style={styles.profileImage}
+          />
+          <View style={styles.userText}>
+            <Text style={[styles.greeting, { color: theme.textPrimary, flexWrap: 'wrap', maxWidth: 250 }]}>
+              Hello, <Text style={[styles.userName, { color: theme.title, }]}>{userName}</Text>
+            </Text>
+            <Text style={styles.subtitle}>How can I help you today?</Text>
+          </View>
+        </View>
+
+        {/* Notification Bell */}
+        <View style={styles.iconWrapper}>
+          <MaterialCommunityIcons name="bell" size={28} style={{ color: theme.iconColor }} />
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>3</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Depression Categories */}
+      <View style={styles.categoryContainer}>
+      {/* Child Depression */}
+      <TouchableOpacity
+        style={[styles.categoryBox, { backgroundColor: '#E6E6FA' }]}
+        onPress={() => handlePress('child', '/Components/Child/Landing')}
+      >
+        {loading && selectedCategory === 'child' ? (
+          <LottieView
+            source={require('../../assets/lottie/LoadingElepGre.json')}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+        ) : (
+          <>
+            <Image source={require('../../assets/images/child.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Child{"\n"}Depression</Text>
+          </>
+        )}
+      </TouchableOpacity>
+
+      {/* Marital Depression */}
+      <TouchableOpacity
+        style={[styles.categoryBox, { backgroundColor: '#FAD2D2' }]}
+        onPress={() => handlePress('marital', '/Components/DAS/Questionnaire')}
+      >
+        {loading && selectedCategory === 'marital' ? (
+          <LottieView
+            source={require('../../assets/lottie/LoadingElepGre.json')}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+        ) : (
+          <>
+            <Image source={require('../../assets/images/marital.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Marital{"\n"}Depression</Text>
+          </>
+        )}
+      </TouchableOpacity>
+
+      {/* Postpartum Depression */}
+      <TouchableOpacity
+        style={[styles.categoryBox, { backgroundColor: '#D2FAD2' }]}
+        onPress={() => handlePress('postpartum', '/Components/EPDS/Questionnaire')}
+      >
+        {loading && selectedCategory === 'postpartum' ? (
+          <LottieView
+            source={require('../../assets/lottie/LoadingElepGre.json')}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+        ) : (
+          <>
+            <Image source={require('../../assets/images/postpartum.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Postpartum{"\n"}Depression</Text>
+          </>
+        )}
+      </TouchableOpacity>
+
+      {/* Adult Depression */}
+      <TouchableOpacity
+        style={[styles.categoryBox, { backgroundColor: '#FADCA2' }]}
+        onPress={() => handlePress('adult', '/Components/GDS/Questionnaire')}
+      >
+        {loading && selectedCategory === 'adult' ? (
+          <LottieView
+            source={require('../../assets/lottie/LoadingElepGre.json')}
+            autoPlay
+            loop
+            style={styles.lottie}
+          />
+        ) : (
+          <>
+            <Image source={require('../../assets/images/adult.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Adult{"\n"}Depression</Text>
+          </>
+        )}
+      </TouchableOpacity>
+    </View>
+
+      {/* Articles Section */}
+      <View style={styles.articlesContainer}>
+        <Text style={[styles.articleTitle, { color: theme.textPrimary }]}>Articles</Text>
+
+        {/* Scrollable Articles */}
+        <ScrollView style={styles.articleScrollView} contentContainerStyle={{ paddingBottom: 220 }}>
+          {/* Article 1 */}
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]} onPress={() => setModalVisible(true)}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Postpartum Depression : </Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                A Comprehensive Overview of Causes, Symptoms, Diagnosis, and Treatment
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/postpartum.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <Article1 modalVisible={modalVisible} setModalVisible={setModalVisible} />
+
+          {/* Article 2 */}
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 3</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 4</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 5</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+            <View style={styles.articleContent}>
+              <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 6</Text>
+              <Text style={[styles.articleText, { color: theme.dimText }]}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </View>
+            <Image
+              source={require('../../assets/images/marital.png')}
+              style={styles.articleImage}
+            />
+          </TouchableOpacity>
+
+        </ScrollView>
       </View>
     </View>
 
@@ -451,7 +630,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     padding: 20,
-    paddingBottom: 5,
+    paddingBottom: 25,
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -506,6 +685,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     paddingHorizontal: 30,
+    paddingBottom: 25
   },
   categoryBox: {
     width: 155,
@@ -541,9 +721,9 @@ const styles = StyleSheet.create({
   articleBox: {
     flexDirection: 'row',
     backgroundColor: '#fff',
-    padding: 15,
+    padding: 20,
     borderRadius: 10,
-    marginBottom: 5,
+    marginBottom: 8,
     alignItems: 'center',
   },
   articleImage: {
@@ -558,6 +738,7 @@ const styles = StyleSheet.create({
   articleHeading: {
     fontSize: 16,
     fontWeight: 'bold',
+    paddingBottom: 2
   },
   articleText: {
     fontSize: 14,

@@ -1,23 +1,23 @@
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
 import { StatusBar, BackHandler } from "react-native";
-import { ThemeProvider, useTheme } from './ThemeContext';
-import React, { useEffect } from 'react';
-import { useRouter, usePathname } from 'expo-router';
+import { ThemeProvider, useTheme } from "./ThemeContext";
+import React, { useEffect } from "react";
+import { useRouter, usePathname } from "expo-router";
 
 const ThemedStatusBar = () => {
-  const { theme } = useTheme() as { theme: any };
+    const { theme } = useTheme() as { theme: any };
 
-  return (
-    <StatusBar
-      barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} // Adjust text/icon color
-      backgroundColor={theme.background} // Adjust background color
-    />
-  );
+    return (
+        <StatusBar
+            barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} // Adjust text/icon color
+            backgroundColor={theme.background} // Adjust background color
+        />
+    );
 };
 
 export default function RootLayout() {
-  const router = useRouter(); // For navigation
-  const pathname = usePathname(); // Get current page route name
+    const router = useRouter(); // For navigation
+    const pathname = usePathname(); // Get current page route name
 
   // Handle hardware back button
   useEffect(() => {
