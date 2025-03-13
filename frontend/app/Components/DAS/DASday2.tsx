@@ -22,7 +22,7 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
   };
 
   const handleSmilePress = () => {
-    router.replace("/Components/DAS/DASGoal");
+    router.replace("/Components/DAS/DASMood");
   };
 
   const animateButton = () => {
