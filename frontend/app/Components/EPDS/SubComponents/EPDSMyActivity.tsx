@@ -65,37 +65,47 @@ export default function EPDSMyActivity() {
         if (user) {
             const userId = user.uid;
             try {
-                // Fetch activities from Firestore
+                // Load from local storage first
+                const cachedActivities = await AsyncStorage.getItem('cachedActivities');
+                if (cachedActivities) {
+                    setGroupedActivities(JSON.parse(cachedActivities)); // Show cached data immediately
+                }
+    
+                // Fetch new data from Firestore in the background
                 const activitiesSnapshot = await firestore()
                     .collection('EPDSDepressionActivities')
                     .doc(userId)
                     .get();
-
+    
                 if (activitiesSnapshot.exists) {
                     const activitiesData = activitiesSnapshot.data();
-
+    
                     if (activitiesData) {
-                        // Group activities by category
+                        // Define the type for grouped
                         const grouped: { [key: string]: { id: string; title: string; description: string; }[] } = {};
-
+    
                         Object.keys(activitiesData).forEach(activityId => {
                             const activity = activitiesData[activityId];
                             const { category, title, description } = activity;
-
-                            // If category doesn't exist in grouped, create it
-                            if (!grouped[category]) {
-                                grouped[category] = [];
+    
+                            // Ensure category is a string
+                            if (typeof category === 'string') {
+                                if (!grouped[category]) {
+                                    grouped[category] = [];
+                                }
+    
+                                grouped[category].push({
+                                    id: activityId,
+                                    title,
+                                    description,
+                                });
                             }
-
-                            // Push activity to the correct category group
-                            grouped[category].push({
-                                id: activityId,
-                                title,
-                                description,
-                            });
                         });
-
-                        setGroupedActivities(grouped);
+    
+                        setGroupedActivities(grouped); // Update UI with new data
+    
+                        // Save to local storage for future use
+                        await AsyncStorage.setItem('cachedActivities', JSON.stringify(grouped));
                     }
                 }
             } catch (error) {
@@ -103,7 +113,8 @@ export default function EPDSMyActivity() {
             }
         }
     };
-
+    
+    // Use useEffect to load data immediately when the page opens
     useEffect(() => {
         fetchActivities();
     }, []);
@@ -130,7 +141,7 @@ export default function EPDSMyActivity() {
                     <Text style={styles.activityDescription}>{item.description}</Text>
                 </View>
                 <View style={styles.activityPoints}>
-                    <FontAwesome name="heart" size={16} color="#ff1493" />
+                    <FontAwesome name="heart" size={16} color="#FB5454" />
                     <Text style={styles.pointsText}>+10 </Text>
                     <Entypo name="chevron-thin-right" size={18} color="#008080" />
                 </View>
@@ -180,6 +191,27 @@ export default function EPDSMyActivity() {
                 break;
             case '2':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity02/Id02');
+                break;
+            case '3':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity03/Id03');
+                break;
+            case '4':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity04/Id04');
+                break;
+                case '5':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity05/Id05');
+                break;
+                case '6':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity06/Id06');
+                break;
+                case '7':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity07/Id07');
+                break;
+                case '8':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity08/Id08');
+                break;
+            case '11':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity11/Id11');
                 break;
             // Add more cases for other activity pages
             default:
@@ -279,6 +311,7 @@ export default function EPDSMyActivity() {
                             </Animated.View>
                             {' '}{leaves}
                         </Text>
+
                         <View style={styles.progressBar}>
                             <Animated.View style={[
                                 styles.progressFill,
@@ -287,7 +320,7 @@ export default function EPDSMyActivity() {
                         </View>
                         <Text style={styles.progressText}>
                             <Animated.View style={{ transform: [{ scale: heartScale }] }}>
-                                <FontAwesome name="heart" size={16} color="#ff1493" />
+                                <FontAwesome name="heart" size={16} color="#FB5454" />
                             </Animated.View>
                             {' '}{hearts}%
                         </Text>
@@ -329,7 +362,7 @@ export default function EPDSMyActivity() {
                         },
                     ]}
                 >
-                    <FontAwesome name="heart" size={16} color="#ff1493" />
+                    <FontAwesome name="heart" size={16} color="#FB5454" />
                 </Animated.View>
             ))}
 
@@ -458,7 +491,7 @@ const styles = StyleSheet.create({
     },
     progressFill: {
         height: '100%',
-        backgroundColor: '#ff1493',
+        backgroundColor: '#FB5454',
         borderRadius: 5,
     },
     progressContainer: {
@@ -533,7 +566,7 @@ const styles = StyleSheet.create({
     pointsText: {
         fontSize: 14,
         marginLeft: 5,
-        color: '#ff1493',
+        color: '#FB5454',
     },
     categorySection: {
         marginBottom: 20,

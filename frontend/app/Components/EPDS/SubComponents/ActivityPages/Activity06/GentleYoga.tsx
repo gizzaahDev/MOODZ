@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function Id03() {
+export default function GentleYoga() {
   return (
     <View>
-      <Text>Id03</Text>
+      <Text>GentleYoga</Text>
     </View>
   )
 }
