@@ -65,37 +65,47 @@ export default function EPDSMyActivity() {
         if (user) {
             const userId = user.uid;
             try {
-                // Fetch activities from Firestore
+                // Load from local storage first
+                const cachedActivities = await AsyncStorage.getItem('cachedActivities');
+                if (cachedActivities) {
+                    setGroupedActivities(JSON.parse(cachedActivities)); // Show cached data immediately
+                }
+    
+                // Fetch new data from Firestore in the background
                 const activitiesSnapshot = await firestore()
                     .collection('EPDSDepressionActivities')
                     .doc(userId)
                     .get();
-
+    
                 if (activitiesSnapshot.exists) {
                     const activitiesData = activitiesSnapshot.data();
-
+    
                     if (activitiesData) {
-                        // Group activities by category
+                        // Define the type for grouped
                         const grouped: { [key: string]: { id: string; title: string; description: string; }[] } = {};
-
+    
                         Object.keys(activitiesData).forEach(activityId => {
                             const activity = activitiesData[activityId];
                             const { category, title, description } = activity;
-
-                            // If category doesn't exist in grouped, create it
-                            if (!grouped[category]) {
-                                grouped[category] = [];
+    
+                            // Ensure category is a string
+                            if (typeof category === 'string') {
+                                if (!grouped[category]) {
+                                    grouped[category] = [];
+                                }
+    
+                                grouped[category].push({
+                                    id: activityId,
+                                    title,
+                                    description,
+                                });
                             }
-
-                            // Push activity to the correct category group
-                            grouped[category].push({
-                                id: activityId,
-                                title,
-                                description,
-                            });
                         });
-
-                        setGroupedActivities(grouped);
+    
+                        setGroupedActivities(grouped); // Update UI with new data
+    
+                        // Save to local storage for future use
+                        await AsyncStorage.setItem('cachedActivities', JSON.stringify(grouped));
                     }
                 }
             } catch (error) {
@@ -103,7 +113,8 @@ export default function EPDSMyActivity() {
             }
         }
     };
-
+    
+    // Use useEffect to load data immediately when the page opens
     useEffect(() => {
         fetchActivities();
     }, []);
@@ -183,6 +194,21 @@ export default function EPDSMyActivity() {
                 break;
             case '3':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity03/Id03');
+                break;
+            case '4':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity04/Id04');
+                break;
+                case '5':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity05/Id05');
+                break;
+                case '6':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity06/Id06');
+                break;
+                case '7':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity07/Id07');
+                break;
+                case '8':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity08/Id08');
                 break;
             case '11':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity11/Id11');
@@ -285,7 +311,7 @@ export default function EPDSMyActivity() {
                             </Animated.View>
                             {' '}{leaves}
                         </Text>
-                        
+
                         <View style={styles.progressBar}>
                             <Animated.View style={[
                                 styles.progressFill,

@@ -70,13 +70,13 @@ const MeditationHome = () => {
 
 
   const recordMeditation = async () => {
-    router.push('/Components/EPDS/SubComponents/ActivityPages/Activity03/ProgressiveMuscleEX');
+    router.push('/Components/EPDS/SubComponents/ActivityPages/Activity04/GratitudeMeditatio');
   };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={[styles.subMiniContainer]}>
-      <Text style={[styles.title, { color: theme.textPrimary }]}>Progressive Muscle</Text>
+      <Text style={[styles.title, { color: theme.textPrimary }]}>Gratitude Meditation</Text>
       <Text style={[styles.guidelines, { color: theme.textSecondary }]}>
         Focus on deep breathing and staying present. Follow the instructions during the meditation.
       </Text>

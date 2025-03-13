@@ -100,8 +100,17 @@ export default function RootLayout() {
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity02/BreathingEx" options={{title: 'BreathingEx', }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity03/Id03" options={{title: 'Id03',}}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity03/ProgressiveMuscleEX" options={{title: 'ProgressiveMuscleEX', }}/>
-
-
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity04/Id04" options={{title: 'Id04',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity04/GratitudeMeditatio" options={{title: 'GratitudeMeditation', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity05/Id05" options={{title: 'Id05',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity05/SleepRelaxationAudio" options={{title: 'SleepRelaxationAudio', }}/>
+        
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity06/Id06" options={{title: 'Id06',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity06/GentleYoga" options={{title: 'GentleYoga', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity07/Id07" options={{title: 'Id07',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity07/WalkingChallenge" options={{title: 'WalkingChallenge', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity08/Id08" options={{title: 'Id08',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity08/PelvicFloor" options={{title: 'PelvicFloor', }}/>
 
 
 

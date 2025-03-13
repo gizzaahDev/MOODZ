@@ -6,6 +6,7 @@ import auth from "@react-native-firebase/auth";
 import LottieView from "lottie-react-native";
 import { useTheme } from './ThemeContext';
 
+
 export default function Index() {
   const router = useRouter();
   const { theme } = useTheme() as { theme: any };
