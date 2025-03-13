@@ -61,6 +61,7 @@ export default function RootLayout() {
         <Stack.Screen name="Components/EPDS/Questionnaire" options={{ title: 'EPDSQuestionnaire', }}/>
         <Stack.Screen name="Components/GDS/Questionnaire" options={{ title: 'GDSQuestionnaire' }}/>
         <Stack.Screen name="Components/DAS/Questionnaire" options={{ title: 'DASQuestionnaire' }}/>
+        <Stack.Screen name="Components/Child/Questionnaire" options={{title: 'ChildQuestinnaire'}} />
 
         <Stack.Screen name="Components/EPDS/SubComponents/EPDSWelcome" options={{ title: 'EPDSWelcome' }}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ChooseActivities" options={{ title: 'ChooseActivities' }}/>
