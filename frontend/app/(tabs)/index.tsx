@@ -389,191 +389,191 @@ export default function Home() {
       </View>
     </View>
 
-    {/* Notification Bell */}
-    <View style={styles.iconWrapper}>
-      <MaterialCommunityIcons name="bell" size={28} style={{ color: theme.iconColor }} />
-      <View style={styles.badge}>
-        <Text style={styles.badgeText}>3</Text>
-      </View>
-    </View>
-  </View>
+//     {/* Notification Bell */}
+//     <View style={styles.iconWrapper}>
+//       <MaterialCommunityIcons name="bell" size={28} style={{ color: theme.iconColor }} />
+//       <View style={styles.badge}>
+//         <Text style={styles.badgeText}>3</Text>
+//       </View>
+//     </View>
+//   </View>
 
-  {/* Depression Categories */}
-  <View style={styles.categoryContainer}>
-    {/* Child Depression */}
-    <TouchableOpacity
-      style={[styles.categoryBox, { backgroundColor: '#E6E6FA' }]}
-      onPress={() => handlePress('child')}
-    >
-      {loading && selectedCategory === 'child' ? (
-        <LottieView
-          source={require('../../assets/lottie/LoadingAAA.json')}
-          autoPlay
-          loop
-          style={styles.lottie}
-        />
-      ) : (
-        <>
-          <Image source={require('../../assets/images/child.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Child{"\n"}Depression</Text>
-        </>
-      )}
-    </TouchableOpacity>
+//   {/* Depression Categories */}
+//   <View style={styles.categoryContainer}>
+//     {/* Child Depression */}
+//     <TouchableOpacity
+//       style={[styles.categoryBox, { backgroundColor: '#E6E6FA' }]}
+//       onPress={() => handlePress('child')}
+//     >
+//       {loading && selectedCategory === 'child' ? (
+//         <LottieView
+//           source={require('../../assets/lottie/LoadingAAA.json')}
+//           autoPlay
+//           loop
+//           style={styles.lottie}
+//         />
+//       ) : (
+//         <>
+//           <Image source={require('../../assets/images/child.png')} style={styles.categoryImage} />
+//           <Text style={styles.categoryText}>Child{"\n"}Depression</Text>
+//         </>
+//       )}
+//     </TouchableOpacity>
 
-    {/* Marital Depression */}
-    <TouchableOpacity
-      style={[styles.categoryBox, { backgroundColor: '#FAD2D2' }]}
-      onPress={() => handlePress('marital')}
-    >
-      {loading && selectedCategory === 'marital' ? (
-        <LottieView
-          source={require('../../assets/lottie/LoadingAAA.json')}
-          autoPlay
-          loop
-          style={styles.lottie}
-        />
-      ) : (
-        <>
-          <Image source={require('../../assets/images/marital.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Marital{"\n"}Depression</Text>
-        </>
-      )}
-    </TouchableOpacity>
+//     {/* Marital Depression */}
+//     <TouchableOpacity
+//       style={[styles.categoryBox, { backgroundColor: '#FAD2D2' }]}
+//       onPress={() => handlePress('marital')}
+//     >
+//       {loading && selectedCategory === 'marital' ? (
+//         <LottieView
+//           source={require('../../assets/lottie/LoadingAAA.json')}
+//           autoPlay
+//           loop
+//           style={styles.lottie}
+//         />
+//       ) : (
+//         <>
+//           <Image source={require('../../assets/images/marital.png')} style={styles.categoryImage} />
+//           <Text style={styles.categoryText}>Marital{"\n"}Depression</Text>
+//         </>
+//       )}
+//     </TouchableOpacity>
 
-    {/* Postpartum Depression */}
-    <TouchableOpacity
-      style={[styles.categoryBox, { backgroundColor: '#D2FAD2' }]}
-      onPress={() => handlePress('postpartum')}
-    >
-      {loading && selectedCategory === 'postpartum' ? (
-        <LottieView
-          source={require('../../assets/lottie/LoadingAAA.json')}
-          autoPlay
-          loop
-          style={styles.lottie}
-        />
-      ) : (
-        <>
-          <Image source={require('../../assets/images/postpartum.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Postpartum{"\n"}Depression</Text>
-        </>
-      )}
-    </TouchableOpacity>
+//     {/* Postpartum Depression */}
+//     <TouchableOpacity
+//       style={[styles.categoryBox, { backgroundColor: '#D2FAD2' }]}
+//       onPress={() => handlePress('postpartum')}
+//     >
+//       {loading && selectedCategory === 'postpartum' ? (
+//         <LottieView
+//           source={require('../../assets/lottie/LoadingAAA.json')}
+//           autoPlay
+//           loop
+//           style={styles.lottie}
+//         />
+//       ) : (
+//         <>
+//           <Image source={require('../../assets/images/postpartum.png')} style={styles.categoryImage} />
+//           <Text style={styles.categoryText}>Postpartum{"\n"}Depression</Text>
+//         </>
+//       )}
+//     </TouchableOpacity>
 
-    {/* Adult Depression */}
-    <TouchableOpacity
-      style={[styles.categoryBox, { backgroundColor: '#FADCA2' }]}
-      onPress={() => handlePress('adult')}
-    >
-      {loading && selectedCategory === 'adult' ? (
-        <LottieView
-          source={require('../../assets/lottie/LoadingAAA.json')}
-          autoPlay
-          loop
-          style={styles.lottie}
-        />
-      ) : (
-        <>
-          <Image source={require('../../assets/images/adult.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Adult{"\n"}Depression</Text>
-        </>
-      )}
-    </TouchableOpacity>
-  </View>
+//     {/* Adult Depression */}
+//     <TouchableOpacity
+//       style={[styles.categoryBox, { backgroundColor: '#FADCA2' }]}
+//       onPress={() => handlePress('adult')}
+//     >
+//       {loading && selectedCategory === 'adult' ? (
+//         <LottieView
+//           source={require('../../assets/lottie/LoadingAAA.json')}
+//           autoPlay
+//           loop
+//           style={styles.lottie}
+//         />
+//       ) : (
+//         <>
+//           <Image source={require('../../assets/images/adult.png')} style={styles.categoryImage} />
+//           <Text style={styles.categoryText}>Adult{"\n"}Depression</Text>
+//         </>
+//       )}
+//     </TouchableOpacity>
+//   </View>
 
-  {/* Articles Section */}
-  <View style={styles.articlesContainer}>
-    <Text style={[styles.articleTitle, { color: theme.textPrimary }]}>Articles</Text>
+//   {/* Articles Section */}
+//   <View style={styles.articlesContainer}>
+//     <Text style={[styles.articleTitle, { color: theme.textPrimary }]}>Articles</Text>
 
-    {/* Scrollable Articles */}
-    <ScrollView style={styles.articleScrollView} contentContainerStyle={{ paddingBottom: 220 }}>
-      {/* Article 1 */}
-      <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]} onPress={() => setModalVisible(true)}>
-        <View style={styles.articleContent}>
-          <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Postpartum Depression : </Text>
-          <Text style={[styles.articleText, { color: theme.dimText }]}>
-            A Comprehensive Overview of Causes, Symptoms, Diagnosis, and Treatment
-          </Text>
-        </View>
-        <Image
-          source={require('../../assets/images/postpartum.png')}
-          style={styles.articleImage}
-        />
-      </TouchableOpacity>
-      <Article1 modalVisible={modalVisible} setModalVisible={setModalVisible} />
+//     {/* Scrollable Articles */}
+//     <ScrollView style={styles.articleScrollView} contentContainerStyle={{ paddingBottom: 220 }}>
+//       {/* Article 1 */}
+//       <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]} onPress={() => setModalVisible(true)}>
+//         <View style={styles.articleContent}>
+//           <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Postpartum Depression : </Text>
+//           <Text style={[styles.articleText, { color: theme.dimText }]}>
+//             A Comprehensive Overview of Causes, Symptoms, Diagnosis, and Treatment
+//           </Text>
+//         </View>
+//         <Image
+//           source={require('../../assets/images/postpartum.png')}
+//           style={styles.articleImage}
+//         />
+//       </TouchableOpacity>
+//       <Article1 modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
-      {/* Article 2 */}
-      <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]} onPress={() => setModalVisible(true)}>
-        <View style={styles.articleContent}>
-          <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Elderly Depression : </Text>
-          <Text style={[styles.articleText, { color: theme.dimText }]}>
-            A Comprehensive Overview of Causes, Symptoms, Diagnosis, and Treatment
-          </Text>
-        </View>
-        <Image
-          source={require('../../assets/images/adult.png')}
-          style={styles.articleImage}
-        />
-      </TouchableOpacity>
-      <Article2 modalVisible={modalVisible} setModalVisible={setModalVisible} />
+//       {/* Article 2 */}
+//       <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]} onPress={() => setModalVisible(true)}>
+//         <View style={styles.articleContent}>
+//           <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Elderly Depression : </Text>
+//           <Text style={[styles.articleText, { color: theme.dimText }]}>
+//             A Comprehensive Overview of Causes, Symptoms, Diagnosis, and Treatment
+//           </Text>
+//         </View>
+//         <Image
+//           source={require('../../assets/images/adult.png')}
+//           style={styles.articleImage}
+//         />
+//       </TouchableOpacity>
+//       <Article2 modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
-      {/* Article 3 */}
-      <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
-        <View style={styles.articleContent}>
-          <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>
-          <Text style={[styles.articleText, { color: theme.dimText }]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </Text>
-        </View>
-        <Image
-          source={require('../../assets/images/marital.png')}
-          style={styles.articleImage}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
-        <View style={styles.articleContent}>
-          <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>
-          <Text style={[styles.articleText, { color: theme.dimText }]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </Text>
-        </View>
-        <Image
-          source={require('../../assets/images/marital.png')}
-          style={styles.articleImage}
-        />
-      </TouchableOpacity>
-    </ScrollView>
-  </View>
+//       {/* Article 3 */}
+//       <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+//         <View style={styles.articleContent}>
+//           <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>
+//           <Text style={[styles.articleText, { color: theme.dimText }]}>
+//             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+//           </Text>
+//         </View>
+//         <Image
+//           source={require('../../assets/images/marital.png')}
+//           style={styles.articleImage}
+//         />
+//       </TouchableOpacity>
+//       <TouchableOpacity style={[styles.articleBox, { backgroundColor: theme.semi_container }]}>
+//         <View style={styles.articleContent}>
+//           <Text style={[styles.articleHeading, { color: theme.textPrimary }]}>Article 2</Text>
+//           <Text style={[styles.articleText, { color: theme.dimText }]}>
+//             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+//           </Text>
+//         </View>
+//         <Image
+//           source={require('../../assets/images/marital.png')}
+//           style={styles.articleImage}
+//         />
+//       </TouchableOpacity>
+//     </ScrollView>
+//   </View>
 
-  {/* Full-Screen Popup */}
-  {modalVisibleAct && (
-    <View style={styles.fullScreenOverlay}>
-      {/* Overlay to close the popup when clicked outside */}
-      <TouchableOpacity
-        style={styles.overlay}
-        activeOpacity={1} // Prevents flickering
-        onPress={() => setModalVisibleAct(false)} // Close popup when clicked outside
-      >
-        {/* Popup content */}
-        <View style={styles.fullScreenPopup}>
-          <Text style={styles.modalText}>Choose an option:</Text>
-          <TouchableOpacity
-            style={styles.modalButton}
-            onPress={() => handleUserChoice('questionnaire', selectedCategory!)}
-          >
-            <Text style={styles.modalButtonText}>Questionnaire</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.modalButton}
-            onPress={() => handleUserChoice('activities', selectedCategory!)}
-          >
-            <Text style={styles.modalButtonText}>Activities</Text>
-          </TouchableOpacity>
-        </View>
-      </TouchableOpacity>
-    </View>
-  )}
-</View>
+//   {/* Full-Screen Popup */}
+//   {modalVisibleAct && (
+//     <View style={styles.fullScreenOverlay}>
+//       {/* Overlay to close the popup when clicked outside */}
+//       <TouchableOpacity
+//         style={styles.overlay}
+//         activeOpacity={1} // Prevents flickering
+//         onPress={() => setModalVisibleAct(false)} // Close popup when clicked outside
+//       >
+//         {/* Popup content */}
+//         <View style={styles.fullScreenPopup}>
+//           <Text style={styles.modalText}>Choose an option:</Text>
+//           <TouchableOpacity
+//             style={styles.modalButton}
+//             onPress={() => handleUserChoice('questionnaire', selectedCategory!)}
+//           >
+//             <Text style={styles.modalButtonText}>Questionnaire</Text>
+//           </TouchableOpacity>
+//           <TouchableOpacity
+//             style={styles.modalButton}
+//             onPress={() => handleUserChoice('activities', selectedCategory!)}
+//           >
+//             <Text style={styles.modalButtonText}>Activities</Text>
+//           </TouchableOpacity>
+//         </View>
+//       </TouchableOpacity>
+//     </View>
+//   )}
+// </View>
   );
 }
 
