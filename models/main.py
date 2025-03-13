@@ -5,6 +5,7 @@ import numpy as np # type: ignore
 from ultralytics import YOLO
 from PIL import Image
 import io
+import pandas as pd
 import pickle
 import joblib
 import uvicorn
@@ -75,17 +76,17 @@ class ChildInput(BaseModel):
     Q20: int
 
 # Postpartum Inputs
-class PostpartumInput(BaseModel):
-    q1: int
-    q2: int
-    q3: int
-    q4: int
-    q5: int
-    q6: int
-    q7: int
-    q8: int
-    q9: int
-    q10: int
+class EPDSInput(BaseModel):
+    Q1: int
+    Q2: int
+    Q3: int
+    Q4: int
+    Q5: int
+    Q6: int
+    Q7: int
+    Q8: int
+    Q9: int
+    Q10: int
 
 # Adult Inputs
 class AdultInput(BaseModel):
@@ -200,38 +201,57 @@ def child_predict(data: ChildInput):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction err: {e}")
     
+    
 # Postpartum Route
-class EPDSResponse(BaseModel):
-    prediction: int
-    prediction_text: str
-
-@app.post("/postpartum/predict", response_model=EPDSResponse)
-async def predict_epds(request: PostpartumInput):
+def reverse_scoring(data):
     try:
-        # Prepare the input features
-        features = np.array([
-            [
-                request.q1, request.q2, request.q3, request.q4, request.q5,
-                request.q6, request.q7, request.q8, request.q9, request.q10
-            ]
-        ])
-
-        # Make prediction
-        prediction = model.predict(features)[0]
-
-        # Map prediction to text
-        if prediction == 0:
-            prediction_text = "Low Risk"
-        elif prediction == 1:
-            prediction_text = "Moderate Risk"
-        else:
-            prediction_text = "High Risk"
-
-        # Return prediction
-        return EPDSResponse(prediction=prediction, prediction_text=prediction_text)
-
+        data['Q3'] = 3 - data['Q3']
+        data['Q5'] = 3 - data['Q5']
+        data['Q10'] = 3 - data['Q10']
+        return data
+    except KeyError as e:
+        raise HTTPException(status_code=400, detail=f"Missing key in input data: {str(e)}")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Error processing the data: {str(e)}")
+
+# Categorize depression risk based on the total score
+def categorize_epds(score):
+    try:
+        if score <= 9:
+            return 'Low'
+        elif 10 <= score <= 19:
+            return 'Moderate'
+        else:
+            return 'High'
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error categorizing depression level: {str(e)}")
+    
+
+@app.post("/postpartum/predict")
+async def predict(epds_input: EPDSInput):
+    try:
+        # Convert the input to a DataFrame
+        input_data = pd.DataFrame([epds_input.dict()])
+
+        # Apply reverse scoring
+        input_data = reverse_scoring(input_data)
+
+        # Calculate the total score
+        input_data['Total_Score'] = input_data[['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10']].sum(axis=1)
+
+        # Predict using the trained model
+        prediction = model.predict(input_data[['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10']])
+
+        # Categorize the result into 'Low', 'Moderate', or 'High'
+        depression_level = categorize_epds(input_data['Total_Score'].iloc[0])
+
+        return {"depression_level": depression_level}
+
+    except KeyError as e:
+        raise HTTPException(status_code=400, detail=f"Invalid input data format: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing the prediction: {str(e)}")
+    
     
 # Adult Route
 @app.post("/adult/predict")

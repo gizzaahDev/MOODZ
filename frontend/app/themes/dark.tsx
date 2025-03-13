@@ -46,4 +46,6 @@ export default {
     landingListItem: "#fff",
     childLottieCircle: "rgba(5, 190, 201, 0.3)",
     childModal: "rgba(231, 231, 231, 0.4)",
+  
+  
 };
