@@ -93,9 +93,8 @@ const UploadPhoto = () => {
         const result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [4, 4],
             quality: 1,
-            base64: true
         });
 
         if (!result.canceled) {
@@ -112,7 +111,7 @@ const UploadPhoto = () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [4, 4],
             quality: 1,
         });
 
@@ -132,18 +131,10 @@ const UploadPhoto = () => {
         setLoading(true);
 
         try {
-            const formData = new FormData();
-            formData.append("file", {
-                uri: selectedImage,
-                name: "photo.jpg",
-                type: "image/jpeg",
-            } as any);
-
             const response = await axios.post(
                 "https://moodz.fly.dev/child/classify/",
-                formData,
                 {
-                    headers: { "Content-Type": "multipart/form-data" },
+                    uri: selectedImage
                 }
             );
 
