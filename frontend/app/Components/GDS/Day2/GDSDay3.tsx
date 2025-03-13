@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet,Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '../../ThemeContext';
+import { useTheme } from '../../../ThemeContext';
 import { useRouter } from 'expo-router';
 import LottieView from 'lottie-react-native';
-import FontLoader from '../../../FontLoader';
+import FontLoader from '../../../../FontLoader';
 
-const GDSDay1 = () => {
+const GDSDay3 = () => {
   const { theme } = useTheme();
   const router = useRouter();
 
@@ -19,11 +19,11 @@ const GDSDay1 = () => {
         
         {/* Title */}
         <View style={styles.textContainer}>
-          <Text style={[styles.heading, { color: theme.textPrimary }]}>Day 01</Text>
+          <Text style={[styles.heading, { color: theme.textPrimary }]}>Day 03</Text>
 
           <View style={styles.imgcontainerday1}>
             <Image
-              source={require('../../../assets/images/icon.png')}
+              source={require('../../../../assets/images/icon.png')}
               style={[styles.startImage1, theme.imageStyle]} // Apply imageStyle from theme
             />
           </View>
@@ -36,25 +36,25 @@ const GDSDay1 = () => {
 
           {/* First Row */}
           <View style={styles.buttonRow}>
-            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Music1")}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/MealPlan")}>
               <View style={styles.buttonWrapper}>
                 <LottieView 
-                  source={require('../../../assets/lottie/musicGDS.json')} 
+                  source={require('../../../../assets/lottie/musicGDS.json')} 
                   autoPlay loop 
                   style={styles.lottie} 
                 />
-                <Text style={styles.buttonText}>Music Therapy</Text>
+                <Text style={styles.buttonText}>Meal Plan</Text>
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Yoga1")}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Story1GDS")}>
               <View style={styles.buttonWrapper}>
                 <LottieView 
-                  source={require('../../../assets/lottie/yogaGDS.json')} 
+                  source={require('../../../../assets/lottie/MeditationGDS.json')} 
                   autoPlay loop 
                   style={styles.lottie} 
                 />
-                <Text style={styles.buttonText}>Yoga Exercises</Text>
+                <Text style={styles.buttonText}>STORY</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -64,7 +64,7 @@ const GDSDay1 = () => {
             <TouchableOpacity onPress={() => navigateTo("/Components/GDS/SmileGDS")}>
               <View style={styles.buttonWrapper}>
                 <LottieView 
-                  source={require('../../../assets/lottie/smileGDS.json')} 
+                  source={require('../../../../assets/lottie/smileGDS.json')} 
                   autoPlay loop 
                   style={styles.lottie} 
                 />
@@ -75,7 +75,7 @@ const GDSDay1 = () => {
             <TouchableOpacity onPress={() => navigateTo("/Components/GDS/PositiveT")}>
               <View style={styles.buttonWrapper}>
                 <LottieView 
-                  source={require('../../../assets/lottie/PositiveT.json')} 
+                  source={require('../../../../assets/lottie/PositiveT.json')} 
                   autoPlay loop 
                   style={styles.lottie} 
                 />
@@ -154,4 +154,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GDSDay1;
+export default GDSDay3;
