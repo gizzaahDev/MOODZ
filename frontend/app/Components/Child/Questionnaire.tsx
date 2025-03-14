@@ -349,6 +349,7 @@ const Questionnaire = () => {
             );
 
             const prediction = response.data;
+            console.log(prediction)
             // prediction have two atrributes. prediction (0/1) and isDeprssed (yes/no)
 
             if (userId) {
@@ -463,8 +464,7 @@ const Questionnaire = () => {
                                         { color: theme.title },
                                     ]}
                                 >
-                                    Center for Epidemiological Studies
-                                    Depression Scale for Children
+                                    CES-DC
                                 </Text>
                             </BlurView>
 
