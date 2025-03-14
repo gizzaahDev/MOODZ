@@ -102,7 +102,9 @@ const Landing = () => {
                         },
                     ]}
                 >
-                    <Text style={[styles.mainText, {color: theme.title}]}>remember!</Text>
+                    <Text style={[styles.mainText, { color: theme.title }]}>
+                        remember!
+                    </Text>
                 </Animated.View>
 
                 <Animated.View
@@ -115,12 +117,31 @@ const Landing = () => {
                         },
                     ]}
                 >
-                    <Text style={[styles.instruction, {color: theme.landingInstruction}]}>
+                    <Text
+                        style={[
+                            styles.instruction,
+                            { color: theme.landingInstruction },
+                        ]}
+                    >
                         You are required to participate in two assessments
                         related to your child's data.
                     </Text>
-                    <Text style={[styles.listItem, {color: theme.landingListItem}]}>1. Upload a photo of your child's face.</Text>
-                    <Text style={[styles.listItem, {color: theme.landingListItem}]}>2. Complete the CES-DC Assessment.</Text>
+                    <Text
+                        style={[
+                            styles.listItem,
+                            { color: theme.landingListItem },
+                        ]}
+                    >
+                        1. Upload a photo of your child's face.
+                    </Text>
+                    <Text
+                        style={[
+                            styles.listItem,
+                            { color: theme.landingListItem },
+                        ]}
+                    >
+                        2. Complete the CES-DC Assessment.
+                    </Text>
                 </Animated.View>
 
                 <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
@@ -186,7 +207,7 @@ const styles = StyleSheet.create({
         lineHeight: 24,
     },
     listItem: {
-        fontSize: 13,
+        fontSize: 14,
         marginBottom: 10,
     },
     startButton: {
