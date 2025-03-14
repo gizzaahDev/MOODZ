@@ -112,7 +112,7 @@ const Photo = () => {
             //     );
             // }
 
-            router.push("/Components/Child/DepressionLevel")
+            router.push("/Components/Child/DepressionLevel");
         } catch (error: any) {
             console.error("Error uploading image:", error);
             Alert.alert(
@@ -260,23 +260,28 @@ const Photo = () => {
                     </View>
                 </View>
             )}
+
+            <Image
+                style={styles.leaveImg}
+                source={require("../../../assets/images/leafBGA.png")}
+            />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    modalContainer: {
+        height: "100%",
+        paddingTop: 60,
+        alignItems: "center",
+    },
     lottie: {
         width: 300,
         height: 300,
     },
-    modalContainer: {
-        flex: 1,
-        paddingTop: 50,
-        alignItems: "center",
-    },
     wrapper: {
-      display: "flex",
-      gap: 50
+        display: "flex",
+        gap: 50,
     },
     modalContent: {
         alignItems: "center",
@@ -336,6 +341,9 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
         fontFamily: "poppinsSemiBold",
+    },
+    leaveImg: {
+        width: "100%",
     },
 });
 
