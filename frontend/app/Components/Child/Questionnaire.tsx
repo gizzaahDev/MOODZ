@@ -349,7 +349,7 @@ const Questionnaire = () => {
             );
 
             const prediction = response.data;
-            console.log(prediction)
+            console.log(prediction);
             // prediction have two atrributes. prediction (0/1) and isDeprssed (yes/no)
 
             if (userId) {
