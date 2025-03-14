@@ -12,6 +12,7 @@ import { useRouter } from "expo-router";
 import { useTheme } from "../../ThemeContext";
 import LottieView from "lottie-react-native";
 import FontLoader from "@/FontLoader";
+import { Path } from "react-native-svg";
 
 const DepressionLevel = () => {
     const { theme } = useTheme();
@@ -128,7 +129,11 @@ const DepressionLevel = () => {
                     <TouchableOpacity
                         style={styles.startButton}
                         onPress={() => {
-                            router.push("/Components/Child/Activity/ActivityWelcome");
+                            router.push({
+                                pathname:
+                                    "/Components/Child/Activity/ActivityWelcome",
+                                params: { depLevel },
+                            });
                         }}
                     >
                         <Text style={styles.startButtonText}>Let's Go</Text>

@@ -9,7 +9,7 @@ import {
     Easing,
     Image,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useTheme } from "../../../ThemeContext";
 import FontLoader from "@/FontLoader";
 
@@ -17,8 +17,9 @@ const { width } = Dimensions.get("window");
 
 const ActivityWelcome = () => {
     const { theme } = useTheme() as { theme: any };
-    const [currentScreen, setCurrentScreen] = useState(0);
     const router = useRouter();
+
+    const { depLevel } = useLocalSearchParams();
 
     const handleNext = () => {
         router.replace("/Components/Child/Activity/ActivityIntro");
