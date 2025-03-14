@@ -10,17 +10,7 @@ import pickle
 import joblib
 import uvicorn
 
-# Enable CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 ## Load the models
-
 # Child Image Model
 face_detector = YOLO("Face_Detector.pt")
 emotion_classifier = YOLO("Emotion_Classifier.pt")
@@ -64,6 +54,15 @@ except FileNotFoundError:
 
 ## Create FastAPI app
 app = FastAPI()
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 ## Input model for request body validation
 # Child Inputs
