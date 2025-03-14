@@ -138,7 +138,9 @@ const UploadPhoto = () => {
                         style={{ transform: [{ scale: scaleAnim }] }}
                     >
                         <TouchableOpacity
-                            onPress={() => {router.push("/Components/Child/Questionnaire");}}
+                            onPress={() => {
+                                router.push("/Components/Child/Questionnaire");
+                            }}
                             style={styles.startButton}
                         >
                             <Text style={styles.startButtonText}>Take</Text>
