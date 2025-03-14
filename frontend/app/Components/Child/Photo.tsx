@@ -112,7 +112,7 @@ const Photo = () => {
             //     );
             // }
 
-            router.push("/Components/Child/QuestionIntro")
+            router.push("/Components/Child/DepressionLevel")
         } catch (error: any) {
             console.error("Error uploading image:", error);
             Alert.alert(
