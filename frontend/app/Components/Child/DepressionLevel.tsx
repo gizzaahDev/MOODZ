@@ -4,6 +4,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     Animated,
+    ImageBackground,
+    Image,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
@@ -65,18 +67,18 @@ const DepressionLevel = () => {
     const getBackgroundColor = () => {
         switch (depLevel) {
             case "normal":
-                return "#D1FAE5"; 
+                return "#D1FAE5";
             case "low":
-                return "#FEF3C7"; 
+                return "#FEF3C7";
             case "moderate":
-                return "#FDE68A"; 
+                return "#FDE68A";
             case "high":
-                return "#FECACA"; 
+                return "#FECACA";
             default:
-                return "#E5E7EB"; 
+                return "#E5E7EB";
         }
     };
-    
+
     return (
         <FontLoader>
             <View
@@ -104,14 +106,35 @@ const DepressionLevel = () => {
                     />
 
                     <View style={styles.textContainer}>
-                        <Text style={[styles.title, {color: theme.textPrimary}]}>Your Depression Level</Text>
-                        <Text style={[styles.depLevelText, {color: theme.textPrimary}]}>{depLevel}</Text>
+                        <Text
+                            style={[styles.title, { color: theme.textPrimary }]}
+                        >
+                            Your Depression Level
+                        </Text>
+                        <Text
+                            style={[
+                                styles.depLevelText,
+                                { color: theme.textPrimary },
+                            ]}
+                        >
+                            {depLevel}
+                        </Text>
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.startButton} onPress={() => {router.push("/Components/Child/ActivityIntro")}}>
-                    <Text style={styles.startButtonText}>Let's Go</Text>
-                </TouchableOpacity>
+                <ImageBackground
+                    source={require("../../../assets/images/lotusBg.png")}
+                    style={{ width: "100%", height: 200 }}
+                >
+                    <TouchableOpacity
+                        style={styles.startButton}
+                        onPress={() => {
+                            router.push("/Components/Child/ActivityIntro");
+                        }}
+                    >
+                        <Text style={styles.startButtonText}>Let's Go</Text>
+                    </TouchableOpacity>
+                </ImageBackground>
             </View>
         </FontLoader>
     );
@@ -142,7 +165,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         alignItems: "center",
-        marginTop: 20
+        marginTop: 20,
     },
     title: {
         fontSize: 24,
@@ -162,7 +185,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         alignItems: "center",
         backgroundColor: "#016A70",
-        marginBottom: 40
+        marginBottom: 40,
     },
     startButtonText: {
         color: "#fff",
