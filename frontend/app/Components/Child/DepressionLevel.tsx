@@ -11,7 +11,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import { useTheme } from "../../ThemeContext";
 import LottieView from "lottie-react-native";
-import { useRoute } from "@react-navigation/native";
 import FontLoader from "@/FontLoader";
 
 const DepressionLevel = () => {
@@ -124,12 +123,12 @@ const DepressionLevel = () => {
 
                 <ImageBackground
                     source={require("../../../assets/images/lotusBg.png")}
-                    style={{ width: "100%", height: 200 }}
+                    style={{ width: "100%", height: 330 }}
                 >
                     <TouchableOpacity
                         style={styles.startButton}
                         onPress={() => {
-                            router.push("/Components/Child/ActivityIntro");
+                            router.push("/Components/Child/Activity/ActivityWelcome");
                         }}
                     >
                         <Text style={styles.startButtonText}>Let's Go</Text>
@@ -185,7 +184,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         alignItems: "center",
         backgroundColor: "#016A70",
-        marginBottom: 40,
+        marginTop: 60,
     },
     startButtonText: {
         color: "#fff",
