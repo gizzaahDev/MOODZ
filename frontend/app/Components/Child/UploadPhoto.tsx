@@ -6,11 +6,8 @@ import {
     Animated,
     Easing,
     View,
-    Modal,
-    Image,
-    Alert,
 } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import FontLoader from "../../../FontLoader";
 import { useTheme } from "../../ThemeContext";
 import { useRouter } from "expo-router";
