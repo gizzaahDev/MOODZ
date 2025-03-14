@@ -160,7 +160,7 @@ def read_root():
     return {"message": "Wellcome to MOODZ!"}
 
 # Child Image Route
-@app.post("/child/classify/")
+@app.post("/child/classify")
 async def classify_emotion(file: UploadFile = File(...)):
     try:
         # Read image
