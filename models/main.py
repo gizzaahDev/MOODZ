@@ -10,7 +10,21 @@ import pickle
 import joblib
 import uvicorn
 
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 ## Load the models
+
+# Child Image Model
+face_detector = YOLO("Face_Detector.pt")
+emotion_classifier = YOLO("Emotion_Classifier.pt")
+
 # Child Model
 child_model_path = "childPredictor.pickle"
 
@@ -146,20 +160,7 @@ class MarriedInput(BaseModel):
 def read_root():
     return {"message": "Wellcome to MOODZ!"}
 
-# Child Image Classifier
-# Load models
-face_detector = YOLO("Face_Detector.pt")
-emotion_classifier = YOLO("Emotion_Classifier.pt")
-
-# Enable CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Adjust this to specific origins if needed
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
+# Child Image Route
 @app.post("/child/classify/")
 async def classify_emotion(file: UploadFile = File(...)):
     try:
