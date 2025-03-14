@@ -2,6 +2,7 @@ export default {
     background: "#0F0F0F",
     textPrimary: "#ffffff",
     textSecondary: "#bbbbbb",
+    textTernary: "#F3FAF4",
     textDimSubTitle: "#ccc",
     textPopup: "#bbbbbb",
     buttonBackground: "#016A70",
@@ -47,4 +48,5 @@ export default {
     childLottieCircle: "rgba(5, 190, 201, 0.3)",
     childModal: "#0F0F0F",
     childModalContent: "rgba(176, 176, 176, 0.2)",
+    ChildMidShadow: 0
 };
