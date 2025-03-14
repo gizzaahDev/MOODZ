@@ -89,28 +89,30 @@ const Photo = () => {
                 type: "image/jpeg",
             } as any);
 
-            const response = await axios.post(
-                "https://moodz.fly.dev/child/classify/",
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                }
-            );
+            // const response = await axios.post(
+            //     "https://moodz.fly.dev/child/classify",
+            //     formData,
+            //     {
+            //         headers: { "Content-Type": "multipart/form-data" },
+            //     }
+            // );
 
-            const result = response.data;
-            console.log("API Response:", result);
+            // const result = response.data;
+            // console.log("API Response:", result);
 
-            if (result.status === "success") {
-                router.push({
-                    pathname: "/Components/Child/Landing",
-                    params: { emotion: result.emotion },
-                });
-            } else {
-                Alert.alert(
-                    "Error",
-                    result.detail || "Failed to classify image"
-                );
-            }
+            // if (result.status === "success") {
+            //     router.push({
+            //         pathname: "/Components/Child/QuestionIntro",
+            //         params: { emotion: result.emotion },
+            //     });
+            // } else {
+            //     Alert.alert(
+            //         "Error",
+            //         result.detail || "Failed to classify image"
+            //     );
+            // }
+
+            router.push("/Components/Child/QuestionIntro")
         } catch (error: any) {
             console.error("Error uploading image:", error);
             Alert.alert(
