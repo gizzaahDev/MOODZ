@@ -18,7 +18,7 @@ const Breathing = () => {
     const [duration, setDuration] = useState(0);
 
     // Find the selected exercise
-    const exercise = BreathExercises.find((ex) => ex.id === "ca3");
+    const exercise = BreathExercises.find((ex) => ex.id === "ca6");
 
     // Format time function
     const formatTime = (millis: number) => {
@@ -131,7 +131,7 @@ const Breathing = () => {
             >
                 <View style={styles.titleContainer}>
                     <Text style={[styles.title, { color: theme.textTernary }]}>
-                        🌿 Welcome to day one of your breathing journey.
+                        🌿 Welcome to {exercise?.title} your wellness journey.
                     </Text>
                 </View>
 
@@ -256,8 +256,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 28,
-        textAlign: "center",
         fontFamily: "robotoBold",
+        textAlign: "center",
+        textTransform:"capitalize"
     },
     animation: {
         width: 400,
