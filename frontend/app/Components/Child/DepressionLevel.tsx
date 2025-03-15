@@ -5,23 +5,38 @@ import {
     TouchableOpacity,
     Animated,
     ImageBackground,
-    Image,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import { useTheme } from "../../ThemeContext";
 import LottieView from "lottie-react-native";
 import FontLoader from "@/FontLoader";
-import { Path } from "react-native-svg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DepressionLevel = () => {
     const { theme } = useTheme();
     const router = useRouter();
 
+    const [userName, setUserName] = useState("User");
     const [imgValue, setImgValue] = useState("negative");
-    const [quizValue, setQuizValue] = useState("no");
+    const [quizValue, setQuizValue] = useState("yes");
     const [depLevel, setDepLevel] = useState("unknown");
 
+    // Get the logged username
+    useEffect(() => {
+        const loadUserData = async () => {
+            try {
+                const name = await AsyncStorage.getItem("userName");
+                setUserName(name ?? "User");
+            } catch (error) {
+                console.error("Failed to load user data:", error);
+            }
+        };
+
+        loadUserData();
+    }, []);
+
+    // Define the depression level
     useEffect(() => {
         const combinedValue = `${imgValue}-${quizValue}`;
 
@@ -107,14 +122,22 @@ const DepressionLevel = () => {
 
                     <View style={styles.textContainer}>
                         <Text
-                            style={[styles.title, { color: theme.textPrimary }]}
+                            style={[
+                                styles.username,
+                                { color: theme.textTernary },
+                            ]}
+                        >
+                            Hi {userName},
+                        </Text>
+                        <Text
+                            style={[styles.title, { color: theme.textTernary }]}
                         >
                             Your Depression Level
                         </Text>
                         <Text
                             style={[
                                 styles.depLevelText,
-                                { color: theme.textPrimary },
+                                { color: theme.textTernary },
                             ]}
                         >
                             {depLevel}
@@ -131,7 +154,7 @@ const DepressionLevel = () => {
                         onPress={() => {
                             router.push({
                                 pathname:
-                                    "/Components/Child/Activity/ActivityWelcome",
+                                    "/Components/Child/Activity/ActivityIntro",
                                 params: { depLevel },
                             });
                         }}
@@ -171,6 +194,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 20,
     },
+    username: { fontSize: 22, fontFamily: "robotoBold", marginBottom: 5 },
     title: {
         fontSize: 24,
         fontWeight: "600",

@@ -9,8 +9,9 @@ import {
     Animated,
     Easing,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { useTheme } from "../../../ThemeContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("window");
 
@@ -53,6 +54,7 @@ const ActivityIntro = () => {
     const { theme } = useTheme() as { theme: any };
     const [currentScreen, setCurrentScreen] = useState(0);
     const router = useRouter();
+    const { depLevel } = useLocalSearchParams();
 
     const handleNext = () => {
         if (currentScreen === data.length - 1) {
@@ -102,7 +104,13 @@ const ActivityIntro = () => {
                 <Text
                     style={[styles.headerTitle, { color: theme.textTernary }]}
                 >
-                    Welcome to Your Wellness Journey!
+                    Welcome to Your{" "}
+                    {depLevel === "low"
+                        ? "5"
+                        : depLevel === "moderate"
+                        ? "10"
+                        : "-1"}{" "}
+                    Days Wellness Journey!
                 </Text>
             </View>
 

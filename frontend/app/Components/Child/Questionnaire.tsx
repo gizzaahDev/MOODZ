@@ -215,7 +215,6 @@ const Questionnaire = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [prediction, setPrediction] = useState("");
-    const [userName, setUserName] = useState("User");
 
     const router = useRouter();
 
@@ -232,18 +231,6 @@ const Questionnaire = () => {
         fetchUser();
     }, []);
 
-    useEffect(() => {
-        const loadUserData = async () => {
-            try {
-                const name = await AsyncStorage.getItem("userName");
-                setUserName(name ?? "User");
-            } catch (error) {
-                console.error("Failed to load user data:", error);
-            }
-        };
-
-        loadUserData();
-    }, []);
 
     const { theme } = useTheme() as { theme: any };
 
