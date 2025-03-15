@@ -7,37 +7,37 @@ interface beInter {
 const BreathExercises: beInter[] = [
     {
         id: "ca1",
-        title: "Normal Breathing",
+        title: "Normal Breath",
         audio: require("../../../../../assets/songs/Mental_Reset_in_5.mp3"),
     },
     {
         id: "ca2",
-        title: "Flower Breathing",
+        title: "Flower Breath",
         audio: require("../../../../../assets/songs/FlowerBreath.mp3"),
     },
     {
         id: "ca3",
-        title: "Buble Breathing",
+        title: "Buble Breath",
         audio: require("../../../../../assets/songs/BubbleBreath.mp3"),
     },
     {
         id: "ca4",
-        title: "Bee Breathing",
+        title: "Bee Breath",
         audio: require("../../../../../assets/songs/BeeBreath.mp3"),
     },
     {
         id: "ca5",
-        title: "Ballon Breathing",
+        title: "Ballon Breath",
         audio: require("../../../../../assets/songs/BallonBreath.mp3"),
     },
     {
         id: "ca6",
-        title: "HotChocolate Breathing",
+        title: "HotChocolate Breath",
         audio: require("../../../../../assets/songs/HotChocoBreath.mp3"),
     },
     {
         id: "ca7",
-        title: "Dragon Breathing",
+        title: "Dragon Breath",
         audio: require("../../../../../assets/songs/DragonBreath.mp3"),
     },
 ];
