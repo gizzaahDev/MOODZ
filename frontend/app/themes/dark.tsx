@@ -48,5 +48,7 @@ export default {
     childLottieCircle: "rgba(5, 190, 201, 0.3)",
     childModal: "#0F0F0F",
     childModalContent: "rgba(176, 176, 176, 0.2)",
-    ChildMidShadow: 0
+    ChildMidShadow: 0,
+    smallBtnBg: "rgba(176, 176, 176, 0.2)",
+    loadingModalBg: "rgba(0, 0, 0, 0.8)",
 };
