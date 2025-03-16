@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     },
     startButtonText: {
         color: "#fff",
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: "poppinsSemiBold",
     },
 });
