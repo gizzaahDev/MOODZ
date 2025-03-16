@@ -334,12 +334,12 @@ const styles = StyleSheet.create({
     },
     backBtnText: {
         color: "#fff",
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: "poppinsSemiBold",
     },
     confirmBtnText: {
         color: "#fff",
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: "poppinsSemiBold",
     },
     leaveImg: {
