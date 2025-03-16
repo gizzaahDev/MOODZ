@@ -21,7 +21,6 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
 import buttonSizes from "../../Dimensions/buttonSize";
 import LottieView from "lottie-react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const questions = [
     {
