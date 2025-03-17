@@ -17,7 +17,7 @@ const BreathExercises: beInter[] = [
     },
     {
         id: "ca3",
-        title: "Buble Breath",
+        title: "Bubble Breath",
         audio: require("../../../../../assets/songs/BubbleBreath.mp3"),
     },
     {
@@ -27,7 +27,7 @@ const BreathExercises: beInter[] = [
     },
     {
         id: "ca5",
-        title: "Ballon Breath",
+        title: "Balloon Breath",
         audio: require("../../../../../assets/songs/BallonBreath.mp3"),
     },
     {
