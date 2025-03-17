@@ -167,11 +167,11 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginVertical: 35,
+        marginVertical: 45,
     },
     img: {
-        width: 400,
-        height: 400,
+        width: 350,
+        height: 350,
     },
     mainTextContainer: {
         display: "flex",
