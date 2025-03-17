@@ -201,13 +201,13 @@ const styles = StyleSheet.create({
     instruction: {
         textAlign: "center",
         fontFamily: "roboto",
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: "500",
         marginBottom: 15,
         lineHeight: 24,
     },
     listItem: {
-        fontSize: 14,
+        fontSize: 13,
         marginBottom: 10,
     },
     startButton: {
