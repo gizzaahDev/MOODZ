@@ -15,11 +15,12 @@ import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LottieView from "lottie-react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
 const Journal = () => {
     const { theme } = useTheme();
     const router = useRouter();
+    const { aid } = useLocalSearchParams();
     const [text, setText] = useState("");
     const [userId, setUserId] = useState<string | null>(null);
     const [userName, setUserName] = useState("User");
@@ -82,7 +83,7 @@ const Journal = () => {
         try {
             if (userId) {
                 const payload = {
-                    id: "ca11",
+                    id: aid,
                     text,
                     day: getDate(),
                     timestamp: firestore.FieldValue.serverTimestamp(),
