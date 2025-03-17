@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useEffect, useRef } from "react";
 import FontLoader from "../../../../../FontLoader";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useTheme } from "../../../../ThemeContext";
 import Sound from "./Sound";
 
@@ -18,7 +18,8 @@ const Intro = () => {
     const router = useRouter();
     const { theme } = useTheme() as { theme: any };
 
-    const natureSound = Sound.find((item) => item.id === "ca9");
+    const { aid } = useLocalSearchParams();
+    const natureSound = Sound.find((item) => item.id === aid);
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideUpAnim = useRef(new Animated.Value(100)).current;
