@@ -5,20 +5,14 @@ import { Audio } from 'expo-av';
 import LottieView from 'lottie-react-native';
 import FontLoader from '../../../FontLoader';
 import { useRouter } from 'expo-router';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const Music1 = () => {
   const { theme } = useTheme();
   const router = useRouter();
 
-
-  const handleGDSHomePress = () => {
-
-    router.replace("/Components/GDS/GDSHome");
-    // Navigate to GDS Home page
-  };
-
-
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   async function playSound() {
@@ -50,6 +44,26 @@ const Music1 = () => {
       : undefined;
   }, [sound]);
 
+  const handleGDSHomePress = async () => {
+    const userId = auth().currentUser?.uid;
+    if (!userId) return;
+    
+    try {
+      const userRef = firestore().collection('UsersGDS').doc(userId);
+      const userDoc = await userRef.get();
+      const data = userDoc.data() || { points: 0 };
+      
+      await userRef.set(
+        {
+          points: (data.points || 0) + 1, // Increment points
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error updating points:", error);
+    }
+    router.replace("/Components/GDS/GDSHome");
+  };
 
   return (
     <FontLoader>
@@ -70,10 +84,9 @@ const Music1 = () => {
         
         <View style={styles.backButtonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleGDSHomePress}>
-            <Text style={styles.backButtonText}>BACK</Text>
+            <Text style={styles.backButtonText}>NEXT</Text>
           </TouchableOpacity>
         </View>
-
       </View>
     </FontLoader>
   );
@@ -84,12 +97,10 @@ const styles = StyleSheet.create({
   textcontainer: { marginTop: 70, padding: 16, alignItems: 'center' },
   animation: { width: 350, height: 300, marginBottom: 10 },
   text_welcome: { fontFamily: 'asul', fontSize: 30, marginBottom: 20 },
-  Player: { flexDirection: 'row', justifyContent: 'center', marginTop: 20 },
   buttonContainer: {
-    alignItems: 'center', // Centers the button horizontally
-    marginVertical: 10, // Adds some spacing
+    alignItems: 'center',
+    marginVertical: 10,
   },
-  
   MusicPlayer: {
     borderRadius: 10,
     width: 160,
@@ -98,29 +109,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#016A70',
   },
-  
   backButtonContainer: {
     alignItems: 'center',
     marginTop: 20,
   },
-  
   backButton: {
     borderRadius: 10,
     width: 120,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#D9534F', // Red color for back button
+    backgroundColor: '#D9534F',
     borderWidth: 1,
     borderColor: '#B52B27',
   },
-  
   backButtonText: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
   },
-  
   buttonText1: {
     color: 'white',
     fontSize: 25,

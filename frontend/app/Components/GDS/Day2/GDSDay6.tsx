@@ -7,7 +7,7 @@ import FontLoader from '../../../../FontLoader';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-const GDSDay2 = () => {
+const GDSDay6 = () => {
   const { theme } = useTheme();
   const router = useRouter();
   const [userPoints, setUserPoints] = useState(0);
@@ -35,49 +35,83 @@ const GDSDay2 = () => {
   return (
     <FontLoader>
       <View style={[styles.container, { backgroundColor: theme.background }]}>
+        
+        {/* Title */}
         <View style={styles.textContainer}>
-          <Text style={[styles.heading, { color: theme.textPrimary }]}>Day 02</Text>
+          <Text style={[styles.heading, { color: theme.textPrimary }]}>Day 06</Text>
+
           <View style={styles.imgcontainerday1}>
-            <Image source={require('../../../../assets/images/icon.png')} style={[styles.startImage1, theme.imageStyle]} />
+            <Image
+              source={require('../../../../assets/images/icon.png')}
+              style={[styles.startImage1, theme.imageStyle]}
+            />
           </View>
-          <Text style={styles.pointsText}>Points: {userPoints}/40</Text>
+
+          {/* Display Earned Points */}
+          <Text style={[styles.pointsText]}>Points: {userPoints}/40</Text>
+
           <Text style={[styles.subHeading, { color: theme.textPrimary }]}>How are you feeling today?</Text>
         </View>
 
         <ScrollView style={styles.scrollView}>
+
+          {/* First Row */}
           <View style={styles.buttonRow}>
-            <TouchableOpacity onPress={() => navigateTo('/Components/GDS/BreathGDS')}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/MealPlan")}>
               <View style={styles.buttonWrapper}>
-                <LottieView source={require('../../../../assets/lottie/BreathGDS.json')} autoPlay loop style={styles.lottie} />
-                <Text style={styles.buttonText}>Breathing</Text>
+                <LottieView 
+                  source={require('../../../../assets/lottie/GDSMeal.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
+                <Text style={styles.buttonText}>Meal Plan</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigateTo('/Components/GDS/MeditationGDS')}>
+
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Story1GDS")}>
               <View style={styles.buttonWrapper}>
-                <LottieView source={require('../../../../assets/lottie/MeditationGDS.json')} autoPlay loop style={styles.lottie} />
-                <Text style={styles.buttonText}>Meditation</Text>
+                <LottieView 
+                  source={require('../../../../assets/lottie/GDSStory.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
+                <Text style={styles.buttonText}>Story</Text>
               </View>
             </TouchableOpacity>
           </View>
+
+          {/* Second Row */}
           <View style={styles.buttonRow}>
-            <TouchableOpacity onPress={() => navigateTo('/Components/GDS/SmileGDS')}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/SmileGDS")}>
               <View style={styles.buttonWrapper}>
-                <LottieView source={require('../../../../assets/lottie/smileGDS.json')} autoPlay loop style={styles.lottie} />
+                <LottieView 
+                  source={require('../../../../assets/lottie/smileGDS.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
                 <Text style={styles.buttonText}>Smiling Activity</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigateTo('/Components/GDS/PositiveT')}>
+
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/PositiveT")}>
               <View style={styles.buttonWrapper}>
-                <LottieView source={require('../../../../assets/lottie/PositiveT.json')} autoPlay loop style={styles.lottie} />
+                <LottieView 
+                  source={require('../../../../assets/lottie/PositiveT.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
                 <Text style={styles.buttonText}>Positive Thought</Text>
               </View>
             </TouchableOpacity>
           </View>
+
+          {/* Back Button */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.backButton} onPress={() => navigateTo('/Components/GDS/GDSHome')}>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigateTo("/Components/GDS/GDSHome")}>
               <Text style={styles.backButtonText}>BACK</Text>
             </TouchableOpacity>
           </View>
+
         </ScrollView>
       </View>
     </FontLoader>
@@ -89,6 +123,15 @@ const styles = StyleSheet.create({
   textContainer: { marginTop: 50, alignItems: 'center', marginBottom: 20 },
   heading: { fontSize: 32, fontWeight: 'bold' },
   subHeading: { fontSize: 22, fontWeight: '500', marginTop: 10 },
+  pointsText: {
+    fontSize: 24,
+    marginBottom: 10,
+    color: '#ff4500',
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4,
+  },
   scrollView: { paddingHorizontal: 20 },
   buttonRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
   buttonWrapper: {
@@ -122,17 +165,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     overflow: 'hidden',
     borderRadius: 100,
-    borderColor: '#016A70',
+    borderColor: "#016A70",
     borderWidth: 3,
   },
-  startImage1: { width: '100%', height: '100%', resizeMode: 'cover' },
-  pointsText: {
-    fontSize: 24,
-    marginBottom: 10,
-    color: '#ff4500',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 4,
+  startImage1: {
+    width: 180,
+    height: 180,
+    resizeMode: 'cover',
   },
 });
 
-export default GDSDay2;
+export default GDSDay6;

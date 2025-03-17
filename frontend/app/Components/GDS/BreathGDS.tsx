@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useTheme } from '../../ThemeContext';
 import FontLoader from '../../../FontLoader';
 import { useRouter } from 'expo-router';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const BreathGDS = () => {
   const { theme } = useTheme();
@@ -46,7 +48,25 @@ const BreathGDS = () => {
     setTimer(0);
   };
 
-  const handleGDSHomePress = () => {
+  const handleGDSHomePress = async () => {
+    const userId = auth().currentUser?.uid;
+    if (!userId) return;
+    
+    try {
+      const userRef = firestore().collection('UsersGDS').doc(userId);
+      const userDoc = await userRef.get();
+      const data = userDoc.data() || { points: 0 };
+      
+      await userRef.set(
+        {
+          points: (data.points || 0) + 1, // Increment points
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error updating points:", error);
+    }
+
     router.replace("/Components/GDS/GDSHome");
   };
 
@@ -62,8 +82,6 @@ const BreathGDS = () => {
               style={[styles.startImage1, theme.imageStyle]} // Apply imageStyle from theme
             />
           </View>
-
-
 
           <View style={styles.imgcontainerday1}>
             <Text style={styles.breathText}>{breathStage}</Text>

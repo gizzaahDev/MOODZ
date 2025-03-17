@@ -1,15 +1,34 @@
-import React from 'react';
-import { View, Text, StyleSheet,Image, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '../../../ThemeContext';
 import { useRouter } from 'expo-router';
 import LottieView from 'lottie-react-native';
 import FontLoader from '../../../../FontLoader';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const GDSDay3 = () => {
   const { theme } = useTheme();
   const router = useRouter();
+  const [userPoints, setUserPoints] = useState(0);
 
-  const navigateTo = (path: string) => {
+  useEffect(() => {
+    const userId = auth().currentUser?.uid;
+    if (userId) {
+      const userRef = firestore().collection('UsersGDS').doc(userId);
+      const unsubscribe = userRef.onSnapshot((doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+          if (data?.points !== undefined) {
+            setUserPoints(data.points);
+          }
+        }
+      });
+      return () => unsubscribe();
+    }
+  }, []);
+
+  const navigateTo = (path) => {
     router.replace(path);
   };
 
@@ -28,9 +47,9 @@ const GDSDay3 = () => {
             />
           </View>
 
-
+          <Text style={styles.pointsText}>Points: {userPoints}/40</Text>
           <Text style={[styles.subHeading, { color: theme.textPrimary }]}>How are you feeling today?</Text>
-        </View>
+          </View>
 
         <ScrollView style={styles.scrollView}>
 
@@ -39,7 +58,7 @@ const GDSDay3 = () => {
             <TouchableOpacity onPress={() => navigateTo("/Components/GDS/MealPlan")}>
               <View style={styles.buttonWrapper}>
                 <LottieView 
-                  source={require('../../../../assets/lottie/musicGDS.json')} 
+                  source={require('../../../../assets/lottie/GDSMeal.json')} 
                   autoPlay loop 
                   style={styles.lottie} 
                 />
@@ -50,7 +69,7 @@ const GDSDay3 = () => {
             <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Story1GDS")}>
               <View style={styles.buttonWrapper}>
                 <LottieView 
-                  source={require('../../../../assets/lottie/MeditationGDS.json')} 
+                  source={require('../../../../assets/lottie/GDSStory.json')} 
                   autoPlay loop 
                   style={styles.lottie} 
                 />
@@ -102,11 +121,8 @@ const styles = StyleSheet.create({
   textContainer: { marginTop: 50, alignItems: 'center', marginBottom: 20 },
   heading: { fontSize: 32, fontWeight: 'bold' },
   subHeading: { fontSize: 22, fontWeight: '500', marginTop: 10 },
-
   scrollView: { paddingHorizontal: 20 },
-
   buttonRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
-
   buttonWrapper: {
     width: 160,
     height: 120,
@@ -117,13 +133,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginHorizontal: 5,
   },
-
   lottie: { width: 80, height: 80, marginBottom: 5 },
-
   buttonText: { color: 'white', fontSize: 18, fontWeight: 'bold', textAlign: 'center' },
-
   buttonContainer: { alignItems: 'center', marginTop: 30 },
-
   backButton: {
     backgroundColor: '#D9534F',
     paddingVertical: 15,
@@ -133,24 +145,25 @@ const styles = StyleSheet.create({
     borderColor: '#B52B27',
     alignItems: 'center',
   },
-
   backButtonText: { color: 'white', fontSize: 20, fontWeight: 'bold' },
-
   imgcontainerday1: {
     width: 200,
     height: 200,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
-    overflow: 'hidden', // Ensures rounded corners if used
+    overflow: 'hidden',
     borderRadius: 100,
-    borderColor: "#016A70",
+    borderColor: '#016A70',
     borderWidth: 3,
   },
-  startImage1: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+  startImage1: { width: '100%', height: '100%', resizeMode: 'cover' },
+  pointsText: {
+    fontSize: 24,
+    marginBottom: 10,
+    color: '#ff4500',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4,
   },
 });
 
