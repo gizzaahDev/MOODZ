@@ -260,7 +260,7 @@ const UploadPhoto = () => {
                     >
                         <View style={styles.modalContainer}>
                             <LottieView
-                                source={require("../../../assets/lottie/Owl.json")}
+                                source={require("../../../assets/lottie/Bird.json")}
                                 autoPlay
                                 loop
                                 style={styles.lottie}
