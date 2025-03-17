@@ -5,6 +5,8 @@ import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const MeditationGDS = () => {
   const { theme } = useTheme();
@@ -41,8 +43,25 @@ const MeditationGDS = () => {
     }
   };
 
-  const handleBackPress = () => {
-    router.replace('/Components/GDS/GDSHome');
+  const handleNextPress = async () => {
+    const userId = auth().currentUser?.uid;
+    if (!userId) return;
+
+    try {
+      const userRef = firestore().collection('UsersGDS').doc(userId);
+      const userDoc = await userRef.get();
+      const data = userDoc.data() || { points: 0 };
+
+      await userRef.set(
+        {
+          points: (data.points || 0) + 1, // Increment points by 1
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error updating points:", error);
+    }
+    router.replace('/Components/GDS/GDSHome'); // Navigate to the home screen
   };
 
   return (
@@ -70,7 +89,7 @@ const MeditationGDS = () => {
         <View style={styles.controls}>
           <TouchableOpacity onPress={seekBackward}>
             <Text style={styles.controlText}>
-              <FontAwesome6 name="backward" size={24} color="#016A70" /> 10s
+              <FontAwesome6 name="backward" size={24} color="#016A70" /> 5s
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={togglePlayPause} style={styles.playButton}>
@@ -80,13 +99,13 @@ const MeditationGDS = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={seekForward}>
             <Text style={styles.controlText}>
-              10s <FontAwesome6 name="forward" size={24} color="#016A70" />
+              5s <FontAwesome6 name="forward" size={24} color="#016A70" />
             </Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.backButtonContainer}>
-          <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
+          <TouchableOpacity style={styles.backButton} onPress={handleNextPress}>
             <Text style={styles.backButtonText}>NEXT</Text>
           </TouchableOpacity>
         </View>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '../../ThemeContext';
 import FontLoader from '../../../FontLoader';
 import { useRouter } from 'expo-router';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const storyContent = `Geriatric Therapy
 
@@ -85,7 +87,25 @@ const Story1GDS = () => {
   const { theme } = useTheme();
   const router = useRouter();
 
-  const handleGDSHomePress = () => {
+  const handleGDSHomePress = async () => {
+    const userId = auth().currentUser?.uid;
+    if (!userId) return;
+
+    try {
+      const userRef = firestore().collection('UsersGDS').doc(userId);
+      const userDoc = await userRef.get();
+      const data = userDoc.data() || { points: 0 };
+
+      await userRef.set(
+        {
+          points: (data.points || 0) + 1, // Increment points
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error updating points:", error);
+    }
+
     router.replace("/Components/GDS/Day2/GDSDay3");
   };
 

@@ -69,6 +69,14 @@ export default function RootLayout() {
         <Stack.Screen name="Components/GDS/GDSDay1" options={{ title: 'GDSDay1' }}/>
         <Stack.Screen name="Components/GDS/Day2/GDSDay2" options={{ title: 'GDSDay2' }}/>
         <Stack.Screen name="Components/GDS/Day2/GDSDay3" options={{ title: 'GDSDay3' }}/>
+        <Stack.Screen name="Components/GDS/Day2/GDSDay4" options={{ title: 'GDSDay4' }}/>
+        <Stack.Screen name="Components/GDS/Day2/GDSDay5" options={{ title: 'GDSDay5' }}/>
+        <Stack.Screen name="Components/GDS/Day2/GDSDay6" options={{ title: 'GDSDay6' }}/>
+        <Stack.Screen name="Components/GDS/Day2/GDSDay7" options={{ title: 'GDSDay7' }}/>
+        <Stack.Screen name="Components/GDS/Day2/GDSDay8" options={{ title: 'GDSDay8' }}/>
+        <Stack.Screen name="Components/GDS/Day2/GDSDay9" options={{ title: 'GDSDay9' }}/>
+        <Stack.Screen name="Components/GDS/Day2/GDSDay10" options={{ title: 'GDSDay10' }}/>
+        <Stack.Screen name="Components/GDS/GDSComplete" options={{ title: 'GDSComplete' }}/>
         <Stack.Screen name="Components/GDS/About" options={{ title: 'GDSAbout' }}/>
         <Stack.Screen name="Components/GDS/GDSHome" options={{ title: 'GDSHome' }}/>
         <Stack.Screen name="Components/GDS/Music1" options={{ title: 'Music1' }}/>

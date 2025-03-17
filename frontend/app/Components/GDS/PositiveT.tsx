@@ -5,41 +5,76 @@ import LottieView from 'lottie-react-native';
 import FontLoader from '../../../FontLoader';
 import { useRouter } from 'expo-router';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PositiveT = () => {
   const { theme } = useTheme();
   const router = useRouter();
   const [positiveThought, setPositiveThought] = useState('');
+  const [userName, setUserName] = useState("User");
 
-  const handleGDSHomePress = () => {
-    router.replace("/Components/GDS/GDSHome"); // Navigate to GDS Home page
-  };
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const name = await AsyncStorage.getItem("userName");
+        setUserName(name || "User");
+      } catch (error) {
+        console.error("Failed to load user data:", error);
+      }
+    };
+    loadUserData();
+  }, []);
 
-  // Save positive thought to Firestore
   const handleSaveThought = async () => {
+    const userId = auth().currentUser?.uid;
+    if (!userId) {
+      Alert.alert("Authentication Error", "You must be logged in to save your thoughts.");
+      return;
+    }
+
     if (positiveThought.trim() === '') {
       Alert.alert("Input Error", "Please write a positive thought before saving.");
       return;
     }
 
     try {
-      await firestore()
-        .collection('positive_thoughts') // New collection
-        .add({
-          thought: positiveThought,
-          timestamp: firestore.FieldValue.serverTimestamp(),
-        });
+      await firestore().collection('UsersGDS').doc(userId).collection('positive_thoughts').add({
+        thought: positiveThought,
+        timestamp: firestore.FieldValue.serverTimestamp(),
+      });
       Alert.alert("Success", "Your positive thought has been saved!");
-      setPositiveThought(''); // Clear the input field after saving
+      setPositiveThought('');
     } catch (error) {
       console.error("Error saving positive thought: ", error);
       Alert.alert("Error", "There was an issue saving your thought. Please try again.");
     }
   };
 
+  const handleGDSHomePress = async () => {
+    const userId = auth().currentUser?.uid;
+    if (!userId) return;
+    
+    try {
+      const userRef = firestore().collection('UsersGDS').doc(userId);
+      const userDoc = await userRef.get();
+      const data = userDoc.data() || { points: 0 };
+      
+      await userRef.set(
+        {
+          points: (data.points || 0) + 1, // Increment points
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error updating points:", error);
+    }
+    router.replace("/Components/GDS/GDSHome");
+  };
+
   return (
     <FontLoader>
-      <View style={[styles.startcontainer, { backgroundColor: theme.background }]}>
+      <View style={[styles.startcontainer, { backgroundColor: theme.background }]}> 
         <View style={styles.textcontainer}>
           <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>Positive Thought</Text>
           <View style={styles.imgcontainerday1}>
@@ -47,13 +82,11 @@ const PositiveT = () => {
           </View>
 
           <TextInput
-            style={[styles.PositiveInput, { fontSize: 24 }]}
+            style={[styles.PositiveInput, { fontSize: 24 }]} 
             placeholder="Write your positive thought"
             value={positiveThought}
             onChangeText={setPositiveThought}
           />
-
-          <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>Please Write Your Strength</Text>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -64,7 +97,7 @@ const PositiveT = () => {
 
         <View style={styles.backButtonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleGDSHomePress}>
-            <Text style={styles.backButtonText}>BACK</Text>
+            <Text style={styles.backButtonText}>NEXT</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -133,4 +166,3 @@ const styles = StyleSheet.create({
 });
 
 export default PositiveT;
-

@@ -7,77 +7,109 @@ import FontLoader from '../../../../FontLoader';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-const GDSDay2 = () => {
+const GDSDay10 = () => {
   const { theme } = useTheme();
   const router = useRouter();
   const [userPoints, setUserPoints] = useState(0);
 
   useEffect(() => {
     const userId = auth().currentUser?.uid;
-    if (userId) {
-      const userRef = firestore().collection('UsersGDS').doc(userId);
-      const unsubscribe = userRef.onSnapshot((doc) => {
-        if (doc.exists) {
-          const data = doc.data();
-          if (data?.points !== undefined) {
-            setUserPoints(data.points);
-          }
-        }
-      });
-      return () => unsubscribe();
-    }
+    if (!userId) return;
+
+    const userRef = firestore().collection('UsersGDS').doc(userId);
+    const unsubscribe = userRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        setUserPoints(doc.data()?.points || 0);
+      }
+    });
+
+    return () => unsubscribe?.();
   }, []);
 
-  const navigateTo = (path) => {
+  const navigateTo = (path: string) => {
     router.replace(path);
   };
 
   return (
     <FontLoader>
       <View style={[styles.container, { backgroundColor: theme.background }]}>
+
+        {/* Title */}
         <View style={styles.textContainer}>
-          <Text style={[styles.heading, { color: theme.textPrimary }]}>Day 02</Text>
+          <Text style={[styles.heading, { color: theme.textPrimary }]}>Day 10</Text>
+
           <View style={styles.imgcontainerday1}>
-            <Image source={require('../../../../assets/images/icon.png')} style={[styles.startImage1, theme.imageStyle]} />
+            <Image
+              source={require('../../../../assets/images/icon.png')}
+              style={[styles.startImage1, theme.imageStyle]} // Apply imageStyle from theme
+            />
           </View>
+
+          {/* Display Earned Points */}
           <Text style={styles.pointsText}>Points: {userPoints}/40</Text>
+
           <Text style={[styles.subHeading, { color: theme.textPrimary }]}>How are you feeling today?</Text>
         </View>
 
         <ScrollView style={styles.scrollView}>
+
+          {/* First Row */}
           <View style={styles.buttonRow}>
-            <TouchableOpacity onPress={() => navigateTo('/Components/GDS/BreathGDS')}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Music1")}>
               <View style={styles.buttonWrapper}>
-                <LottieView source={require('../../../../assets/lottie/BreathGDS.json')} autoPlay loop style={styles.lottie} />
-                <Text style={styles.buttonText}>Breathing</Text>
+                <LottieView 
+                  source={require('../../../../assets/lottie/musicGDS.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
+                <Text style={styles.buttonText}>Music Therapy</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigateTo('/Components/GDS/MeditationGDS')}>
+
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/Yoga1")}>
               <View style={styles.buttonWrapper}>
-                <LottieView source={require('../../../../assets/lottie/MeditationGDS.json')} autoPlay loop style={styles.lottie} />
-                <Text style={styles.buttonText}>Meditation</Text>
+                <LottieView 
+                  source={require('../../../../assets/lottie/yogaGDS.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
+                <Text style={styles.buttonText}>Yoga Exercises</Text>
               </View>
             </TouchableOpacity>
           </View>
+
+          {/* Second Row */}
           <View style={styles.buttonRow}>
-            <TouchableOpacity onPress={() => navigateTo('/Components/GDS/SmileGDS')}>
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/SmileGDS")}>
               <View style={styles.buttonWrapper}>
-                <LottieView source={require('../../../../assets/lottie/smileGDS.json')} autoPlay loop style={styles.lottie} />
+                <LottieView 
+                  source={require('../../../../assets/lottie/smileGDS.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
                 <Text style={styles.buttonText}>Smiling Activity</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigateTo('/Components/GDS/PositiveT')}>
+
+            <TouchableOpacity onPress={() => navigateTo("/Components/GDS/PositiveT")}>
               <View style={styles.buttonWrapper}>
-                <LottieView source={require('../../../../assets/lottie/PositiveT.json')} autoPlay loop style={styles.lottie} />
+                <LottieView 
+                  source={require('../../../../assets/lottie/PositiveT.json')} 
+                  autoPlay loop 
+                  style={styles.lottie} 
+                />
                 <Text style={styles.buttonText}>Positive Thought</Text>
               </View>
             </TouchableOpacity>
           </View>
+
+          {/* Back Button */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.backButton} onPress={() => navigateTo('/Components/GDS/GDSHome')}>
-              <Text style={styles.backButtonText}>BACK</Text>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigateTo("/Components/GDS/GDSComplete")}>
+              <Text style={styles.backButtonText}>Completed</Text>
             </TouchableOpacity>
           </View>
+
         </ScrollView>
       </View>
     </FontLoader>
@@ -89,8 +121,21 @@ const styles = StyleSheet.create({
   textContainer: { marginTop: 50, alignItems: 'center', marginBottom: 20 },
   heading: { fontSize: 32, fontWeight: 'bold' },
   subHeading: { fontSize: 22, fontWeight: '500', marginTop: 10 },
+
+  pointsText: {
+    fontSize: 24,
+    marginBottom: 10,
+    color: '#ff4500',
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4,
+  },
+
   scrollView: { paddingHorizontal: 20 },
+
   buttonRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
+
   buttonWrapper: {
     width: 160,
     height: 120,
@@ -101,9 +146,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginHorizontal: 5,
   },
+
   lottie: { width: 80, height: 80, marginBottom: 5 },
+
   buttonText: { color: 'white', fontSize: 18, fontWeight: 'bold', textAlign: 'center' },
+
   buttonContainer: { alignItems: 'center', marginTop: 30 },
+
   backButton: {
     backgroundColor: '#D9534F',
     paddingVertical: 15,
@@ -113,7 +162,9 @@ const styles = StyleSheet.create({
     borderColor: '#B52B27',
     alignItems: 'center',
   },
+
   backButtonText: { color: 'white', fontSize: 20, fontWeight: 'bold' },
+
   imgcontainerday1: {
     width: 200,
     height: 200,
@@ -122,17 +173,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     overflow: 'hidden',
     borderRadius: 100,
-    borderColor: '#016A70',
+    borderColor: "#016A70",
     borderWidth: 3,
   },
-  startImage1: { width: '100%', height: '100%', resizeMode: 'cover' },
-  pointsText: {
-    fontSize: 24,
-    marginBottom: 10,
-    color: '#ff4500',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 4,
+
+  startImage1: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
 
-export default GDSDay2;
+export default GDSDay10;

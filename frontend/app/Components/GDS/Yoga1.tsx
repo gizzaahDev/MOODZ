@@ -5,6 +5,8 @@ import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const Yoga1 = () => {
   const { theme } = useTheme();
@@ -29,19 +31,36 @@ const Yoga1 = () => {
 
   const seekForward = async () => {
     if (videoRef.current) {
-      const newPosition = position + 1000; // 5 seconds forward
+      const newPosition = position + 10000; // 10 seconds forward
       await videoRef.current.setPositionAsync(Math.min(newPosition, duration));
     }
   };
 
   const seekBackward = async () => {
     if (videoRef.current) {
-      const newPosition = position - 1000; // 5 seconds backward
+      const newPosition = position - 10000; // 10 seconds backward
       await videoRef.current.setPositionAsync(Math.max(newPosition, 0));
     }
   };
 
-  const handleBackPress = () => {
+  const handleBackPress = async () => {
+    const userId = auth().currentUser?.uid;
+    if (!userId) return;
+    
+    try {
+      const userRef = firestore().collection('UsersGDS').doc(userId);
+      const userDoc = await userRef.get();
+      const data = userDoc.data() || { points: 0 };
+      
+      await userRef.set(
+        {
+          points: (data.points || 0) + 1, // Increment points
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error updating points:", error);
+    }
     router.replace('/Components/GDS/GDSHome');
   };
 
@@ -165,7 +184,6 @@ const styles = StyleSheet.create({
 });
 
 export default Yoga1;
-
 
 
 
