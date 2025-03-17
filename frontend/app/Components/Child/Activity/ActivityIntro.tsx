@@ -57,7 +57,7 @@ const ActivityIntro = () => {
 
     const handleNext = () => {
         if (currentScreen === data.length - 1) {
-            router.replace("/Components/EPDS/SubComponents/ChooseActivities");
+            router.replace("/Components/Child/Activity/ActivityView");
         } else {
             setCurrentScreen(currentScreen + 1);
         }
@@ -203,7 +203,7 @@ const ActivityIntro = () => {
                         style={[styles.buttonText, { color: theme.buttonText }]}
                     >
                         {currentScreen === data.length - 1
-                            ? "Choose Activities"
+                            ? "Let's Start"
                             : "Next"}
                     </Text>
                 </TouchableOpacity>
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
         width: "90%",
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 14,
         fontWeight: "bold",
     },
 });
