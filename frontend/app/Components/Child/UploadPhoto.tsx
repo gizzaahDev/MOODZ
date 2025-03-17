@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         width: "90%",
         alignSelf: "center",
         borderRadius: 12,
-        paddingHorizontal: 19,
+        paddingHorizontal: 25,
         paddingVertical: 22,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     instruction: {
         textAlign: "center",
         fontFamily: "roboto",
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: "800",
         marginBottom: 15,
         lineHeight: 24,
