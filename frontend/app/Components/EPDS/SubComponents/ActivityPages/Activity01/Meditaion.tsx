@@ -164,7 +164,7 @@ const MeditationActivity = () => {
                 .doc(today);
 
             const userDoc = await userRef.get();
-            const data = userDoc.data() || { meditationHistory: {}, hearts: 0, leaves: 0, activityType: {} };
+            const data = userDoc.data() || { meditationHistory: {}, hearts: 0, leaves: 0, activityType: {}, completedActivities: [] };
 
             const sessionDuration = typeof position !== 'undefined' ? position : 0;
 
@@ -176,6 +176,15 @@ const MeditationActivity = () => {
             }
 
             const todayHistory = data.meditationHistory?.[today] || {};
+
+            // Add the current activity to the completed activities array
+            const completedActivity = {
+                category: 'Meditation and Relaxation',
+                title: 'Guided Mindfulness Meditation (5–15 minutes)',
+                description: 'Focus on deep breathing and staying present.',
+                date: today,
+                duration: sessionDuration,
+            };
 
             await userRef.set(
                 {
@@ -194,9 +203,9 @@ const MeditationActivity = () => {
                             streakDays: todayHistory.streakDays || 0,
                             playCount: (todayHistory.playCount || 0) + 1,
                             sessionDurations: [...(todayHistory.sessionDurations || []), sessionDuration],
-
                         },
                     },
+                    completedActivities: [...(data.completedActivities || []), completedActivity], // Update completed activities
                 },
                 { merge: true }
             );

@@ -89,15 +89,15 @@ const Login = () => {
   const handleSignIn = async () => {
 
 
-    const isServerConnected = await checkServerConnection();
+    // const isServerConnected = await checkServerConnection();
 
-    if (!isServerConnected) {
-      ToastAndroid.show(
-        "No internet connection. Please check your connection.",
-        ToastAndroid.SHORT
-      );
-      return; // Exit early if server is not reachable
-    }
+    // if (!isServerConnected) {
+    //   ToastAndroid.show(
+    //     "No internet connection. Please check your connection.",
+    //     ToastAndroid.SHORT
+    //   );
+    //   return; // Exit early if server is not reachable
+    // }
     if (!validateInputs()) return;
 
     auth()
@@ -163,15 +163,15 @@ const Login = () => {
 
   const onGoogleButtonPress = async () => {
 
-    const isServerConnected = await checkServerConnection();
+    // const isServerConnected = await checkServerConnection();
 
-    if (!isServerConnected) {
-      ToastAndroid.show(
-        "No internet connection. Please check your connection.",
-        ToastAndroid.SHORT
-      );
-      return; // Exit early if server is not reachable
-    }
+    // if (!isServerConnected) {
+    //   ToastAndroid.show(
+    //     "No internet connection. Please check your connection.",
+    //     ToastAndroid.SHORT
+    //   );
+    //   return; // Exit early if server is not reachable
+    // }
 
     try {
       await GoogleSignin.signOut();

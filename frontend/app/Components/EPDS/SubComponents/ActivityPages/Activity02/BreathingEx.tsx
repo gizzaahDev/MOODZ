@@ -71,7 +71,7 @@ const MeditationActivity = () => {
                 .doc(today);
 
             const userDoc = await userRef.get();
-            const data = userDoc.data() || { meditationHistoryBreathing: {}, hearts: 0, leaves: 0, activityType: {} };
+            const data = userDoc.data() || { meditationHistoryBreathing: {}, hearts: 0, leaves: 0, activityType: {}, completedActivities: [] };
 
             const sessionDuration = typeof position !== 'undefined' ? position : 0;
 
@@ -83,6 +83,15 @@ const MeditationActivity = () => {
             }
 
             const todayHistory = data.meditationHistoryBreathing?.[today] || {};
+
+            // Create the completed activity object
+            const completedActivity = {
+                category: 'Meditation and Relaxation',
+                title: 'Breathing Exercises',
+                description: 'Box breathing technique',
+                date: today,
+                duration: sessionDuration,
+            };
 
             await userRef.set(
                 {
@@ -101,9 +110,9 @@ const MeditationActivity = () => {
                             streakDays: todayHistory.streakDays || 0,
                             playCount: (todayHistory.playCount || 0) + 1,
                             sessionDurations: [...(todayHistory.sessionDurations || []), sessionDuration],
-
                         },
                     },
+                    completedActivities: [...(data.completedActivities || []), completedActivity], // Add completed activity to the array
                 },
                 { merge: true }
             );

@@ -123,15 +123,15 @@ const SignUp = () => {
       return;
     }
 
-    const isServerConnected = await checkServerConnection();
+    // const isServerConnected = await checkServerConnection();
     
-        if (!isServerConnected) {
-          ToastAndroid.show(
-            "No internet connection. Please check your connection.",
-            ToastAndroid.SHORT
-          );
-          return; // Exit early if server is not reachable
-        }
+    //     if (!isServerConnected) {
+    //       ToastAndroid.show(
+    //         "No internet connection. Please check your connection.",
+    //         ToastAndroid.SHORT
+    //       );
+    //       return; // Exit early if server is not reachable
+    //     }
 
     try {
       const userCredential = await auth().createUserWithEmailAndPassword(email, password);

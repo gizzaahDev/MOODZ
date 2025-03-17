@@ -221,15 +221,15 @@ const Questionnaire = () => {
 
   const handleSubmit = async () => {
     // Immediately check connectivity to the backend server
-    const isServerConnected = await checkServerConnection();
+    // const isServerConnected = await checkServerConnection();
   
-    if (!isServerConnected) {
-      ToastAndroid.show(
-        "No internet connection. Please check your connection.",
-        ToastAndroid.SHORT
-      );
-      return; // Exit early if server is not reachable
-    }
+    // if (!isServerConnected) {
+    //   ToastAndroid.show(
+    //     "No internet connection. Please check your connection.",
+    //     ToastAndroid.SHORT
+    //   );
+    //   return; // Exit early if server is not reachable
+    // }
   
     // Validate answers before submitting
     if (answers.includes(null)) {
@@ -310,15 +310,15 @@ const Questionnaire = () => {
 
     if (prediction.toLowerCase() === 'high risk') {
 
-      const isServerConnected = await checkServerConnection();
+      // const isServerConnected = await checkServerConnection();
 
-      if (!isServerConnected) {
-        ToastAndroid.show(
-          "No internet connection. Please check your connection.",
-          ToastAndroid.SHORT
-        );
-        return; // Exit early if server is not reachable
-      }
+      // if (!isServerConnected) {
+      //   ToastAndroid.show(
+      //     "No internet connection. Please check your connection.",
+      //     ToastAndroid.SHORT
+      //   );
+      //   return; // Exit early if server is not reachable
+      // }
 
       Linking.openURL('https://lankadoctor.com/specialist/sri-lanka-psychiatrists.php')
         .catch(err => console.error('Failed to open URL:', err));
