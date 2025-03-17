@@ -34,12 +34,11 @@ const Activity = ({ title, subtitle, onPress, circleColor }: ActivityType) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#F3FAF4",
-        width: "75%",
+        backgroundColor: "#dafee5",
+        width: "100%",
         height: 135,
         flexDirection: "row",
         justifyContent: "space-between",
-        alignSelf: "flex-end",
         borderRadius: 40,
         paddingHorizontal: 20,
         marginVertical: 5,
