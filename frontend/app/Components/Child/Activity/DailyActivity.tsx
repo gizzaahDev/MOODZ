@@ -97,15 +97,15 @@ const activityData = [
 ];
 
 interface daProps{
-    selectedDay: number
+    pressDay: number
 }
 
-const DailyActivity:React.FC<daProps> = ({selectedDay}) => {
+const DailyActivity:React.FC<daProps> = ({pressDay}) => {
     const router = useRouter();
 
     // filter activity by day
     const filterTasks = activityData.filter(
-        (item) => item.day === selectedDay
+        (item) => item.day === pressDay
     );
 
     return (
