@@ -6,9 +6,13 @@ import BreathExercises from "./BreathExercises";
 import { useTheme } from "../../../../ThemeContext";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontLoader from "@/FontLoader";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 const Breathing = () => {
     const { theme } = useTheme();
+
+    const { aid } = useLocalSearchParams();
+    console.log(aid)
 
     const [isBreathing, setIsBreathing] = useState(false);
     const [sound, setSound] = useState<Audio.Sound | null>(null);
@@ -18,7 +22,7 @@ const Breathing = () => {
     const [duration, setDuration] = useState(0);
 
     // Find the selected exercise
-    const exercise = BreathExercises.find((ex) => ex.id === "ca6");
+    const exercise = BreathExercises.find((ex) => ex.id === aid);
 
     // Format time function
     const formatTime = (millis: number) => {
@@ -43,7 +47,7 @@ const Breathing = () => {
             await newSound.playAsync();
             setIsPlaying(true);
             setIsBreathing(true);
-            setIsFinished(false); 
+            setIsFinished(false);
 
             newSound.setOnPlaybackStatusUpdate((status) => {
                 if (status.isLoaded) {
@@ -81,16 +85,16 @@ const Breathing = () => {
     const replaySound = async () => {
         if (sound) {
             await sound.setPositionAsync(0);
-            await sound.playAsync(); 
+            await sound.playAsync();
             setIsPlaying(true);
             setIsBreathing(true);
-            setIsFinished(false); 
+            setIsFinished(false);
         }
     };
 
     const togglePlayPause = async () => {
         if (isFinished) {
-            await replaySound(); 
+            await replaySound();
         } else if (isPlaying) {
             await pauseSound();
         } else {
@@ -258,7 +262,7 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontFamily: "robotoBold",
         textAlign: "center",
-        textTransform:"capitalize"
+        textTransform: "capitalize",
     },
     animation: {
         width: 400,
@@ -307,7 +311,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         width: "90%",
         borderRadius: 50,
-        marginTop: 30
+        marginTop: 30,
     },
     button: {
         paddingVertical: 15,
