@@ -65,7 +65,7 @@ const ForgotPassword = () => {
 
   const handleResetPassword = async () => {
 
-    const isServerConnected = await checkServerConnection();
+    // const isServerConnected = await checkServerConnection();
 
     
     if (!emailRegex.test(email)) {
@@ -77,13 +77,13 @@ const ForgotPassword = () => {
       return;
     }
 
-    if (!isServerConnected) {
-      ToastAndroid.show(
-        "No internet connection. Please check your connection.",
-        ToastAndroid.SHORT
-      );
-      return; // Exit early if server is not reachable
-    }
+    // if (!isServerConnected) {
+    //   ToastAndroid.show(
+    //     "No internet connection. Please check your connection.",
+    //     ToastAndroid.SHORT
+    //   );
+    //   return; // Exit early if server is not reachable
+    // }
 
     try {
       await auth().sendPasswordResetEmail(email);
