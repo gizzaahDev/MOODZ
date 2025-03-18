@@ -128,7 +128,7 @@ const Questionnaire = () => {
     const timeout = setTimeout(() => controller.abort(), 1500);  // Set a timeout for the request
 
     try {
-      const response = await fetch('https://moodz.fly.dev/', {
+      const response = await fetch('https://moodzgds-hdoty7s3nq-as.a.run.app', {
         method: 'GET',  // Use GET method to check server
         signal: controller.signal,
       });
@@ -173,7 +173,7 @@ const Questionnaire = () => {
     try {
       // Proceed with submission if server is reachable
       const response = await axios.post(
-        'https://moodz.fly.dev/adult/predict',
+        'https://moodzgds-hdoty7s3nq-as.a.run.app/adult/predict',
         {
           Q1: answers[0],
           Q2: answers[1],
