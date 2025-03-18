@@ -94,6 +94,7 @@ const activityData = [
         params: { aid: "ca8" },
         circleColor: "#8612b7",
     },
+    
 ];
 
 interface daProps{
