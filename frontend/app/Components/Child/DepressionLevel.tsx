@@ -18,8 +18,7 @@ const DepressionLevel = () => {
     const router = useRouter();
     const params = useLocalSearchParams();
 
-    // const depLevel = params.newDepLevel;
-    const depLevel = "normal";
+    const depLevel = params.newDepLevel;
 
     const [userName, setUserName] = useState("User");
 
