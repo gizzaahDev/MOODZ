@@ -7,6 +7,7 @@ import {
     Alert,
     StyleSheet,
     ActivityIndicator,
+    Modal,
 } from "react-native";
 import { useTheme } from "../../ThemeContext";
 import { useRouter } from "expo-router";
@@ -89,30 +90,33 @@ const Photo = () => {
                 type: "image/jpeg",
             } as any);
 
-            // const response = await axios.post(
-            //     "https://moodz.fly.dev/child/classify",
-            //     formData,
-            //     {
-            //         headers: { "Content-Type": "multipart/form-data" },
-            //     }
-            // );
+            const response = await axios.post(
+                "https://moodzchild-hdoty7s3nq-as.a.run.app/child/classify",
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
 
-            // const result = response.data;
-            // console.log("API Response:", result);
+            const result = response.data;
+            console.log("API Response:", result);
 
-            // if (result.status === "success") {
-            //     router.push({
-            //         pathname: "/Components/Child/QuestionIntro",
-            //         params: { emotion: result.emotion },
-            //     });
-            // } else {
-            //     Alert.alert(
-            //         "Error",
-            //         result.detail || "Failed to classify image"
-            //     );
-            // }
-
-            router.push("/Components/Child/DepressionLevel");
+            if (result.status === "success") {
+                setTimeout(() => {
+                    router.push({
+                        pathname: "/Components/Child/QuestionIntro",
+                        params: {
+                            emotion: result.emotion,
+                            faceImg: selectedImage,
+                        },
+                    });
+                }, 3001);
+            } else {
+                Alert.alert(
+                    "Error",
+                    result.detail || "Failed to classify image"
+                );
+            }
         } catch (error: any) {
             console.error("Error uploading image:", error);
             Alert.alert(
@@ -120,7 +124,9 @@ const Photo = () => {
                 "Something went wrong. Please try again."
             );
         } finally {
-            setLoading(false);
+            setTimeout(() => {
+                setLoading(false);
+            }, 3000);
         }
     };
 
@@ -170,13 +176,7 @@ const Photo = () => {
                             onPress={handleConfirm}
                             disabled={loading}
                         >
-                            {loading ? (
-                                <ActivityIndicator color="#fff" />
-                            ) : (
-                                <Text style={[styles.confirmBtnText]}>
-                                    Confirm
-                                </Text>
-                            )}
+                            <Text style={[styles.confirmBtnText]}>Confirm</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -265,6 +265,58 @@ const Photo = () => {
                 style={styles.leaveImg}
                 source={require("../../../assets/images/leafBGA.png")}
             />
+
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={loading}
+                onRequestClose={() => setLoading(false)}
+            >
+                <View
+                    style={[
+                        styles.modalWrapper,
+                        { backgroundColor: theme.loadingModalBg },
+                    ]}
+                >
+                    <View
+                        style={[
+                            styles.loadingContent,
+                            {
+                                backgroundColor: theme.loadingModalBackground,
+                            },
+                        ]}
+                    >
+                        <LottieView
+                            source={require("../../../assets/lottie/succesfullyDone.json")} // Add your Lottie animation file here
+                            autoPlay
+                            loop
+                            style={styles.animation}
+                        />
+                        <Text
+                            style={[
+                                styles.loadingTextTitle,
+                                { color: theme.textPrimary },
+                            ]}
+                        >
+                            SUCCESSFUL!
+                        </Text>
+                        <Text
+                            style={[
+                                styles.loadingText,
+                                { color: theme.dimText },
+                            ]}
+                        >
+                            Image Uploaded Successfully!
+                        </Text>
+                        <LottieView
+                            source={require("../../../assets/lottie/LoadAnime.json")} // Add your Lottie animation file here
+                            autoPlay
+                            loop
+                            style={styles.animationLoading}
+                        />
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };
@@ -344,6 +396,40 @@ const styles = StyleSheet.create({
     },
     leaveImg: {
         width: "100%",
+    },
+    modalWrapper: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    loadingContent: {
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff",
+        padding: 20,
+        borderRadius: 10,
+        width: 350,
+    },
+    loadingText: {
+        marginTop: 10,
+        fontSize: 16,
+        color: "#333",
+    },
+    loadingTextTitle: {
+        marginTop: 10,
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#333",
+    },
+    animation: {
+        width: 200,
+        height: 200,
+        marginBottom: 5,
+    },
+    animationLoading: {
+        width: 75,
+        height: 75,
+        marginBottom: 5,
     },
 });
 
