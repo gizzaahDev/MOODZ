@@ -14,17 +14,17 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import FontLoader from "../../../FontLoader";
 import { useTheme } from "../../ThemeContext";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import LottieView from "lottie-react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const UploadPhoto = () => {
     const { theme } = useTheme() as { theme: any };
     const router = useRouter();
+    const params = useLocalSearchParams();
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+    const emotion = params.emotion as string | undefined;
+    const faceImg = params.faceImg as string | undefined;
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideUpAnim = useRef(new Animated.Value(100)).current;
@@ -139,7 +139,10 @@ const UploadPhoto = () => {
                     >
                         <TouchableOpacity
                             onPress={() => {
-                                router.push("/Components/Child/Questionnaire");
+                                router.push({
+                                    pathname: "/Components/Child/Questionnaire",
+                                    params: { emotion, faceImg },
+                                });
                             }}
                             style={styles.startButton}
                         >
