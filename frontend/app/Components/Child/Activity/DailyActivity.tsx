@@ -126,7 +126,7 @@ const activityData = [
     },
     {
         id: "da1",
-        day: 1,
+        day: 5,
         activityId: "ca11",
         title: "Gratitude Journaling",
         subtitle: "Write down anything you're grateful for today",
@@ -136,7 +136,7 @@ const activityData = [
     },
     {
         id: "da2",
-        day: 1,
+        day: 5,
         activityId: "",
         title: "Breathing Exercise",
         subtitle: "Practice deep breathing for relaxation",
@@ -146,7 +146,7 @@ const activityData = [
     },
     {
         id: "da3",
-        day: 1,
+        day: 5,
         activityId: "ca8",
         title: "Sound Scaping",
         subtitle: "Spend 10 minutes soothing",
@@ -156,7 +156,7 @@ const activityData = [
     },
     {
         id: "da1",
-        day: 1,
+        day: 6,
         activityId: "ca11",
         title: "Gratitude Journaling",
         subtitle: "Write down anything you're grateful for today",
@@ -166,7 +166,7 @@ const activityData = [
     },
     {
         id: "da2",
-        day: 1,
+        day: 6,
         activityId: "",
         title: "Breathing Exercise",
         subtitle: "Practice deep breathing for relaxation",
@@ -176,7 +176,7 @@ const activityData = [
     },
     {
         id: "da3",
-        day: 1,
+        day: 6,
         activityId: "ca8",
         title: "Sound Scaping",
         subtitle: "Spend 10 minutes soothing",
@@ -186,7 +186,7 @@ const activityData = [
     },
     {
         id: "da1",
-        day: 1,
+        day: 7,
         activityId: "ca11",
         title: "Gratitude Journaling",
         subtitle: "Write down anything you're grateful for today",
@@ -196,7 +196,7 @@ const activityData = [
     },
     {
         id: "da2",
-        day: 1,
+        day: 7,
         activityId: "",
         title: "Breathing Exercise",
         subtitle: "Practice deep breathing for relaxation",
@@ -206,7 +206,7 @@ const activityData = [
     },
     {
         id: "da3",
-        day: 1,
+        day: 7,
         activityId: "ca8",
         title: "Sound Scaping",
         subtitle: "Spend 10 minutes soothing",
@@ -216,7 +216,7 @@ const activityData = [
     },
     {
         id: "da1",
-        day: 1,
+        day: 8,
         activityId: "ca11",
         title: "Gratitude Journaling",
         subtitle: "Write down anything you're grateful for today",
@@ -226,7 +226,7 @@ const activityData = [
     },
     {
         id: "da2",
-        day: 1,
+        day: 8,
         activityId: "",
         title: "Breathing Exercise",
         subtitle: "Practice deep breathing for relaxation",
@@ -236,7 +236,7 @@ const activityData = [
     },
     {
         id: "da3",
-        day: 1,
+        day: 8,
         activityId: "ca8",
         title: "Sound Scaping",
         subtitle: "Spend 10 minutes soothing",
@@ -246,7 +246,7 @@ const activityData = [
     },
     {
         id: "da1",
-        day: 1,
+        day: 9,
         activityId: "ca11",
         title: "Gratitude Journaling",
         subtitle: "Write down anything you're grateful for today",
@@ -256,7 +256,7 @@ const activityData = [
     },
     {
         id: "da2",
-        day: 1,
+        day: 9,
         activityId: "",
         title: "Breathing Exercise",
         subtitle: "Practice deep breathing for relaxation",
@@ -266,7 +266,7 @@ const activityData = [
     },
     {
         id: "da3",
-        day: 1,
+        day: 9,
         activityId: "ca8",
         title: "Sound Scaping",
         subtitle: "Spend 10 minutes soothing",
@@ -276,7 +276,7 @@ const activityData = [
     },
     {
         id: "da1",
-        day: 1,
+        day: 10,
         activityId: "ca11",
         title: "Gratitude Journaling",
         subtitle: "Write down anything you're grateful for today",
@@ -286,7 +286,7 @@ const activityData = [
     },
     {
         id: "da2",
-        day: 1,
+        day: 10,
         activityId: "",
         title: "Breathing Exercise",
         subtitle: "Practice deep breathing for relaxation",
@@ -296,7 +296,7 @@ const activityData = [
     },
     {
         id: "da3",
-        day: 1,
+        day: 10,
         activityId: "ca8",
         title: "Sound Scaping",
         subtitle: "Spend 10 minutes soothing",
