@@ -36,7 +36,7 @@ export default function Home() {
     const getQuestionnaireRoute = (category: string) => {
         switch (category) {
             case "child":
-                return "/Components/Child/Activity/Breath/Breathing";
+                return "/Components/Child/Landing";
             case "marital":
                 return "/Components/DAS/Questionnaire";
             case "postpartum":
@@ -361,7 +361,7 @@ export default function Home() {
                                 style={styles.categoryImage}
                             />
                             <Text style={styles.categoryText}>
-                                Adult{"\n"}Depression
+                                Elderly{"\n"}Depression
                             </Text>
                         </>
                     )}
