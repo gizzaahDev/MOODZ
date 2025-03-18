@@ -481,7 +481,7 @@ const Questionnaire = () => {
 
     try {
       // Submit data to backend
-      const response = await axios.post('https://moodz.fly.dev/married/predict', payload);
+      const response = await axios.post('https://moodzdas-hdoty7s3nq-as.a.run.app/married/predict', payload);
       const { prediction_text, total_score, level } = response.data; // Ensure 'level' exists in the backend response
 
       // Update state with prediction and level
@@ -504,15 +504,15 @@ const Questionnaire = () => {
 
     if (prediction.toLowerCase() === 'high') {
 
-      const isServerConnected = await checkServerConnection();
+     // const isServerConnected = await checkServerConnection();
 
-      if (!isServerConnected) {
-        ToastAndroid.show(
-          "No internet connection. Please check your connection.",
-          ToastAndroid.SHORT
-        );
-        return; // Exit early if server is not reachable
-      }
+      // if (!isServerConnected) {
+      //   ToastAndroid.show(
+      //     "No internet connection. Please check your connection.",
+      //     ToastAndroid.SHORT
+      //   );
+      //   return; // Exit early if server is not reachable
+      // }
 
       Linking.openURL('https://lankadoctor.com/specialist/sri-lanka-psychiatrists.php')
         .catch(err => console.error('Failed to open URL:', err));
@@ -1094,10 +1094,3 @@ const styles = StyleSheet.create({
 });
 
 export default Questionnaire;
-
-
-
-
-
-  
-           

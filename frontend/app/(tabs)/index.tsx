@@ -54,7 +54,7 @@ export default function Home() {
             case "child":
                 return "/Components/Child/SubComponents/ChildMyActivity";
             case "marital":
-                return "/Components/DAS/SubComponents/DASMyActivity";
+                return "/Components/DAS/DASAbout";
             case "postpartum":
                 return "/Components/EPDS/SubComponents/EPDSMyActivity";
             case "adult":
@@ -84,12 +84,20 @@ export default function Home() {
                 .where("category", "==", category)
                 .get();
 
-            const [epdsSnapshot, gdsSnapshot] = await Promise.all([
+            const dasQuery = firestore()
+                .collection("UsersDAS")
+                .doc(userId)
+                .collection("QuestionnairesDAS")
+                .where("category", "==", category)
+                .get();
+
+            const [epdsSnapshot, gdsSnapshot, dasSnapshot] = await Promise.all([
                 epdsQuery,
                 gdsQuery,
+                dasQuery,
             ]);
 
-            return !epdsSnapshot.empty || !gdsSnapshot.empty; // Returns true if at least one document exists in either collection
+            return !epdsSnapshot.empty || !gdsSnapshot.empty || !dasSnapshot.empty; // Returns true if at least one document exists in either collection
         } catch (error) {
             console.error("Error checking questionnaire submission:", error);
             return false;
