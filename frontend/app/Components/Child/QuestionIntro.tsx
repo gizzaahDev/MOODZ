@@ -6,16 +6,25 @@ import {
     Animated,
     Easing,
     View,
+    Modal,
+    TouchableWithoutFeedback,
+    Image,
+    Alert,
 } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FontLoader from "../../../FontLoader";
 import { useTheme } from "../../ThemeContext";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import LottieView from "lottie-react-native";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const UploadPhoto = () => {
     const { theme } = useTheme() as { theme: any };
     const router = useRouter();
+    const params = useLocalSearchParams();
+
+    const emotion = params.emotion as string | undefined;
+    const faceImg = params.faceImg as string | undefined;
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideUpAnim = useRef(new Animated.Value(100)).current;
@@ -83,7 +92,7 @@ const UploadPhoto = () => {
                         ]}
                     >
                         <LottieView
-                            source={require("../../../assets/lottie/ChildUploadPhoto.json")}
+                            source={require("../../../assets/lottie/Survey.json")}
                             autoPlay
                             loop
                             style={styles.lottie}
@@ -100,7 +109,7 @@ const UploadPhoto = () => {
                         ]}
                     >
                         <Text style={[styles.mainText, { color: theme.title }]}>
-                            Upload Photo
+                            Take Questionnaire
                         </Text>
                     </Animated.View>
 
@@ -120,8 +129,8 @@ const UploadPhoto = () => {
                                 { color: theme.landingInstruction },
                             ]}
                         >
-                            Upload a photo of the child's face, capturing their
-                            expression after receiving something they like.
+                            Please select the response that best describes how
+                            your child has felt during the past week.
                         </Text>
                     </Animated.View>
 
@@ -129,12 +138,15 @@ const UploadPhoto = () => {
                         style={{ transform: [{ scale: scaleAnim }] }}
                     >
                         <TouchableOpacity
-                            onPress={() =>
-                                router.push("/Components/Child/Photo")
-                            }
+                            onPress={() => {
+                                router.push({
+                                    pathname: "/Components/Child/Questionnaire",
+                                    params: { emotion, faceImg },
+                                });
+                            }}
                             style={styles.startButton}
                         >
-                            <Text style={styles.startButtonText}>Upload</Text>
+                            <Text style={styles.startButtonText}>Take</Text>
                         </TouchableOpacity>
                     </Animated.View>
                 </ImageBackground>
@@ -162,14 +174,14 @@ const styles = StyleSheet.create({
         marginBottom: 50,
     },
     lottie: {
-        width: 300,
-        height: 300,
+        width: 450,
+        height: 400,
     },
     mainTextContainer: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginBottom: 10,
+        marginBottom: 20,
     },
     mainText: {
         textTransform: "capitalize",
@@ -181,7 +193,7 @@ const styles = StyleSheet.create({
         width: "90%",
         alignSelf: "center",
         borderRadius: 12,
-        paddingHorizontal: 25,
+        paddingHorizontal: 19,
         paddingVertical: 22,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
@@ -193,7 +205,7 @@ const styles = StyleSheet.create({
     instruction: {
         textAlign: "center",
         fontFamily: "roboto",
-        fontSize: 15,
+        fontSize: 16,
         fontWeight: "800",
         marginBottom: 15,
         lineHeight: 24,

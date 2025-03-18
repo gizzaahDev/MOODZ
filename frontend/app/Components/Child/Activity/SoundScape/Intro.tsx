@@ -1,26 +1,30 @@
 import {
     Text,
-    ImageBackground,
+    Image,
     StyleSheet,
     TouchableOpacity,
     Animated,
     Easing,
     View,
+    ImageBackground,
 } from "react-native";
 import React, { useEffect, useRef } from "react";
-import FontLoader from "../../../FontLoader";
-import { useTheme } from "../../ThemeContext";
-import { useRouter } from "expo-router";
-import LottieView from "lottie-react-native";
+import FontLoader from "../../../../../FontLoader";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useTheme } from "../../../../ThemeContext";
+import Sound from "./Sound";
 
-const UploadPhoto = () => {
-    const { theme } = useTheme() as { theme: any };
+const Intro = () => {
     const router = useRouter();
+    const { theme } = useTheme() as { theme: any };
+
+    const { aid } = useLocalSearchParams();
+    const natureSound = Sound.find((item) => item.id === aid);
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideUpAnim = useRef(new Animated.Value(100)).current;
     const scaleAnim = useRef(new Animated.Value(0)).current;
-    const zoomAnim = useRef(new Animated.Value(1)).current;
+    const swingAnim = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         Animated.timing(fadeAnim, {
@@ -44,21 +48,33 @@ const UploadPhoto = () => {
     }, [fadeAnim, slideUpAnim, scaleAnim]);
 
     useEffect(() => {
+        // Swinging animation
         Animated.loop(
             Animated.sequence([
-                Animated.timing(zoomAnim, {
-                    toValue: 0.9,
-                    duration: 1500,
+                // Move up
+                Animated.timing(swingAnim, {
+                    toValue: -5,
+                    duration: 1000,
+                    easing: Easing.linear,
                     useNativeDriver: true,
                 }),
-                Animated.timing(zoomAnim, {
-                    toValue: 1,
-                    duration: 1500,
+                // Move down
+                Animated.timing(swingAnim, {
+                    toValue: 5,
+                    duration: 1000,
+                    easing: Easing.linear,
+                    useNativeDriver: true,
+                }),
+                // Return to the center
+                Animated.timing(swingAnim, {
+                    toValue: 0,
+                    duration: 1000,
+                    easing: Easing.linear,
                     useNativeDriver: true,
                 }),
             ])
         ).start();
-    }, [zoomAnim]);
+    }, [swingAnim]);
 
     return (
         <FontLoader>
@@ -69,24 +85,21 @@ const UploadPhoto = () => {
                 ]}
             >
                 <ImageBackground
-                    source={require("../../../assets/images/ChildBG.png")}
+                    source={require("../../../../../assets/images/ChildBG.png")}
+                    style={{ height: "100%" }}
                     resizeMode="cover"
-                    style={styles.bg}
                 >
                     <Animated.View
                         style={[
-                            styles.lottieContainer,
+                            styles.imgContainer,
                             {
-                                backgroundColor: theme.childLottieCircle,
-                                transform: [{ scale: zoomAnim }],
+                                transform: [{ translateY: swingAnim }],
                             },
                         ]}
                     >
-                        <LottieView
-                            source={require("../../../assets/lottie/ChildUploadPhoto.json")}
-                            autoPlay
-                            loop
-                            style={styles.lottie}
+                        <Image
+                            source={require("../../../../../assets/images/HeadSetBoy.png")}
+                            style={styles.img}
                         />
                     </Animated.View>
 
@@ -99,29 +112,22 @@ const UploadPhoto = () => {
                             },
                         ]}
                     >
-                        <Text style={[styles.mainText, { color: theme.title }]}>
-                            Upload Photo
-                        </Text>
-                    </Animated.View>
-
-                    <Animated.View
-                        style={[
-                            styles.subTextContainer,
-                            {
-                                opacity: fadeAnim,
-                                transform: [{ translateY: slideUpAnim }],
-                                backgroundColor: theme.landingSubTextContainer,
-                            },
-                        ]}
-                    >
                         <Text
                             style={[
                                 styles.instruction,
-                                { color: theme.landingInstruction },
+                                { color: theme.textTernary },
                             ]}
                         >
-                            Upload a photo of the child's face, capturing their
-                            expression after receiving something they like.
+                            Enjoy the soothing{" "}
+                            <Text
+                                style={{
+                                    color: theme.title,
+                                    fontSize: 19,
+                                }}
+                            >
+                                {natureSound?.title}
+                            </Text>{" "}
+                            sound for a moment of relaxation. 😊✨
                         </Text>
                     </Animated.View>
 
@@ -129,12 +135,16 @@ const UploadPhoto = () => {
                         style={{ transform: [{ scale: scaleAnim }] }}
                     >
                         <TouchableOpacity
-                            onPress={() =>
-                                router.push("/Components/Child/Photo")
-                            }
+                            onPress={() => {
+                                router.push({
+                                    pathname:
+                                        "/Components/Child/Activity/SoundScape/FirstSound",
+                                    params: { soundId: natureSound?.id },
+                                });
+                            }}
                             style={styles.startButton}
                         >
-                            <Text style={styles.startButtonText}>Upload</Text>
+                            <Text style={styles.startButtonText}>Start</Text>
                         </TouchableOpacity>
                     </Animated.View>
                 </ImageBackground>
@@ -147,59 +157,32 @@ const styles = StyleSheet.create({
     container: {
         height: "100%",
     },
-    bg: {
-        flex: 1,
+    imgContainer: {
+        alignItems: "center",
         justifyContent: "center",
-        alignItems: "center",
+        marginVertical: 50,
     },
-    lottieContainer: {
-        width: 350,
-        height: 350,
-        borderRadius: 175,
-        alignItems: "center",
-        alignSelf: "center",
-        marginTop: 25,
-        marginBottom: 50,
-    },
-    lottie: {
-        width: 300,
-        height: 300,
+    img: {
+        width: 250,
+        height: 430,
     },
     mainTextContainer: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginBottom: 10,
-    },
-    mainText: {
-        textTransform: "capitalize",
-        fontSize: 26,
-        fontWeight: "600",
-        fontFamily: "robotoBold",
-    },
-    subTextContainer: {
-        width: "90%",
-        alignSelf: "center",
-        borderRadius: 12,
-        paddingHorizontal: 25,
-        paddingVertical: 22,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 6,
-        elevation: 5,
-        marginBottom: 10,
+        marginBottom: 20,
     },
     instruction: {
         textAlign: "center",
         fontFamily: "roboto",
-        fontSize: 15,
-        fontWeight: "800",
-        marginBottom: 15,
+        fontSize: 18,
+        fontWeight: "700",
         lineHeight: 24,
+        marginBottom: 25,
+        paddingHorizontal: 12,
     },
     startButton: {
-        width: 160,
+        width: "90%",
         paddingVertical: 14,
         borderRadius: 50,
         alignSelf: "center",
@@ -209,9 +192,9 @@ const styles = StyleSheet.create({
     },
     startButtonText: {
         color: "#fff",
-        fontSize: 14,
+        fontSize: 16,
         fontFamily: "poppinsSemiBold",
     },
 });
 
-export default UploadPhoto;
+export default Intro;

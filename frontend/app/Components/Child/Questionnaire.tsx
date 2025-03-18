@@ -18,10 +18,9 @@ import { useTheme } from "../../ThemeContext";
 import { BlurView } from "expo-blur";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import buttonSizes from "../../Dimensions/buttonSize";
 import LottieView from "lottie-react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const questions = [
     {
@@ -214,10 +213,15 @@ const Questionnaire = () => {
     const [userId, setUserId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [prediction, setPrediction] = useState("");
-    const [userName, setUserName] = useState("User");
+    const [depLevel, setDepLevel] = useState("unknown");
 
+    const { theme } = useTheme() as { theme: any };
     const router = useRouter();
+    const params = useLocalSearchParams();
+
+    // get image values from params
+    const emotion = params.emotion as string | undefined;
+    const faceImg = params.faceImg as string | undefined;
 
     // Fetch logged-in user's UID
     useEffect(() => {
@@ -231,21 +235,6 @@ const Questionnaire = () => {
         };
         fetchUser();
     }, []);
-
-    useEffect(() => {
-        const loadUserData = async () => {
-            try {
-                const name = await AsyncStorage.getItem("userName");
-                setUserName(name ?? "User");
-            } catch (error) {
-                console.error("Failed to load user data:", error);
-            }
-        };
-
-        loadUserData();
-    }, []);
-
-    const { theme } = useTheme() as { theme: any };
 
     const handleSelect = (value: number) => {
         const newAnswers = [...answers];
@@ -297,17 +286,6 @@ const Questionnaire = () => {
     };
 
     const handleSubmit = async () => {
-        // Immediately check connectivity to the backend server
-        const isServerConnected = await checkServerConnection();
-
-        if (!isServerConnected) {
-            ToastAndroid.show(
-                "No internet connection. Please check your connection.",
-                ToastAndroid.SHORT
-            );
-            return; // Exit early if server is not reachable
-        }
-
         // Validate answers before submitting
         if (answers.includes(null)) {
             ToastAndroid.show(
@@ -323,7 +301,7 @@ const Questionnaire = () => {
         try {
             // Proceed with submission if server is reachable
             const response = await axios.post(
-                "https://moodz.fly.dev/child/predict",
+                "https://moodzchild-hdoty7s3nq-as.a.run.app/child/predict",
                 {
                     Q1: answers[0],
                     Q2: answers[1],
@@ -349,12 +327,42 @@ const Questionnaire = () => {
             );
 
             const prediction = response.data;
-            // prediction have two atrributes. prediction (0/1) and isDeprssed (yes/no)
+            console.log(prediction);
+
+            // Get the depression level
+            const imgValue = emotion?.toLowerCase();
+            const quizValue = prediction.isDepressed;
+
+            const combinedValue = `${imgValue}-${quizValue}`;
+
+            let newDepLevel = "unknown"; // Default value
+            switch (combinedValue) {
+                case "negative-No":
+                    newDepLevel = "low";
+                    break;
+                case "positive-No":
+                    newDepLevel = "normal";
+                    break;
+                case "negative-Yes":
+                    newDepLevel = "high";
+                    break;
+                case "positive-Yes":
+                    newDepLevel = "moderate";
+                    break;
+                default:
+                    newDepLevel = "unknown";
+                    break;
+            }
+
+            setDepLevel(newDepLevel); // Update depLevel state
 
             if (userId) {
                 const payload = {
+                    emotion,
+                    faceImg,
                     answers,
                     prediction,
+                    depLevel: newDepLevel, // Use the updated value directly
                     timestamp: firestore.FieldValue.serverTimestamp(),
                 };
 
@@ -370,9 +378,13 @@ const Questionnaire = () => {
             // Hide loading animation and show success message after submission
             setTimeout(() => {
                 setIsLoading(false); // Stop loading animation
-                setPrediction(prediction);
-                setShowModal(true);
+                setShowModal(true); // Show success modal
             }, 3500); // Wait for 3 seconds before hiding the loading animation
+
+            router.push({
+                pathname: "/Components/Child/DepressionLevel",
+                params: { newDepLevel },
+            });
         } catch (error) {
             console.error("Error submitting data:", error);
 
@@ -463,8 +475,7 @@ const Questionnaire = () => {
                                         { color: theme.title },
                                     ]}
                                 >
-                                    Center for Epidemiological Studies
-                                    Depression Scale for Children
+                                    CES-DC Questionnaire
                                 </Text>
                             </BlurView>
 
@@ -604,7 +615,7 @@ const Questionnaire = () => {
                     <View
                         style={[
                             styles.modalContainer,
-                            { backgroundColor: theme.modalBackground },
+                            { backgroundColor: theme.loadingModalBg },
                         ]}
                     >
                         <View
@@ -636,7 +647,7 @@ const Questionnaire = () => {
                                     { color: theme.dimText },
                                 ]}
                             >
-                                Questionnaire submitted successfully!
+                                Questionnaire Submitted Successfully!
                             </Text>
                             <LottieView
                                 source={require("../../../assets/lottie/LoadAnime.json")} // Add your Lottie animation file here
@@ -770,7 +781,7 @@ const styles = StyleSheet.create({
     },
     submitButtonText: {
         color: "#fff",
-        fontSize: 18,
+        fontSize: 14,
         fontWeight: "bold",
     },
     nextButton: {
@@ -815,7 +826,7 @@ const styles = StyleSheet.create({
     },
     circularProgressWrapper: {
         position: "absolute",
-        top: 210, // Vertical position remains as-is
+        top: 150, // Vertical position remains as-is
         zIndex: 2,
         justifyContent: "center",
         alignItems: "center",

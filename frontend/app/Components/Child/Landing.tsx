@@ -102,7 +102,9 @@ const Landing = () => {
                         },
                     ]}
                 >
-                    <Text style={[styles.mainText, {color: theme.title}]}>remember!</Text>
+                    <Text style={[styles.mainText, { color: theme.title }]}>
+                        remember!
+                    </Text>
                 </Animated.View>
 
                 <Animated.View
@@ -115,12 +117,31 @@ const Landing = () => {
                         },
                     ]}
                 >
-                    <Text style={[styles.instruction, {color: theme.landingInstruction}]}>
+                    <Text
+                        style={[
+                            styles.instruction,
+                            { color: theme.landingInstruction },
+                        ]}
+                    >
                         You are required to participate in two assessments
                         related to your child's data.
                     </Text>
-                    <Text style={[styles.listItem, {color: theme.landingListItem}]}>1. Upload a photo of your child's face.</Text>
-                    <Text style={[styles.listItem, {color: theme.landingListItem}]}>2. Complete the CES-DC Assessment.</Text>
+                    <Text
+                        style={[
+                            styles.listItem,
+                            { color: theme.landingListItem },
+                        ]}
+                    >
+                        1. Upload a photo of your child's face.
+                    </Text>
+                    <Text
+                        style={[
+                            styles.listItem,
+                            { color: theme.landingListItem },
+                        ]}
+                    >
+                        2. Complete the CES-DC Assessment.
+                    </Text>
                 </Animated.View>
 
                 <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
@@ -146,11 +167,11 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginVertical: 35,
+        marginVertical: 45,
     },
     img: {
-        width: 400,
-        height: 400,
+        width: 350,
+        height: 350,
     },
     mainTextContainer: {
         display: "flex",
@@ -180,7 +201,7 @@ const styles = StyleSheet.create({
     instruction: {
         textAlign: "center",
         fontFamily: "roboto",
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: "500",
         marginBottom: 15,
         lineHeight: 24,
@@ -200,7 +221,7 @@ const styles = StyleSheet.create({
     },
     startButtonText: {
         color: "#fff",
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: "poppinsSemiBold",
     },
 });
