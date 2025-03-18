@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Animated }
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
+import firestore from '@react-native-firebase/firestore';
 
 const DASday4 = ({ navigation }: { navigation: any }) => {
   const { theme } = useTheme() as { theme: any };
@@ -13,15 +14,47 @@ const DASday4 = ({ navigation }: { navigation: any }) => {
     router.replace("/Components/DAS/DASHome");
   };
 
-  const handleQuiz1Press = () => {
+  const activitiesRef = firestore().collection('activities');
+  
+  const updateActivityCount = async (activityName: string) => {
+    try {
+      const dayDoc = activitiesRef.doc('Day 4');
+    
+      const doc = await dayDoc.get();
+      const currentActivities = doc.exists ? doc.data()?.activities || [] : [];
+
+      const activityIndex = currentActivities.findIndex((a: any) => a.name === activityName);
+      
+      if (activityIndex === -1) {
+        await dayDoc.set({
+          activities: [...currentActivities, { name: activityName, count: 1 }]
+        }, { merge: true });
+      } else {
+const updatedCount = currentActivities[activityIndex].count + 1;
+        const newActivities = [...currentActivities];
+        newActivities[activityIndex].count = updatedCount;
+
+        await dayDoc.update({
+          activities: newActivities
+        });
+      }
+    } catch (error) {
+      console.error("Error updating activity count:", error);
+    }
+  };
+
+  const handleQuiz1Press = async () => {
+    await updateActivityCount('Love Wisdom Quiz');
     router.replace("/Components/DAS/DASquiz1");
   };
  
-  const handleQuiz2Press = () => {
+  const handleQuiz2Press = async () => {
+    await updateActivityCount('Gratitude Moment Quiz');
     router.replace("/Components/DAS/DASquiz2");
   };
 
-  const handleQuiz3Press = () => {
+  const handleQuiz3Press = async () => {
+    await updateActivityCount('Couple Edition Quiz');
     router.replace("/Components/DAS/DASquiz3");
   };
 

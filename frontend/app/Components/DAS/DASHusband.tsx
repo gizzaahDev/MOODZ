@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Animated }
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
+import firestore from '@react-native-firebase/firestore';
 
 const DASHusband = ({ navigation }: { navigation: any }) => {
   const { theme } = useTheme() as { theme: any };
@@ -13,15 +14,47 @@ const DASHusband = ({ navigation }: { navigation: any }) => {
     router.replace("/Components/DAS/DASday5");
   };
 
-  const handleLeaderPress = () => {
+  const activitiesRef = firestore().collection('activities');
+  
+  const updateActivityCount = async (activityName: string) => {
+    try {
+      const dayDoc = activitiesRef.doc('Day 5 - Husband');
+    
+      const doc = await dayDoc.get();
+      const currentActivities = doc.exists ? doc.data()?.activities || [] : [];
+
+      const activityIndex = currentActivities.findIndex((a: any) => a.name === activityName);
+      
+      if (activityIndex === -1) {
+        await dayDoc.set({
+          activities: [...currentActivities, { name: activityName, count: 1 }]
+        }, { merge: true });
+      } else {
+const updatedCount = currentActivities[activityIndex].count + 1;
+        const newActivities = [...currentActivities];
+        newActivities[activityIndex].count = updatedCount;
+
+        await dayDoc.update({
+          activities: newActivities
+        });
+      }
+    } catch (error) {
+      console.error("Error updating activity count:", error);
+    }
+  };
+  
+  const handleLeaderPress = async () => {
+    await updateActivityCount('Quito 1');
     router.replace("/Components/DAS/Husband1");
   };
  
-  const handleLovePress = () => {
+  const handleLovePress = async () => {
+    await updateActivityCount('Quito 2');
     router.replace("/Components/DAS/Husband2");
   };
 
-  const handleGrowthPress = () => {
+  const handleGrowthPress = async () => {
+    await updateActivityCount('Quito 3');
     router.replace("/Components/DAS/Husband3");
   };
 

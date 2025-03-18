@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Animated }
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
+import firestore from '@react-native-firebase/firestore';
 
 const DASday2 = ({ navigation }: { navigation: any }) => {
   const { theme } = useTheme() as { theme: any };
@@ -13,15 +14,48 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
     router.replace("/Components/DAS/DASHome");
   };
 
-  const handleMusicPress = () => {
+  const activitiesRef = firestore().collection('activities');
+  
+  const updateActivityCount = async (activityName: string) => {
+    try {
+      const dayDoc = activitiesRef.doc('Day 2');
+    
+      const doc = await dayDoc.get();
+      const currentActivities = doc.exists ? doc.data()?.activities || [] : [];
+
+      const activityIndex = currentActivities.findIndex((a: any) => a.name === activityName);
+      
+      if (activityIndex === -1) {
+        await dayDoc.set({
+          activities: [...currentActivities, { name: activityName, count: 1 }]
+        }, { merge: true });
+      } else {
+        
+        const updatedCount = currentActivities[activityIndex].count + 1;
+        const newActivities = [...currentActivities];
+        newActivities[activityIndex].count = updatedCount;
+
+        await dayDoc.update({
+          activities: newActivities
+        });
+      }
+    } catch (error) {
+      console.error("Error updating activity count:", error);
+    }
+  };
+
+  const handleMusicPress = async () => {
+    await updateActivityCount('Music Player 2');
     router.replace("/Components/DAS/Music2");
   };
  
-  const handleLovePress = () => {
+  const handleLovePress = async () => {
+    await updateActivityCount('Memo Love Board');
     router.replace("/Components/DAS/Date1");
   };
 
-  const handleSmilePress = () => {
+  const handleSmilePress = async () => {
+    await updateActivityCount('Smile Goal');
     router.replace("/Components/DAS/DASMood");
   };
 
@@ -72,7 +106,7 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
 
             <TouchableOpacity onPress={handleSmilePress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
-                <Text style={styles.buttonText1}>Smile{'\n'}Goal</Text>
+                <Text style={styles.buttonText1}>Mood{'\n'}Calender</Text>
               </Animated.View>
             </TouchableOpacity>
 
