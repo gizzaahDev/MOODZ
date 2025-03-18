@@ -1,9 +1,7 @@
 import {
     View,
     Text,
-    Button,
     StyleSheet,
-    TouchableOpacity,
     Image,
 } from "react-native";
 import React, { useState } from "react";
@@ -11,7 +9,6 @@ import DailyActivity from "./DailyActivity";
 import DateBoxes from "./DateBoxes";
 import FontLoader from "../../../../FontLoader";
 import { useTheme } from "../../../ThemeContext";
-import { useRouter } from "expo-router";
 
 const ActivityView = () => {
     const { theme } = useTheme();
