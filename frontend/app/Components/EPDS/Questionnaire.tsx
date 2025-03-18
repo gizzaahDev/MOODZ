@@ -246,7 +246,7 @@ const Questionnaire = () => {
     try {
       // Proceed with submission if server is reachable
       const response = await axios.post(
-        'https://moodz.fly.dev/postpartum/predict',
+        'https://moodzpostpartum-hdoty7s3nq-as.a.run.app/postpartum/predict',
         // 'http://192.168.8.188:8000/postpartum/predict', 
         {
           Q1: answers[0],
