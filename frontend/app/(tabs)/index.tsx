@@ -36,7 +36,7 @@ export default function Home() {
     const getQuestionnaireRoute = (category: string) => {
         switch (category) {
             case "child":
-                return "/Components/Child/Activity/StoryTime/StoryTelling";
+                return "/Components/Child/Activity/ActivityView";
             case "marital":
                 return "/Components/DAS/Questionnaire";
             case "postpartum":
