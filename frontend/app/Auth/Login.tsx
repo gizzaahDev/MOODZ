@@ -89,15 +89,15 @@ const Login = () => {
   const handleSignIn = async () => {
 
 
-    const isServerConnected = await checkServerConnection();
+    // const isServerConnected = await checkServerConnection();
 
-    if (!isServerConnected) {
-      ToastAndroid.show(
-        "No internet connection. Please check your connection.",
-        ToastAndroid.SHORT
-      );
-      return; // Exit early if server is not reachable
-    }
+    // if (!isServerConnected) {
+    //   ToastAndroid.show(
+    //     "No internet connection. Please check your connection.",
+    //     ToastAndroid.SHORT
+    //   );
+    //   return; // Exit early if server is not reachable
+    // }
     if (!validateInputs()) return;
 
     auth()
@@ -138,40 +138,40 @@ const Login = () => {
   };
 
 
-  const checkServerConnection = async () => {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 1500);  // Set a timeout for the request
+  // const checkServerConnection = async () => {
+  //   const controller = new AbortController();
+  //   const timeout = setTimeout(() => controller.abort(), 1500);  // Set a timeout for the request
 
-    try {
-      const response = await fetch('https://moodz.fly.dev/', {
-        method: 'GET',  // Use GET method to check server
-        signal: controller.signal,
-      });
-      clearTimeout(timeout);
+  //   try {
+  //     const response = await fetch('https://moodz.fly.dev/', {
+  //       method: 'GET',  // Use GET method to check server
+  //       signal: controller.signal,
+  //     });
+  //     clearTimeout(timeout);
 
-      if (response.ok) {
-        return true;  // Return true if the server is reachable
-      } else {
-        return false; // Return false if the server is unreachable
-      }
-    } catch (error) {
-      clearTimeout(timeout);
-      return false;  // Return false if an error or timeout occurs
-    }
-  };
+  //     if (response.ok) {
+  //       return true;  // Return true if the server is reachable
+  //     } else {
+  //       return false; // Return false if the server is unreachable
+  //     }
+  //   } catch (error) {
+  //     clearTimeout(timeout);
+  //     return false;  // Return false if an error or timeout occurs
+  //   }
+  // };
 
 
   const onGoogleButtonPress = async () => {
 
-    const isServerConnected = await checkServerConnection();
+    // const isServerConnected = await checkServerConnection();
 
-    if (!isServerConnected) {
-      ToastAndroid.show(
-        "No internet connection. Please check your connection.",
-        ToastAndroid.SHORT
-      );
-      return; // Exit early if server is not reachable
-    }
+    // if (!isServerConnected) {
+    //   ToastAndroid.show(
+    //     "No internet connection. Please check your connection.",
+    //     ToastAndroid.SHORT
+    //   );
+    //   return; // Exit early if server is not reachable
+    // }
 
     try {
       await GoogleSignin.signOut();
