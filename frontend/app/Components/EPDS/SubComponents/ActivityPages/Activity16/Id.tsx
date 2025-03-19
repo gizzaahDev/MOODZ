@@ -11,7 +11,8 @@ const MeditationHome = () => {
   const [totalDays, setTotalDays] = useState(0);
   const [streakDays, setStreakDays] = useState(0);
   const [playCount, setPlayCount] = useState(0);
-  const [sessionDurations, setSessionDurations] = useState<number[]>([]);
+  const [questionCount, setQuestionCount] = useState(0);
+  const [commentCount, setCommentCount] = useState(0);
   const [meditationDates, setMeditationDates] = useState<{ [key: string]: { selected: boolean; selectedColor: string } }>({});
 
   const userId = auth().currentUser?.uid;
@@ -20,46 +21,65 @@ const MeditationHome = () => {
   useEffect(() => {
     if (userId) {
       fetchProgress();
+      fetchCommunityStats();
     }
   }, [userId]);
+
+  const fetchCommunityStats = async () => {
+    try {
+      const communityRef = firestore().collection('Community');
+      const snapshot = await communityRef.where('userId', '==', userId).get();
+      setQuestionCount(snapshot.size);
+
+      let totalComments = 0;
+      snapshot.forEach(doc => {
+        const answers = doc.data().answers || [];
+        totalComments += answers.length;
+      });
+      setCommentCount(totalComments);
+    } catch (error) {
+      console.error('Error fetching community stats:', error);
+    }
+  };
 
   const fetchProgress = async () => {
     try {
       const userId = auth().currentUser?.uid;
       if (!userId) return;
 
-      // Get the date for today
       const today = new Date().toISOString().split('T')[0];
+      const userRef = firestore()
+        .collection('UsersEpds')
+        .doc(userId)
+        .collection('CompletedActivities')
+        .doc(today);
 
-      // Reference to the document for today's activity under 'CompletedActivities' subcollection
-      const userRef = firestore().collection('UsersEpds').doc(userId).collection('CompletedActivities').doc(today);
-
-      // Fetch the user's meditation data for today
       const userDoc = await userRef.get();
 
       if (userDoc.exists) {
         const data = userDoc.data();
-        const meditationHistoryProgMuscle = data?.meditationHistoryProgMuscle || {};
+        const walkingTask = data?.walkingTask || {};
 
         // Get all recorded dates
-        const dates = Object.keys(meditationHistoryProgMuscle);
+        const dates = Object.keys(walkingTask);
 
-        // Calculate total days meditated
+        // Calculate total days walked
         setTotalDays(dates.length);
 
-        // Get today's session data (today's session if exists)
-        const todayData = meditationHistoryProgMuscle[today] || { streakDays: 0, playCount: 0, sessionDurations: [] };
+        // Get today's session data
+        const todayData = walkingTask[today] || { 
+          totalDays: 0,
+          streakDays: 0, 
+          playCount: 0
+        };
 
         setStreakDays(todayData.streakDays || 0);
         setPlayCount(todayData.playCount || 0);
-        setSessionDurations((todayData.sessionDurations || []).map((duration: number) =>
-          parseFloat((duration / (60 * 1000)).toFixed(2)) // Convert duration from ms to minutes
-        ));
 
-        // Format meditation dates for the calendar
+        // Format walking dates for the calendar
         const markedDates: { [key: string]: { selected: boolean; selectedColor: string } } = {};
         dates.forEach((date) => {
-          markedDates[date] = { selected: true, selectedColor: '#016A70' }; // Use primary color
+          markedDates[date] = { selected: true, selectedColor: '#016A70' };
         });
         setMeditationDates(markedDates);
       }
@@ -70,15 +90,15 @@ const MeditationHome = () => {
 
 
   const recordMeditation = async () => {
-    router.push('/Components/EPDS/SubComponents/ActivityPages/Activity03/ProgressiveMuscleEX');
+    router.push('/Components/EPDS/SubComponents/ActivityPages/Activity16/SocialInteraction');
   };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={[styles.subMiniContainer]}>
-      <Text style={[styles.title, { color: theme.textPrimary }]}>Progressive Muscle</Text>
+      <Text style={[styles.title, { color: theme.textPrimary }]}>Postpartum Community</Text>
       <Text style={[styles.guidelines, { color: theme.textSecondary }]}>
-        Progressive muscle relaxation helps reduce tension by systematically tensing and relaxing different muscle groups. Follow the guided instructions carefully.
+        Share your experiences, ask questions, and connect with other parents in our supportive community. Your voice matters.
       </Text>
       <ScrollView>
         {/* Progress Stats */}
@@ -88,40 +108,13 @@ const MeditationHome = () => {
               Total Days: {totalDays}
             </Text>
             <Text style={[styles.progressText, { color: theme.textPrimary }]}>
-              Streak: {streakDays} days
+              Questions Posted: {questionCount}
             </Text>
             <Text style={[styles.progressText, { color: theme.textPrimary }]}>
-              Play Count: {playCount}
+              Comments Made: {commentCount}
             </Text>
           </View>
-
-
-
-          <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
-            Session Durations
-          </Text>
-          <View style={styles.durationsContainer}>
-          {sessionDurations.length > 0 ? (
-        <View style={styles.durationsWrapper}>
-            {sessionDurations.map((duration, index) => (
-                <View key={index} style={styles.subContainer}>
-                    <Text style={[styles.durationsText, { color: theme.textPrimary }]}>
-                        {duration} Min
-                    </Text>
-                </View>
-            ))}
         </View>
-    ) : (
-        <Text style={[styles.noRecordsText, ]}>
-            No records available...
-        </Text>
-    )}
-          </View>
-
-        </View>
-
-        {/* Start Meditation Button */}
-
 
         {/* Calendar */}
         <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
@@ -207,50 +200,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'left',
   },
-  durationsContainer: {
-    height: 'auto',
-    padding:10,
-    margin:5,
-    
-    borderRadius: 8,
-    backgroundColor: '#ffffff', // Add a background color to the container
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3.5,
-    elevation: 4,
-  },
-  durationsWrapper: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-  },
-  subContainer: {
-    marginRight: 5,
-    marginTop: 5,
-    marginBottom: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    backgroundColor: '#f0f0f0', // Add a background color to the sub-containers
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3.5,
-    
-    elevation: 2, // for Android
-  },
-
-  durationsText: {
-    fontSize: 14,
-    fontWeight: 'normal',
-  },
-  noRecordsText: {
-    fontSize: 14,
-    
-    color: '#888', // Light gray to indicate no records
-    
-    
-},
   buttonContainer: {
     width: '100%',
     marginBottom: 10,

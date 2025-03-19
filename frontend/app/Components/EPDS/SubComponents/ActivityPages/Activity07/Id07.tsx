@@ -28,38 +28,41 @@ const MeditationHome = () => {
       const userId = auth().currentUser?.uid;
       if (!userId) return;
 
-      // Get the date for today
       const today = new Date().toISOString().split('T')[0];
+      const userRef = firestore()
+        .collection('UsersEpds')
+        .doc(userId)
+        .collection('CompletedActivities')
+        .doc(today);
 
-      // Reference to the document for today's activity under 'CompletedActivities' subcollection
-      const userRef = firestore().collection('UsersEpds').doc(userId).collection('CompletedActivities').doc(today);
-
-      // Fetch the user's meditation data for today
       const userDoc = await userRef.get();
 
       if (userDoc.exists) {
         const data = userDoc.data();
-        const meditationHistoryProgMuscle = data?.meditationHistoryProgMuscle || {};
+        const walkingTask = data?.walkingTask || {};
 
         // Get all recorded dates
-        const dates = Object.keys(meditationHistoryProgMuscle);
+        const dates = Object.keys(walkingTask);
 
-        // Calculate total days meditated
+        // Calculate total days walked
         setTotalDays(dates.length);
 
-        // Get today's session data (today's session if exists)
-        const todayData = meditationHistoryProgMuscle[today] || { streakDays: 0, playCount: 0, sessionDurations: [] };
+        // Get today's session data
+        const todayData = walkingTask[today] || { 
+          totalDays: 0,
+          streakDays: 0, 
+          playCount: 0,
+          steps: []
+        };
 
         setStreakDays(todayData.streakDays || 0);
         setPlayCount(todayData.playCount || 0);
-        setSessionDurations((todayData.sessionDurations || []).map((duration: number) =>
-          parseFloat((duration / (60 * 1000)).toFixed(2)) // Convert duration from ms to minutes
-        ));
+        setSessionDurations(todayData.steps || []);
 
-        // Format meditation dates for the calendar
+        // Format walking dates for the calendar
         const markedDates: { [key: string]: { selected: boolean; selectedColor: string } } = {};
         dates.forEach((date) => {
-          markedDates[date] = { selected: true, selectedColor: '#016A70' }; // Use primary color
+          markedDates[date] = { selected: true, selectedColor: '#016A70' };
         });
         setMeditationDates(markedDates);
       }
@@ -98,7 +101,7 @@ const MeditationHome = () => {
 
 
           <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
-            Session Durations
+            All Steps History
           </Text>
           <View style={styles.durationsContainer}>
           {sessionDurations.length > 0 ? (
@@ -106,7 +109,7 @@ const MeditationHome = () => {
             {sessionDurations.map((duration, index) => (
                 <View key={index} style={styles.subContainer}>
                     <Text style={[styles.durationsText, { color: theme.textPrimary }]}>
-                        {duration} Min
+                        {duration} Steps
                     </Text>
                 </View>
             ))}

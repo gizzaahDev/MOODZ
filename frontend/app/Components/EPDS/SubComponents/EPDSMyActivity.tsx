@@ -70,30 +70,30 @@ export default function EPDSMyActivity() {
                 if (cachedActivities) {
                     setGroupedActivities(JSON.parse(cachedActivities)); // Show cached data immediately
                 }
-    
+
                 // Fetch new data from Firestore in the background
                 const activitiesSnapshot = await firestore()
                     .collection('EPDSDepressionActivities')
                     .doc(userId)
                     .get();
-    
+
                 if (activitiesSnapshot.exists) {
                     const activitiesData = activitiesSnapshot.data();
-    
+
                     if (activitiesData) {
                         // Define the type for grouped
                         const grouped: { [key: string]: { id: string; title: string; description: string; }[] } = {};
-    
+
                         Object.keys(activitiesData).forEach(activityId => {
                             const activity = activitiesData[activityId];
                             const { category, title, description } = activity;
-    
+
                             // Ensure category is a string
                             if (typeof category === 'string') {
                                 if (!grouped[category]) {
                                     grouped[category] = [];
                                 }
-    
+
                                 grouped[category].push({
                                     id: activityId,
                                     title,
@@ -101,9 +101,9 @@ export default function EPDSMyActivity() {
                                 });
                             }
                         });
-    
+
                         setGroupedActivities(grouped); // Update UI with new data
-    
+
                         // Save to local storage for future use
                         await AsyncStorage.setItem('cachedActivities', JSON.stringify(grouped));
                     }
@@ -113,7 +113,7 @@ export default function EPDSMyActivity() {
             }
         }
     };
-    
+
     // Use useEffect to load data immediately when the page opens
     useEffect(() => {
         fetchActivities();
@@ -198,20 +198,32 @@ export default function EPDSMyActivity() {
             case '4':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity04/Id04');
                 break;
-                case '5':
+            case '5':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity05/Id05');
                 break;
-                case '6':
+            case '6':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity06/Id06');
                 break;
-                case '7':
+            case '7':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity07/Id07');
                 break;
-                case '8':
+            case '8':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity08/Id08');
                 break;
             case '11':
                 router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity11/Id11');
+                break;
+            case '12':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity12/Id12');
+                break;
+            case '13':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity13/Id13');
+                break;
+
+
+
+            case '16':
+                router.replace('/Components/EPDS/SubComponents/ActivityPages/Activity16/Id');
                 break;
             // Add more cases for other activity pages
             default:
@@ -418,7 +430,7 @@ export default function EPDSMyActivity() {
 
                         <View>
                             {/* Done for Today */}
-                            <Text style={styles.sectionTitle}>Done For Today</Text>
+                            <Text style={styles.sectionTitle}>Last Done For Today</Text>
                             {activity ? (
                                 <View style={styles.categorySection}>
                                     <Text style={styles.categoryTitle}>{activity.category}</Text>
