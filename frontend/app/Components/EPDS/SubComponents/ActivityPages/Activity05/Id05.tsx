@@ -39,16 +39,16 @@ const MeditationHome = () => {
 
       if (userDoc.exists) {
         const data = userDoc.data();
-        const meditationHistoryProgMuscle = data?.meditationHistoryProgMuscle || {};
+        const sleepRelaxation = data?.sleepRelaxation || {};
 
         // Get all recorded dates
-        const dates = Object.keys(meditationHistoryProgMuscle);
+        const dates = Object.keys(sleepRelaxation);
 
         // Calculate total days meditated
         setTotalDays(dates.length);
 
         // Get today's session data (today's session if exists)
-        const todayData = meditationHistoryProgMuscle[today] || { streakDays: 0, playCount: 0, sessionDurations: [] };
+        const todayData = sleepRelaxation[today] || { streakDays: 0, playCount: 0, sessionDurations: [] };
 
         setStreakDays(todayData.streakDays || 0);
         setPlayCount(todayData.playCount || 0);
@@ -76,9 +76,9 @@ const MeditationHome = () => {
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={[styles.subMiniContainer]}>
-      <Text style={[styles.title, { color: theme.textPrimary }]}>Breathing Exercise</Text>
+      <Text style={[styles.title, { color: theme.textPrimary }]}>Sleep Relaxation Music</Text>
       <Text style={[styles.guidelines, { color: theme.textSecondary }]}>
-        Focus on deep breathing and staying present. Follow the instructions during the meditation.
+        Listen to calming music to help you relax and unwind. Create a peaceful environment for better sleep.
       </Text>
       <ScrollView>
         {/* Progress Stats */}
@@ -97,7 +97,7 @@ const MeditationHome = () => {
 
 
 
-          <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
+          {/* <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
             Session Durations
           </Text>
           <View style={styles.durationsContainer}>
@@ -116,7 +116,7 @@ const MeditationHome = () => {
             No records available...
         </Text>
     )}
-          </View>
+          </View> */}
 
         </View>
 
