@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Animated }
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
+import firestore from '@react-native-firebase/firestore';
 
 const DASMeditation = ({ navigation }: { navigation: any }) => {
   const { theme } = useTheme() as { theme: any };
@@ -13,15 +14,47 @@ const DASMeditation = ({ navigation }: { navigation: any }) => {
     router.replace("/Components/DAS/DASday6");
   };
 
-  const handleMindPress = () => {
+  const activitiesRef = firestore().collection('activities');
+  
+  const updateActivityCount = async (activityName: string) => {
+    try {
+      const dayDoc = activitiesRef.doc('Day 6');
+    
+      const doc = await dayDoc.get();
+      const currentActivities = doc.exists ? doc.data()?.activities || [] : [];
+
+      const activityIndex = currentActivities.findIndex((a: any) => a.name === activityName);
+      
+      if (activityIndex === -1) {
+        await dayDoc.set({
+          activities: [...currentActivities, { name: activityName, count: 1 }]
+        }, { merge: true });
+      } else {
+const updatedCount = currentActivities[activityIndex].count + 1;
+        const newActivities = [...currentActivities];
+        newActivities[activityIndex].count = updatedCount;
+
+        await dayDoc.update({
+          activities: newActivities
+        });
+      }
+    } catch (error) {
+      console.error("Error updating activity count:", error);
+    }
+  };
+
+  const handleMindPress = async () => {
+    await updateActivityCount('Mindfullness Meditation');
     router.replace("/Components/DAS/Dmed1");
   };
  
-  const handleKindPress = () => {
+  const handleKindPress = async () => {
+    await updateActivityCount('Loving-Kindness Meditation');
     router.replace("/Components/DAS/Dmed2");
   };
 
-  const handleGuidePress = () => {
+  const handleGuidePress = async () => {
+    await updateActivityCount('Heart Clearing & Healing Meditation');
     router.replace("/Components/DAS/Dmed3");
   };
 

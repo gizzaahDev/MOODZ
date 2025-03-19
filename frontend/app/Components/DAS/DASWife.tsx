@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Animated }
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
+import firestore from '@react-native-firebase/firestore';
 
 const DASWife = ({ navigation }: { navigation: any }) => {
   const { theme } = useTheme() as { theme: any };
@@ -13,15 +14,47 @@ const DASWife = ({ navigation }: { navigation: any }) => {
     router.replace("/Components/DAS/DASday5");
   };
 
-  const handleSelfPress = () => {
+  const activitiesRef = firestore().collection('activities');
+  
+  const updateActivityCount = async (activityName: string) => {
+    try {
+      const dayDoc = activitiesRef.doc('Day 5 - Wife');
+    
+      const doc = await dayDoc.get();
+      const currentActivities = doc.exists ? doc.data()?.activities || [] : [];
+
+      const activityIndex = currentActivities.findIndex((a: any) => a.name === activityName);
+      
+      if (activityIndex === -1) {
+        await dayDoc.set({
+          activities: [...currentActivities, { name: activityName, count: 1 }]
+        }, { merge: true });
+      } else {
+const updatedCount = currentActivities[activityIndex].count + 1;
+        const newActivities = [...currentActivities];
+        newActivities[activityIndex].count = updatedCount;
+
+        await dayDoc.update({
+          activities: newActivities
+        });
+      }
+    } catch (error) {
+      console.error("Error updating activity count:", error);
+    }
+  };
+
+  const handleSelfPress = async () => {
+    await updateActivityCount('Quito 1');
     router.replace("/Components/DAS/Wife1");
   };
  
-  const handleMarryPress = () => {
+  const handleMarryPress = async () => {
+    await updateActivityCount('Quito 2');
     router.replace("/Components/DAS/Wife2");
   };
 
-  const handleStrengthPress = () => {
+  const handleStrengthPress = async () => {
+    await updateActivityCount('Quito 3');
     router.replace("/Components/DAS/Wife3");
   };
   
