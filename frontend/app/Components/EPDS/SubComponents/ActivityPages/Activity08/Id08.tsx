@@ -28,38 +28,46 @@ const MeditationHome = () => {
       const userId = auth().currentUser?.uid;
       if (!userId) return;
 
-      // Get the date for today
       const today = new Date().toISOString().split('T')[0];
+      const userRef = firestore()
+        .collection('UsersEpds')
+        .doc(userId)
+        .collection('CompletedActivities')
+        .doc(today);
 
-      // Reference to the document for today's activity under 'CompletedActivities' subcollection
-      const userRef = firestore().collection('UsersEpds').doc(userId).collection('CompletedActivities').doc(today);
-
-      // Fetch the user's meditation data for today
       const userDoc = await userRef.get();
 
       if (userDoc.exists) {
         const data = userDoc.data();
-        const meditationHistoryProgMuscle = data?.meditationHistoryProgMuscle || {};
+        const pelvicFloorHistory = data?.pelvicFloorHistory || {};
 
         // Get all recorded dates
-        const dates = Object.keys(meditationHistoryProgMuscle);
+        const dates = Object.keys(pelvicFloorHistory);
 
-        // Calculate total days meditated
+        // Calculate total days
         setTotalDays(dates.length);
 
-        // Get today's session data (today's session if exists)
-        const todayData = meditationHistoryProgMuscle[today] || { streakDays: 0, playCount: 0, sessionDurations: [] };
+        // Get today's data
+        const todayData = pelvicFloorHistory[today] || {
+          totalDays: 0,
+          streakDays: 0,
+          playCount: 0,
+          totalSessions: 0
+        };
 
         setStreakDays(todayData.streakDays || 0);
         setPlayCount(todayData.playCount || 0);
-        setSessionDurations((todayData.sessionDurations || []).map((duration: number) =>
-          parseFloat((duration / (60 * 1000)).toFixed(2)) // Convert duration from ms to minutes
-        ));
 
-        // Format meditation dates for the calendar
+        // Get all session durations from history
+        const allSessions = dates.map(date => {
+          return pelvicFloorHistory[date].totalSessions || 0;
+        });
+        setSessionDurations(allSessions);
+
+        // Format dates for the calendar
         const markedDates: { [key: string]: { selected: boolean; selectedColor: string } } = {};
         dates.forEach((date) => {
-          markedDates[date] = { selected: true, selectedColor: '#016A70' }; // Use primary color
+          markedDates[date] = { selected: true, selectedColor: '#016A70' };
         });
         setMeditationDates(markedDates);
       }

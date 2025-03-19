@@ -39,22 +39,19 @@ const MeditationHome = () => {
 
       if (userDoc.exists) {
         const data = userDoc.data();
-        const meditationHistoryProgMuscle = data?.meditationHistoryProgMuscle || {};
+        const coloringTask = data?.coloringTask || {};
 
         // Get all recorded dates
-        const dates = Object.keys(meditationHistoryProgMuscle);
+        const dates = Object.keys(coloringTask);
 
         // Calculate total days meditated
         setTotalDays(dates.length);
 
         // Get today's session data (today's session if exists)
-        const todayData = meditationHistoryProgMuscle[today] || { streakDays: 0, playCount: 0, sessionDurations: [] };
+        const todayData = coloringTask[today] || { streakDays: 0, playCount: 0 };
 
         setStreakDays(todayData.streakDays || 0);
         setPlayCount(todayData.playCount || 0);
-        setSessionDurations((todayData.sessionDurations || []).map((duration: number) =>
-          parseFloat((duration / (60 * 1000)).toFixed(2)) // Convert duration from ms to minutes
-        ));
 
         // Format meditation dates for the calendar
         const markedDates: { [key: string]: { selected: boolean; selectedColor: string } } = {};
@@ -97,7 +94,7 @@ const MeditationHome = () => {
 
 
 
-          <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
+          {/* <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
             Session Durations
           </Text>
           <View style={styles.durationsContainer}>
@@ -116,7 +113,7 @@ const MeditationHome = () => {
             No records available...
         </Text>
     )}
-          </View>
+          </View> */}
 
         </View>
 

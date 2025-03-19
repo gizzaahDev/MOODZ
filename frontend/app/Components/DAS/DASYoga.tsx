@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Animated }
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
+import firestore from '@react-native-firebase/firestore';
 
 const DASYoga = ({ navigation }: { navigation: any }) => {
   const { theme } = useTheme() as { theme: any };
@@ -13,20 +14,57 @@ const DASYoga = ({ navigation }: { navigation: any }) => {
     router.replace("/Components/DAS/DASday7");
   };
 
-  const handleAct1Press = () => {
+  const activitiesRef = firestore().collection('activities');
+  
+  const updateActivityCount = async (activityName: string) => {
+    try {
+      const dayDoc = activitiesRef.doc('Day 7');
+    
+      const doc = await dayDoc.get();
+      const currentActivities = doc.exists ? doc.data()?.activities || [] : [];
+
+      const activityIndex = currentActivities.findIndex((a: any) => a.name === activityName);
+      
+      if (activityIndex === -1) {
+        await dayDoc.set({
+          activities: [...currentActivities, { name: activityName, count: 1 }]
+        }, { merge: true });
+      } else {
+const updatedCount = currentActivities[activityIndex].count + 1;
+        const newActivities = [...currentActivities];
+        newActivities[activityIndex].count = updatedCount;
+
+        await dayDoc.update({
+          activities: newActivities
+        });
+      }
+    } catch (error) {
+      console.error("Error updating activity count:", error);
+    }
+  };
+  const handleCompPress = () => {
+    router.replace("/Components/DAS/DASAbout2");
+  };
+
+  const handleAct1Press = async () => {
+    await updateActivityCount('MOODZ Challenge');
     router.replace("/Components/DAS/DYoga1");
   };
  
-  const handleAct2Press = () => {
+  const handleAct2Press = async () => {
+    await updateActivityCount('Partner Yoga - Intermediate');
     router.replace("/Components/DAS/DYoga2");
   };
-  const handleAct3Press = () => {
+  const handleAct3Press = async () => {
+    await updateActivityCount('Mobility Based Yoga');
     router.replace("/Components/DAS/DYoga3");
   };
-  const handleAct4Press = () => {
+  const handleAct4Press = async () => {
+    await updateActivityCount('Fitness Yoga');
     router.replace("/Components/DAS/DYoga4");
   };
-  const handleAct5Press = () => {
+  const handleAct5Press = async () => {
+    await updateActivityCount('Partner Yoga - Advanced');
     router.replace("/Components/DAS/DYoga5");
   };
   
@@ -99,6 +137,10 @@ const DASYoga = ({ navigation }: { navigation: any }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleHomePress} onPressIn={animateButton}>
               <Text style={styles.buttonText}>BACK</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={handleCompPress} onPressIn={animateButton}>
+              <Text style={styles.buttonText}>CONTINUE</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
