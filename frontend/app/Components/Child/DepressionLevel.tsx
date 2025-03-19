@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Animated,
     ImageBackground,
+    Linking,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -82,7 +83,9 @@ const DepressionLevel = () => {
                 params: { depLevel },
             });
         } else if (depLevel === "high") {
-            router.push("/(tabs)");
+            Linking.openURL(
+                "https://lankadoctor.com/specialist/sri-lanka-psychiatrists.php"
+            );
         } else {
             router.push("/(tabs)");
         }
