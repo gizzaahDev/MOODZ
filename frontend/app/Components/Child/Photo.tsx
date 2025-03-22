@@ -6,8 +6,6 @@ import {
     TouchableOpacity,
     Alert,
     StyleSheet,
-    ActivityIndicator,
-    Modal,
 } from "react-native";
 import { useTheme } from "../../ThemeContext";
 import { useRouter } from "expo-router";
@@ -15,6 +13,9 @@ import LottieView from "lottie-react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
+import LoadingAlert from "../../constants/LoadingAlert";
+import SuccessAlert from "../../constants/SuccessAlert";
+import FailedAlert from "../../constants/FailedAlert";
 
 const Photo = () => {
     const { theme } = useTheme() as { theme: any };
@@ -22,6 +23,9 @@ const Photo = () => {
 
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [failed, setFailed] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     // Request permissions for camera and gallery
     const requestPermissions = async () => {
@@ -81,6 +85,8 @@ const Photo = () => {
         }
 
         setLoading(true);
+        setSuccess(false);
+        setFailed(false);
 
         try {
             const formData = new FormData();
@@ -101,8 +107,14 @@ const Photo = () => {
             const result = response.data;
             console.log("API Response:", result);
 
+            setLoading(false);
+
             if (result.status === "success") {
+                setSuccess(true);
+
                 setTimeout(() => {
+                    setSuccess(false);
+
                     router.push({
                         pathname: "/Components/Child/QuestionIntro",
                         params: {
@@ -110,23 +122,17 @@ const Photo = () => {
                             faceImg: selectedImage,
                         },
                     });
-                }, 3001);
+                }, 5000);
             } else {
-                Alert.alert(
-                    "Error",
-                    result.detail || "Failed to classify image"
-                );
+                setLoading(false);
+                setFailed(true);
+                setErrorMsg("Please upload a child's face image !");
             }
         } catch (error: any) {
             console.error("Error uploading image:", error);
-            Alert.alert(
-                "Upload failed",
-                "Something went wrong. Please try again."
-            );
-        } finally {
-            setTimeout(() => {
-                setLoading(false);
-            }, 3000);
+            setLoading(false);
+            setFailed(true);
+            setErrorMsg("Something went wrong. Try again !");
         }
     };
 
@@ -260,63 +266,36 @@ const Photo = () => {
                     </View>
                 </View>
             )}
-
             <Image
                 style={styles.leaveImg}
                 source={require("../../../assets/images/leafBGA.png")}
             />
+            <LoadingAlert
+                loading={loading}
+                setLoading={setLoading}
+                lottie={require("../../../assets/lottie/LoadingElepGre.json")}
+                title="LOADING!"
+                text="Uploading image... Please wait."
+            />
+            {success && (
+                <SuccessAlert
+                    success={success}
+                    setSuccess={setSuccess}
+                    lottie={require("../../../assets/lottie/succesfullyDone.json")}
+                    title="SUCCESSFUL"
+                    text="Image has been uploaded successfully !"
+                />
+            )}
 
-            <Modal
-                animationType="fade"
-                transparent={true}
-                visible={loading}
-                onRequestClose={() => setLoading(false)}
-            >
-                <View
-                    style={[
-                        styles.modalWrapper,
-                        { backgroundColor: theme.loadingModalBg },
-                    ]}
-                >
-                    <View
-                        style={[
-                            styles.loadingContent,
-                            {
-                                backgroundColor: theme.loadingModalBackground,
-                            },
-                        ]}
-                    >
-                        <LottieView
-                            source={require("../../../assets/lottie/succesfullyDone.json")} // Add your Lottie animation file here
-                            autoPlay
-                            loop
-                            style={styles.animation}
-                        />
-                        <Text
-                            style={[
-                                styles.loadingTextTitle,
-                                { color: theme.textPrimary },
-                            ]}
-                        >
-                            SUCCESSFUL!
-                        </Text>
-                        <Text
-                            style={[
-                                styles.loadingText,
-                                { color: theme.dimText },
-                            ]}
-                        >
-                            Image Uploaded Successfully!
-                        </Text>
-                        <LottieView
-                            source={require("../../../assets/lottie/LoadAnime.json")} // Add your Lottie animation file here
-                            autoPlay
-                            loop
-                            style={styles.animationLoading}
-                        />
-                    </View>
-                </View>
-            </Modal>
+            {failed && (
+                <FailedAlert
+                    failed={failed}
+                    setFailed={setFailed}
+                    lottie={require("../../../assets/lottie/failedLottie.json")}
+                    title="FAILED"
+                    text={errorMsg}
+                />
+            )}
         </View>
     );
 };
