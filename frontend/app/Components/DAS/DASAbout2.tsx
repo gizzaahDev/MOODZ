@@ -11,7 +11,10 @@ const DASAbout2 = ({ navigation }: { navigation: any }) => {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.replace('/Components/DAS/DASHome');
+    router.replace('/Components/DAS/DASTracker');
+  };
+  const handleLogin1 = () => {
+    router.replace('/Components/DAS/DASAbout');
   };
 
   return (
@@ -23,7 +26,7 @@ const DASAbout2 = ({ navigation }: { navigation: any }) => {
               STEP 2
             </Text>
             <Text style={[styles.textTitle, { color: theme.title }]}>
-            Evaluate Your Progress
+            Track The Activity Count
             </Text>
             <Text style={[styles.textParagraph, { color: theme.textSecondary }]}>
               Smaller steps leads to bigger Changers over TIME
@@ -38,7 +41,15 @@ const DASAbout2 = ({ navigation }: { navigation: any }) => {
             onPress={handleLogin}
           >
             <Text style={[styles.startButtonText, { color: theme.buttonText }]}>
-              Get Started
+              View
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.startButton2, { backgroundColor: theme.buttonBackground }]}
+            onPress={handleLogin1}
+          >
+            <Text style={[styles.startButtonText, { color: theme.buttonText }]}>
+              Back
             </Text>
           </TouchableOpacity>
         </View>
@@ -100,6 +111,17 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
+  },
+  startButton2: {
+    borderRadius: 30,
+    paddingVertical: 16,
+    paddingHorizontal: 60,
+    elevation: 3, // Add shadow for better depth
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    marginTop: 8,
   },
   startButtonText: {
     fontSize: 18,

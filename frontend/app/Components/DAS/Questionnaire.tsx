@@ -882,7 +882,6 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     bottom: 10,
-
     borderRadius: 50,
     alignItems: 'center',
     backgroundColor: '#016A70',

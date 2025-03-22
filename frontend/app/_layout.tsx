@@ -132,6 +132,15 @@ export default function RootLayout() {
 
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity11/Id11" options={{title: 'Id11',}}/>
         <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity11/PositiveThought" options={{title: 'PositiveThought', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity12/Id12" options={{title: 'Id12',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity12/GratitudeList" options={{title: 'GratitudeList', }}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity13/Id13" options={{title: 'Id13',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity13/CreativeArt" options={{title: 'CreativeArt', }}/>
+
+
+
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity16/Id16" options={{title: 'Id16',}}/>
+        <Stack.Screen name="Components/EPDS/SubComponents/ActivityPages/Activity16/SocialInteraction" options={{title: 'SocialInteraction', }}/>
         
       </Stack>
 

@@ -4,6 +4,7 @@ import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
 import FontLoader from '../../../FontLoader';
 
+
 const { width, height } = Dimensions.get('window');
 
 const DASday6 = ({ navigation }: { navigation: any }) => {

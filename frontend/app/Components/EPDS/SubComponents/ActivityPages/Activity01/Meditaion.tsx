@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, BackHandler } from 'react-native';
 import { Audio } from 'expo-av';
 import LottieView from 'lottie-react-native';
-import meditationAudio from '../../../../../../assets/songs/Mental_Reset_in_5.mp3';
 import { useTheme } from '../../../../../ThemeContext';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -69,26 +68,30 @@ const MeditationActivity = () => {
 
     useEffect(() => {
         const loadAudio = async () => {
-            const { sound } = await Audio.Sound.createAsync(
-                meditationAudio, // Use the local audio file
-                { shouldPlay: false }
-            );
-            setSound(sound);
+            try {
+                const { sound } = await Audio.Sound.createAsync(
+                    { uri: 'https://firebasestorage.googleapis.com/v0/b/testdb-8ea15.firebasestorage.app/o/MOODZ%2FVideo%2FEPDS%2FMental_Reset_in_5.mp3?alt=media&token=5f3752df-d0fc-407a-abf1-a0df58597de5' },
+                    { shouldPlay: false }
+                );
+                setSound(sound);
 
-            sound.setOnPlaybackStatusUpdate((status) => {
-                if (status.isLoaded) {
-                    setIsPlaying(status.isPlaying);
-                    setPosition(status.positionMillis);
-                    setDuration(status.durationMillis ?? 0);
+                sound.setOnPlaybackStatusUpdate((status) => {
+                    if (status.isLoaded) {
+                        setIsPlaying(status.isPlaying);
+                        setPosition(status.positionMillis);
+                        setDuration(status.durationMillis ?? 0);
 
-                    // Update subtitle based on current position
-                    const currentTime = status.positionMillis;
-                    const subtitle = subtitles.find(
-                        (sub) => currentTime >= sub.startTime && currentTime < sub.endTime
-                    );
-                    setCurrentSubtitle(subtitle ? subtitle.text : null);
-                }
-            });
+                        // Update subtitle based on current position
+                        const currentTime = status.positionMillis;
+                        const subtitle = subtitles.find(
+                            (sub) => currentTime >= sub.startTime && currentTime < sub.endTime
+                        );
+                        setCurrentSubtitle(subtitle ? subtitle.text : null);
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading audio:', error);
+            }
         };
 
         loadAudio();

@@ -11,7 +11,7 @@ const DASAbout = ({ navigation }: { navigation: any }) => {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.replace('/Components/DAS/DASAbout2');
+    router.replace('/Components/DAS/DASHome');
   };
 
   return (

@@ -2,9 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing, FlatList } from 'react-native';
 import { Audio } from 'expo-av';
 import { FontAwesome6 } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native'; // Import Lottie for animations
+import { router } from 'expo-router';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 export default function SleepRelaxationAudio() {
-  const [sound, setSound] = useState(null);
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [showSongList, setShowSongList] = useState(false);
@@ -12,17 +16,16 @@ export default function SleepRelaxationAudio() {
 
   // List of songs
   const songs = [
-    { id: '1', title: 'Relaxing Ocean Waves', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-    { id: '2', title: 'Soft Rain Sounds', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-    { id: '3', title: 'Gentle Piano', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-    { id: '4', title: 'Calm Guitar Melody', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
-    { id: '5', title: 'Peaceful Birds Chirping', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
-    { id: '6', title: 'Relaxing Ocean Waves', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-    
+    { id: '1', title: '1. The Little Power Nap Series. Sleep and Relaxation', url: 'https://firebasestorage.googleapis.com/v0/b/testdb-8ea15.firebasestorage.app/o/MOODZ%2FVideo%2FEPDS%2F10%20minutes.%20The%20Little%20Power%20Nap%20Series.%20Sleep%20and%20Relaxation%20Music%203%20%5BIhq64W33cyo%5D.mp3?alt=media&token=41217a4d-b413-46c7-8f70-5b3991dcf152' },
+    { id: '2', title: '2. Sleep Music, Relaxing Music', url: 'https://firebasestorage.googleapis.com/v0/b/testdb-8ea15.firebasestorage.app/o/MOODZ%2FVideo%2FEPDS%2FDeep%20Sleep%20in%2010%20Minutes.Sleep%20Music.%20Relaxing%20Music.Peaceful%20Music.%20Sivananda%20Yoga%2C%20Kapalbhati%20%5BZJpt_bRTC6g%5D.mp3?alt=media&token=336d316a-565d-4a27-bb20-dc537e5bc9fc' },
+    { id: '3', title: '3. Gentle Piano', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+    { id: '4', title: '4. Calm Guitar Melody', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
+    { id: '5', title: '5. Peaceful Birds Chirping', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
+    { id: '6', title: '6. Relaxing Ocean Waves', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
   ];
 
   // Function to load and play a song
-  async function playSong(songUrl) {
+  async function playSong(songUrl: string) {
     if (sound) {
       await sound.unloadAsync(); // Stop previous sound
     }
@@ -72,6 +75,77 @@ export default function SleepRelaxationAudio() {
     }
   }
 
+
+  const handleDone = async () => {
+    try {
+      const userId = auth().currentUser?.uid;
+      if (!userId) return;
+
+      const today = new Date().toISOString().split('T')[0];
+      const userRef = firestore()
+        .collection('UsersEpds')
+        .doc(userId)
+        .collection('CompletedActivities')
+        .doc(today);
+
+      const userDoc = await userRef.get();
+      const data = userDoc.data() || { sleepRelaxation: {}, hearts: 0, leaves: 0, activityType: {}, completedActivities: [] };
+
+      const sessionDuration = typeof position !== 'undefined' ? position : 0;
+
+      let updatedHearts = (data.hearts || 0) + 10;
+      let updatedLeaves = data.leaves || 0;
+      if (updatedHearts >= 100) {
+        updatedHearts = 0;
+        updatedLeaves += 1;
+      }
+
+      const todayHistory = data.sleepRelaxation?.[today] || {};
+
+      // Add the current activity to the completed activities array
+      const completedActivity = {
+        category: 'Meditation and Relaxation',
+        title: 'Sleep Relaxation Music',
+        description: 'A guided session to improve sleep quality.',
+        date: today,
+        duration: sessionDuration,
+      };
+
+      await userRef.set(
+        {
+          hearts: updatedHearts,
+          leaves: updatedLeaves,
+          activityType: {
+            ...data.activityType,
+            category: 'Meditation and Relaxation',
+            title: 'Sleep Relaxation Music',
+            description: 'A guided session to improve sleep quality.',
+          },
+          sleepRelaxation: {
+            ...data.sleepRelaxation,
+            [today]: {
+              totalDays: (todayHistory.totalDays || 0) + 1,
+              streakDays: todayHistory.streakDays || 0,
+              playCount: (todayHistory.playCount || 0) + 1,
+              sessionDurations: [...(todayHistory.sessionDurations || []), sessionDuration],
+            },
+          },
+          completedActivities: [...(data.completedActivities || []), completedActivity], // Update completed activities
+        },
+        { merge: true }
+      );
+
+      if (isPlaying) {
+        togglePlayPause();
+      }
+
+      router.push('/Components/EPDS/SubComponents/EPDSMyActivity');
+    } catch (error) {
+      console.error('Error saving meditation session:', error);
+    }
+  };
+
+
   // Function to open song list with animation
   const openDrawer = () => {
     Animated.timing(drawerAnimation, {
@@ -93,8 +167,28 @@ export default function SleepRelaxationAudio() {
     }).start(() => setShowSongList(false));
   };
 
+  useEffect(() => {
+    return () => {
+      if (sound) {
+        sound.unloadAsync();
+      }
+    };
+  }, [sound]);
+
+
   return (
     <View style={styles.container}>
+      {/* Title */}
+      <Text style={styles.title}>Sleep Relaxation Music</Text>
+
+      {/* Lottie Animation in Center */}
+      <LottieView
+        source={require('../../../../../../assets/lottie/MediYogaEPDS.json')}
+        autoPlay
+        loop
+        style={styles.animation}
+      />
+
       {/* Top Navigation */}
       <View style={styles.header}>
         <TouchableOpacity onPress={openDrawer}>
@@ -103,23 +197,30 @@ export default function SleepRelaxationAudio() {
       </View>
 
       {/* Song Controls */}
-      <View style={styles.controls}>
-        <TouchableOpacity onPress={skipBackward}>
-          <FontAwesome6 name="backward" size={30} color="#FFF" />
+      // frontend/app/Components/EPDS/SubComponents/ActivityPages/Activity05/SleepRelaxationAudio.tsx
+      // ... existing code ...
+      <View style={[styles.controls, { position: 'absolute', bottom: 120 }]}>
+        <TouchableOpacity style={styles.controlButton} onPress={skipBackward}>
+          <FontAwesome6 name="backward" size={20} style={styles.controlIcon} />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={togglePlayPause}>
-          <FontAwesome6 name={isPlaying ? 'pause' : 'play'} size={30} color="#FFF" />
+        <TouchableOpacity style={styles.controlButton} onPress={togglePlayPause}>
+          <FontAwesome6 name={isPlaying ? 'pause' : 'play'} size={20} style={styles.controlIcon} />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={skipForward}>
-          <FontAwesome6 name="forward" size={30} color="#FFF" />
+        <TouchableOpacity style={styles.controlButton} onPress={skipForward}>
+          <FontAwesome6 name="forward" size={20} style={styles.controlIcon} />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={toggleMute}>
-          <FontAwesome6 name={isMuted ? 'volume-mute' : 'volume-up'} size={30} color="#FFF" />
+        <TouchableOpacity style={styles.controlButton} onPress={toggleMute}>
+          <FontAwesome6 name={isMuted ? 'volume-xmark' : 'volume-high'} size={20} style={styles.controlIcon} />
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity style={[styles.button, { position: 'absolute', bottom: 30, }]} onPress={handleDone}>
+        <Text style={styles.buttonText}>Done</Text>
+      </TouchableOpacity>
+      
 
       {/* Animated Song List Drawer */}
       {showSongList && (
@@ -127,9 +228,17 @@ export default function SleepRelaxationAudio() {
           <View style={styles.drawerHeader}>
             <Text style={styles.drawerTitle}>Select a Song</Text>
             <TouchableOpacity onPress={closeDrawer}>
-              <FontAwesome6 name="times" size={24} color="#FFF" />
+              <View style={styles.controlx}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={{ color: '#FFF', marginRight: 8 }}>Close</Text>
+                  <FontAwesome6 name="xmark" size={24} color="#FFF" />
+                </View>
+              </View>
             </TouchableOpacity>
+
+
           </View>
+
 
           <FlatList
             data={songs}
@@ -150,26 +259,69 @@ export default function SleepRelaxationAudio() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2C3E50',
+    backgroundColor: '#F3FAF4',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  header: {
+  title: {
     position: 'absolute',
     top: 40,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#016A70',
+  },
+  animation: {
+    width: 400,
+    height: 400,
+    position: 'absolute',
+    top: '30%',
+  },
+  header: {
+    position: 'absolute',
+    top: 150,
     right: 20,
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 50,
+    elevation: 25,
+    textAlign: 'center',
   },
   songButton: {
     fontSize: 16,
-    color: '#FFF',
+    color: '#016A70',
     fontWeight: 'bold',
+    textAlign: "center"
+  },
+  controlButton: { // New style for the control buttons
+    backgroundColor: '#016A70', // Background color for the buttons
+    padding: 20,
+    borderRadius: 50,
+    elevation: 25,
+    textAlign: 'center',
+    width: 65, // Fixed width for circle
+    height: 65, // Fixed height for circle
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  controlx: {
+    backgroundColor: '#016A70', // Background color for the buttons
+    padding: 10,
+    borderRadius: 50,
+    elevation: 25,
+    textAlign: 'center',
+    width: 100, // Fixed width for circle
+    height: 50, // Fixed height for circle
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  controlIcon: { // New style for the icons
+    color: '#fff', // White color for the icons
   },
   controls: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
     width: '80%',
-    
   },
   drawer: {
     position: 'absolute',
@@ -181,12 +333,28 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     padding: 20,
   },
+  button: {
+    backgroundColor: '#016A70',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 50,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.5,
+    elevation: 5, // for Android
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   drawerHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
-    
   },
   drawerTitle: {
     fontSize: 18,
