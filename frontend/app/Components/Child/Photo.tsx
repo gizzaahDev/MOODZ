@@ -128,13 +128,13 @@ const Photo = () => {
             } else {
                 setLoading(false);
                 setFailed(true);
-                setErrorMsg("Please upload a child's face image !");
+                setErrorMsg("Please upload a child's face image!");
             }
         } catch (error: any) {
             console.error("Error uploading image:", error);
             setLoading(false);
             setFailed(true);
-            setErrorMsg("Something went wrong. Try again !");
+            setErrorMsg("Something went wrong. Try again!");
         }
     };
 
@@ -285,15 +285,15 @@ const Photo = () => {
                 setLoading={setLoading}
                 lottie={require("../../../assets/lottie/LoadingElepGre.json")}
                 title="LOADING!"
-                text="Uploading image... Please wait."
+                text="Uploading image... Please wait!"
             />
             {success && (
                 <SuccessAlert
                     success={success}
                     setSuccess={setSuccess}
                     lottie={require("../../../assets/lottie/succesfullyDone.json")}
-                    title="SUCCESSFUL"
-                    text="Image has been uploaded successfully !"
+                    title="SUCCESS"
+                    text="Image has been uploaded successfully!"
                 />
             )}
 
