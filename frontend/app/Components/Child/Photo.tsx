@@ -17,6 +17,7 @@ import axios from "axios";
 import LoadingAlert from "../../constants/LoadingAlert";
 import SuccessAlert from "../../constants/SuccessAlert";
 import FailedAlert from "../../constants/FailedAlert";
+import SureAlert from "@/app/constants/SureAlert";
 
 const Photo = () => {
     const { theme } = useTheme() as { theme: any };
@@ -190,7 +191,7 @@ const Photo = () => {
             ) : (
                 <ImageBackground
                     source={require("../../../assets/images/ChildBG.png")}
-                    style={{height: "100%"}}
+                    style={{ height: "100%" }}
                 >
                     <View style={styles.wrapper}>
                         <LottieView
