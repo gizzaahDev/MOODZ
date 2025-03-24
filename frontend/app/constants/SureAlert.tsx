@@ -69,7 +69,7 @@ const SureAlert: React.FC<alert> = ({
                             <TouchableOpacity
                                 style={[
                                     styles.btn,
-                                    { backgroundColor: "#3a9251" },
+                                    { backgroundColor: "#016A70" },
                                 ]}
                                 onPress={() => {
                                     setVisible(false);
@@ -126,15 +126,18 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: "robotoBold",
         fontSize: 16,
+        marginBottom: 10
     },
     text: {
         fontSize: 13,
+        textAlign: "center",
         marginTop: 10,
+        paddingHorizontal: 15,
     },
     btnContainer: {
         flexDirection: "row",
         gap: 35,
-        marginTop: 25,
+        marginTop: 35,
     },
     btn: {
         padding: 15,
@@ -142,6 +145,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontSize: 13,
+        paddingHorizontal: 15,
     },
 });
 
