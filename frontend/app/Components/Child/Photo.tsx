@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Alert,
     StyleSheet,
+    ImageBackground,
 } from "react-native";
 import { useTheme } from "../../ThemeContext";
 import { useRouter } from "expo-router";
@@ -187,89 +188,97 @@ const Photo = () => {
                     </View>
                 </View>
             ) : (
-                <View style={styles.wrapper}>
-                    <LottieView
-                        source={require("../../../assets/lottie/Bird.json")}
-                        autoPlay
-                        loop
-                        style={styles.lottie}
-                    />
-                    <View
-                        style={[
-                            styles.modalContent,
-                            { backgroundColor: theme.childModalContent },
-                        ]}
-                    >
-                        <Text
+                <ImageBackground
+                    source={require("../../../assets/images/ChildBG.png")}
+                    style={{height: "100%"}}
+                >
+                    <View style={styles.wrapper}>
+                        <LottieView
+                            source={require("../../../assets/lottie/Upload.json")}
+                            autoPlay
+                            loop
+                            style={styles.lottie}
+                        />
+                        <View
                             style={[
-                                styles.modalText,
-                                { color: theme.landingInstruction },
+                                styles.modalContent,
+                                {
+                                    backgroundColor: theme.childModalContent,
+                                    borderWidth: 1,
+                                    borderStyle: "dashed",
+                                    borderColor: theme.textTernary,
+                                },
                             ]}
                         >
-                            Upload Photo
-                        </Text>
-                        <View style={styles.iconContainer}>
-                            <TouchableOpacity
-                                style={{
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                                onPress={openCamera}
+                            <Text
+                                style={[
+                                    styles.modalText,
+                                    { color: theme.landingInstruction },
+                                ]}
                             >
-                                <MaterialCommunityIcons
-                                    name="camera-outline"
-                                    style={[
-                                        styles.icons,
-                                        {
-                                            backgroundColor: theme.selectedTab,
-                                        },
-                                    ]}
-                                />
-                                <Text
+                                Upload Photo
+                            </Text>
+                            <View style={styles.iconContainer}>
+                                <TouchableOpacity
                                     style={{
-                                        marginLeft: 8,
-                                        marginTop: 10,
-                                        color: theme.landingInstruction,
+                                        alignItems: "center",
+                                        justifyContent: "center",
                                     }}
+                                    onPress={openCamera}
                                 >
-                                    Take Photo
-                                </Text>
-                            </TouchableOpacity>
+                                    <MaterialCommunityIcons
+                                        name="camera-outline"
+                                        style={[
+                                            styles.icons,
+                                            {
+                                                backgroundColor: theme.camerabg,
+                                            },
+                                        ]}
+                                    />
+                                    <Text
+                                        style={{
+                                            marginLeft: 8,
+                                            marginTop: 10,
+                                            color: theme.landingInstruction,
+                                        }}
+                                    >
+                                        Take Photo
+                                    </Text>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity
-                                style={{
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                                onPress={openGallery}
-                            >
-                                <MaterialCommunityIcons
-                                    name="image-outline"
-                                    style={[
-                                        styles.icons,
-                                        {
-                                            backgroundColor: theme.selectedTab,
-                                        },
-                                    ]}
-                                />
-                                <Text
+                                <TouchableOpacity
                                     style={{
-                                        marginLeft: 8,
-                                        marginTop: 10,
-                                        color: theme.landingInstruction,
+                                        alignItems: "center",
+                                        justifyContent: "center",
                                     }}
+                                    onPress={openGallery}
                                 >
-                                    From Gallery
-                                </Text>
-                            </TouchableOpacity>
+                                    <MaterialCommunityIcons
+                                        name="image-outline"
+                                        style={[
+                                            styles.icons,
+                                            {
+                                                backgroundColor:
+                                                    theme.gallerybg,
+                                            },
+                                        ]}
+                                    />
+                                    <Text
+                                        style={{
+                                            marginLeft: 8,
+                                            marginTop: 10,
+                                            color: theme.landingInstruction,
+                                        }}
+                                    >
+                                        From Gallery
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
-                </View>
+                </ImageBackground>
             )}
-            <Image
-                style={styles.leaveImg}
-                source={require("../../../assets/images/leafBGA.png")}
-            />
+
             <LoadingAlert
                 loading={loading}
                 setLoading={setLoading}
@@ -307,12 +316,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     lottie: {
-        width: 300,
-        height: 300,
+        width: 400,
+        height: 400,
     },
     wrapper: {
         display: "flex",
-        gap: 50,
     },
     modalContent: {
         alignItems: "center",
@@ -333,7 +341,7 @@ const styles = StyleSheet.create({
         gap: 50,
     },
     icons: {
-        color: "#016A70",
+        color: "#fff",
         fontSize: 35,
         borderRadius: 10,
         padding: 8,
