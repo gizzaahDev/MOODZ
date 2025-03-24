@@ -21,6 +21,10 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import buttonSizes from "../../Dimensions/buttonSize";
 import LottieView from "lottie-react-native";
+import SureAlert from "@/app/constants/SureAlert";
+import LoadingAlert from "@/app/constants/LoadingAlert";
+import SuccessAlert from "@/app/constants/SuccessAlert";
+import FailedAlert from "@/app/constants/FailedAlert";
 
 const questions = [
     {
@@ -211,9 +215,11 @@ const Questionnaire = () => {
     const [answers, setAnswers] = useState(Array(questions.length).fill(null));
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [userId, setUserId] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [failed, setFailed] = useState(false);
     const [depLevel, setDepLevel] = useState("unknown");
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     const { theme } = useTheme() as { theme: any };
     const router = useRouter();
@@ -296,7 +302,8 @@ const Questionnaire = () => {
         }
 
         // Show loading animation
-        setIsLoading(true);
+        setLoading(true);
+        setShowConfirmation(false);
 
         try {
             // Proceed with submission if server is reachable
@@ -371,31 +378,22 @@ const Questionnaire = () => {
                     .doc(userId)
                     .collection("QuestionnaireChilds")
                     .add(payload);
-            } else {
-                throw new Error("User ID is null");
             }
 
-            // Hide loading animation and show success message after submission
-            setTimeout(() => {
-                setIsLoading(false); // Stop loading animation
-                setShowModal(true); // Show success modal
-            }, 3500); // Wait for 3 seconds before hiding the loading animation
+            setLoading(false);
+            setSuccess(true);
 
-            router.push({
-                pathname: "/Components/Child/DepressionLevel",
-                params: { newDepLevel },
-            });
+            setTimeout(() => {
+                setSuccess(false);
+                router.push({
+                    pathname: "/Components/Child/DepressionLevel",
+                    params: { newDepLevel },
+                });
+            }, 5000);
         } catch (error) {
             console.error("Error submitting data:", error);
-
-            // Handle error by stopping the loading animation and showing the error message
-            setTimeout(() => {
-                setIsLoading(false); // Stop loading animation in case of error
-                ToastAndroid.show(
-                    "Submission failed. Please try again.",
-                    ToastAndroid.SHORT
-                );
-            }, 3000); // Wait for 3 seconds before hiding the loading animation
+            setLoading(false);
+            setFailed(true);
         }
     };
 
@@ -590,7 +588,9 @@ const Questionnaire = () => {
                                                         : "#016A70",
                                             },
                                         ]}
-                                        onPress={handleSubmit}
+                                        onPress={() => {
+                                            setShowConfirmation(true);
+                                        }}
                                     >
                                         <Text
                                             style={[
@@ -606,58 +606,45 @@ const Questionnaire = () => {
                         </View>
                     </View>
                 </View>
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={isLoading}
-                    onRequestClose={() => setIsLoading(false)}
-                >
-                    <View
-                        style={[
-                            styles.modalContainer,
-                            { backgroundColor: theme.loadingModalBg },
-                        ]}
-                    >
-                        <View
-                            style={[
-                                styles.loadingContent,
-                                {
-                                    backgroundColor:
-                                        theme.loadingModalBackground,
-                                },
-                            ]}
-                        >
-                            <LottieView
-                                source={require("../../../assets/lottie/succesfullyDone.json")} // Add your Lottie animation file here
-                                autoPlay
-                                loop
-                                style={styles.animation}
-                            />
-                            <Text
-                                style={[
-                                    styles.loadingTextTitle,
-                                    { color: theme.textPrimary },
-                                ]}
-                            >
-                                SUCCESSFUL!
-                            </Text>
-                            <Text
-                                style={[
-                                    styles.loadingText,
-                                    { color: theme.dimText },
-                                ]}
-                            >
-                                Questionnaire Submitted Successfully!
-                            </Text>
-                            <LottieView
-                                source={require("../../../assets/lottie/LoadAnime.json")} // Add your Lottie animation file here
-                                autoPlay
-                                loop
-                                style={styles.animationLoading}
-                            />
-                        </View>
-                    </View>
-                </Modal>
+
+                <SureAlert
+                    visible={showConfirmation}
+                    setVisible={setShowConfirmation}
+                    lottie={require("../../../assets/lottie/Warning.json")}
+                    title="Are you sure?"
+                    text="You won't be able to change your answers after submission!"
+                    btn1="Confirm"
+                    btn2="Cancel"
+                    onConfirm={handleSubmit}
+                />
+
+                <LoadingAlert
+                    loading={loading}
+                    setLoading={setLoading}
+                    lottie={require("../../../assets/lottie/LoadingElepGre.json")}
+                    title="LOADING!"
+                    text="Analyzing your respones... Please wait!"
+                />
+
+                {success && (
+                    <SuccessAlert
+                        success={success}
+                        setSuccess={setSuccess}
+                        lottie={require("../../../assets/lottie/succesfullyDone.json")}
+                        title="SUCCESS"
+                        text="Responses has been uploaded successfully!"
+                    />
+                )}
+
+                {failed && (
+                    <FailedAlert
+                        failed={failed}
+                        setFailed={setFailed}
+                        lottie={require("../../../assets/lottie/failedLottie.json")}
+                        title="FAILED"
+                        text="Submission failed. Please try again!"
+                    />
+                )}
             </View>
         </>
     );
