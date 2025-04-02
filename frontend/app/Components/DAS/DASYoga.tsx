@@ -139,7 +139,7 @@ const updatedCount = currentActivities[activityIndex].count + 1;
               <Text style={styles.buttonText}>BACK</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={handleCompPress} onPressIn={animateButton}>
+            <TouchableOpacity style={styles.button1} onPress={handleCompPress} onPressIn={animateButton}>
               <Text style={styles.buttonText}>CONTINUE</Text>
             </TouchableOpacity>
           </View>
@@ -218,6 +218,19 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#272727',
+    padding: 15,
+    borderRadius: 50,
+    width: 350,
+    alignItems: 'center',
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  button1: {
+    backgroundColor: '#016A70',
     padding: 15,
     borderRadius: 50,
     width: 350,
