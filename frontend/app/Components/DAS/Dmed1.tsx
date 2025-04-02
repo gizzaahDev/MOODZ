@@ -33,7 +33,7 @@ const Dmed1 = () => {
   return (
     <FontLoader>
       <LinearGradient
-        colors={['#9DC183', '#016A70']}
+        colors={['#F3FAF4', '#F3FAF4']}
         style={styles.container}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'asul',
     fontSize: 34,
-    color: '#FFFFFF',
+    color: '#016A70',
     textAlign: 'center',
     marginBottom: 8,
     textShadowColor: 'rgba(0,0,0,0.2)',
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontFamily: 'asul',
     fontSize: 18,
-    color: '#E8F3EA',
+    color: '#016A70',
     textAlign: 'center',
     marginBottom: 30,
   },
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 25,
     elevation: 5,
-    shadowColor: '#000',
+    shadowColor: '#016A70',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   infoBox: {
-    backgroundColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: '#016A70',
     borderRadius: 15,
     padding: 20,
     marginBottom: 25,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   infoTitle: {
     fontFamily: 'asul',
     fontSize: 20,
-    color: '#FFFFFF',
+    color: 'white',
     marginBottom: 12,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255,255,255,0.3)',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   infoText: {
     fontFamily: 'asul',
     fontSize: 16,
-    color: '#F0F7F4',
+    color: 'white',
     marginVertical: 5,
     lineHeight: 24,
   },

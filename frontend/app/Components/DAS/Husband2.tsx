@@ -86,7 +86,7 @@ const Husband2 = ({ navigation }: { navigation: any }) => {
 
   return (
     <FontLoader>
-      <View style={[styles.startcontainer, { backgroundColor: '#9DC183' }]}>
+      <View style={[styles.startcontainer, { backgroundColor: '#F3FAF4' }]}>
         <View style={styles.textcontainer}>
           <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>
             📖 Read & Heal 📖

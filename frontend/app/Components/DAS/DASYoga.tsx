@@ -86,9 +86,9 @@ const updatedCount = currentActivities[activityIndex].count + 1;
 
   return (
     <FontLoader>
-      <View style={[styles.startcontainer, { backgroundColor: '#9DC183' }]}>
+      <View style={[styles.startcontainer, { backgroundColor: '#F3FAF4' }]}>
         <View style={styles.textcontainer}>
-          <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>
+          <Text style={[styles.text_welcome, { color: "#016A70" }]}>
             Best Yoga Workouts
           </Text>
 
