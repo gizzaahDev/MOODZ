@@ -78,7 +78,7 @@ const Date1 = () => {
 
   return (
     <FontLoader>
-      <ScrollView contentContainerStyle={[styles.container, { backgroundColor: "white" }]}> 
+      <ScrollView contentContainerStyle={[styles.container, { backgroundColor: "#F3FAF4" }]}> 
         <Text style={[styles.header, { color: theme.textColor }]}>Our Love Board</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryContainer}>
           {categories.map((category, index) => (

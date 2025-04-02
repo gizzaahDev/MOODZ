@@ -85,7 +85,7 @@ const StoryScreen = () => {
 
   return (
     <FontLoader>
-      <View style={[styles.container, { backgroundColor: "#9DC183" }]}>
+      <View style={[styles.container, { backgroundColor: "#F3FAF4" }]}>
         <ScrollView contentContainerStyle={styles.content}>
           <Text style={[styles.header, { color: "black" }]}>Share Your Story</Text>
 

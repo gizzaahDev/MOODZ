@@ -121,7 +121,7 @@ const Dance1 = ({ navigation }: { navigation: any }) => {
 
   return (
     <FontLoader>
-      <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.backgroundColor }]}>
+      <ScrollView contentContainerStyle={[styles.container, { backgroundColor: "#F3FAF4" }]}>
         {/* Cards */}
         {cards.map((card) => (
           <View key={card.id} style={styles.card}>

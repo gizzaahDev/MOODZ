@@ -77,9 +77,9 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
 
   return (
     <FontLoader>
-      <View style={[styles.startcontainer, { backgroundColor: '#9DC183' }]}>
+      <View style={[styles.startcontainer, { backgroundColor: '#F3FAF4' }]}>
         <View style={styles.textcontainer}>
-          <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>
+          <Text style={[styles.text_welcome, { color: "#016A70" }]}>
             Choose as you Prefered
           </Text>
 
@@ -128,7 +128,7 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
 const styles = StyleSheet.create({
   startcontainer: {
     flex: 1,
-    backgroundColor: '#9DC183', // Updated background color
+    backgroundColor: '#F3FAF4', // Updated background color
   },
   textcontainer: {
     marginTop: 70,

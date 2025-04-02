@@ -149,7 +149,7 @@ await FileSystem.moveAsync({ from: photo!.uri, to: imagePath });
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#F3FAF4',
   },
   message: {
     textAlign: 'center',
