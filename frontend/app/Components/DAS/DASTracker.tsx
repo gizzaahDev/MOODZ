@@ -76,7 +76,7 @@ const DASTracker = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#9DC183',
+    backgroundColor: '#F3FAF4',
   },
   container: {
     flexGrow: 1,

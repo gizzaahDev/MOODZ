@@ -59,7 +59,7 @@ const DYoga1 = () => {
   return (
     <FontLoader>
       <LinearGradient
-        colors={['#9DC183', '#016A70']}
+        colors={['#F3FAF4', '#F3FAF4']}
         style={styles.container}
       >
         <View style={styles.header}>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontFamily: 'DMSans-Bold',
-    color: 'white',
+    color: '#016A70',
     marginTop: 10,
     textShadowColor: 'rgba(0,0,0,0.2)',
     textShadowOffset: { width: 1, height: 1 },
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: 20,
     fontFamily: 'DMSans-Medium',
-    color: 'white',
+    color: '#016A70',
     backgroundColor: 'rgba(0,0,0,0.2)',
     paddingHorizontal: 15,
     paddingVertical: 5,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   workoutName: {
     fontSize: 24,
     fontFamily: 'DMSans-Bold',
-    color: 'white',
+    color: '#016A70',
     marginTop: 15,
     textAlign: 'center',
     textShadowColor: 'rgba(0,0,0,0.2)',
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   timerCircle: {
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#016A70',
     width: 140,
     height: 140,
     borderRadius: 70,

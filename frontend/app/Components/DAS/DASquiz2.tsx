@@ -72,7 +72,7 @@ const DASquiz2 = ({ navigation }: { navigation: any }) => {
 
   return (
     <FontLoader>
-      <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.backgroundColor }]}>
+      <ScrollView contentContainerStyle={[styles.container, { backgroundColor: "#F3FAF4" }]}>
         {!showResult ? (
           <>
             <Text style={[styles.title, { color: theme.textColor }]}>Gratitude Moments Quiz</Text>

@@ -33,7 +33,7 @@ const DYoga5 = () => {
   return (
     <FontLoader>
       <LinearGradient
-        colors={['#9DC183', '#016A70']}
+        colors={['#F3FAF4', '#F3FAF4']}
         style={styles.container}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'asul',
     fontSize: 34,
-    color: '#FFFFFF',
+    color: '#016A70',
     textAlign: 'center',
     marginBottom: 8,
     textShadowColor: 'rgba(0,0,0,0.2)',
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontFamily: 'asul',
     fontSize: 18,
-    color: '#E8F3EA',
+    color: '#016A70',
     textAlign: 'center',
     marginBottom: 30,
   },
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   infoBox: {
-    backgroundColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: '#016A70',
     borderRadius: 15,
     padding: 20,
     marginBottom: 25,

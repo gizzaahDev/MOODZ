@@ -235,7 +235,7 @@ const DASMood = () => {
 
   return (
     <FontLoader>
-      <View style={[styles.container, { backgroundColor: "white" }]}>
+      <View style={[styles.container, { backgroundColor: "#F3FAF4" }]}>
         <Text style={[styles.title, { color: "black" }]}>
           {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
         </Text>
