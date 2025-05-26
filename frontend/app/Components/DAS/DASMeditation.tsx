@@ -54,7 +54,7 @@ const updatedCount = currentActivities[activityIndex].count + 1;
   };
 
   const handleGuidePress = async () => {
-    await updateActivityCount('Heart Clearing & Healing Meditation');
+    await updateActivityCount('Heart Clearing & Healing');
     router.replace("/Components/DAS/Dmed3");
   };
 

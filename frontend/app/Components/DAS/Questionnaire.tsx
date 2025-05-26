@@ -502,7 +502,7 @@ const Questionnaire = () => {
 
   const handleNextPress = async () => {
 
-    if (prediction.toLowerCase() === 'high') {
+    if (prediction.toLowerCase() === 'Severe') {
 
      // const isServerConnected = await checkServerConnection();
 
@@ -692,11 +692,11 @@ const Questionnaire = () => {
                     <Text style={[styles.Animeh1title, { color: theme.textPrimary }]}>Dear <Text style={[{ color: theme.title }]}>{userName}</Text>,</Text>
                     <Text style={[styles.Animeh9title, { color: theme.textDimSubTitle }]}>Your level of depression:</Text>
 
-                    <Text style={[styles.Animeh1Predict, { color: theme.title }, prediction.toLowerCase() === 'high' && { color: theme.warningText },]}>{prediction}</Text>
+                    <Text style={[styles.Animeh1Predict, { color: theme.title }, prediction.toLowerCase() === 'Severe' && { color: theme.warningText },]}>{prediction}</Text>
                     <View style={styles.containerAnime}>
                       <LottieView
                         source={
-                          prediction.toLowerCase() === 'high'
+                          prediction.toLowerCase() === 'Severe'
                             ? require('../../../assets/lottie/sadStarAnime.json') // Sad star animation for "high risk"
                             : require('../../../assets/lottie/smileStarAnime.json') // Smile star animation for other predictions
                         }
@@ -704,7 +704,7 @@ const Questionnaire = () => {
                         loop
                         style={[
                           styles.startAnimation,
-                          prediction.toLowerCase() === 'high'
+                          prediction.toLowerCase() === 'Severe'
                             ? {
                               width: 130,
                               height: 130,
@@ -726,17 +726,17 @@ const Questionnaire = () => {
               </View>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleAboutPress}>
-                  <Text style={styles.buttonText}>About</Text>
+                  <Text style={styles.buttonText}>Next</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
                     styles.buttonNext,
-                    prediction.toLowerCase() === 'high' && styles.highButton,
+                    prediction.toLowerCase() === 'Severe' && styles.highButton,
                   ]}
                   onPress={handleNextPress}
                 >
                   <Text style={styles.buttonTextNext}>
-                    {prediction.toLowerCase() === 'high' ? 'Get Professional Help' : 'Next'}
+                    {prediction.toLowerCase() === 'Severe' ? 'Get Professional Help' : 'Back'}
                   </Text>
                 </TouchableOpacity>
               </View>

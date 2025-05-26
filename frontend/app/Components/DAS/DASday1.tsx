@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import { useTheme } from '../../ThemeContext';
 import { useRouter } from 'expo-router';
@@ -15,30 +15,25 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
   };
 
   const activitiesRef = firestore().collection('activities');
-  
+
   const updateActivityCount = async (activityName: string) => {
     try {
       const dayDoc = activitiesRef.doc('Day 1');
-    
       const doc = await dayDoc.get();
       const currentActivities = doc.exists ? doc.data()?.activities || [] : [];
 
       const activityIndex = currentActivities.findIndex((a: any) => a.name === activityName);
-      
+
       if (activityIndex === -1) {
-        
         await dayDoc.set({
           activities: [...currentActivities, { name: activityName, count: 1 }]
         }, { merge: true });
       } else {
-        
         const updatedCount = currentActivities[activityIndex].count + 1;
         const newActivities = [...currentActivities];
         newActivities[activityIndex].count = updatedCount;
 
-        await dayDoc.update({
-          activities: newActivities
-        });
+        await dayDoc.update({ activities: newActivities });
       }
     } catch (error) {
       console.error("Error updating activity count:", error);
@@ -49,7 +44,7 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
     await updateActivityCount('Music Player');
     router.replace("/Components/DAS/Music1");
   };
- 
+
   const handleDancePress = async () => {
     await updateActivityCount('Dance Therapy');
     router.replace("/Components/DAS/Dance1");
@@ -82,7 +77,6 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
           <Text style={[styles.text_welcome, { color: "#016A70" }]}>
             Choose as you Prefered
           </Text>
-
           <View style={styles.imgcontainerday1}>
             <Image
               source={require('../../../assets/images/gettingstart.png')}
@@ -110,8 +104,6 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
                 <Text style={styles.buttonText1}>Happiness{'\n'}Together</Text>
               </Animated.View>
             </TouchableOpacity>
-
-           
           </View>
 
           <View style={styles.buttonContainer}>
@@ -128,12 +120,11 @@ const DASday1 = ({ navigation }: { navigation: any }) => {
 const styles = StyleSheet.create({
   startcontainer: {
     flex: 1,
-    backgroundColor: '#F3FAF4', // Updated background color
+    backgroundColor: '#F3FAF4',
   },
   textcontainer: {
     marginTop: 70,
     padding: 16,
-    marginBottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -164,9 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontWeight: 'bold',
   },
-  scrollView1: {
-    marginTop: 0,
-  },
+  scrollView1: {},
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -174,9 +163,9 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     borderRadius: 20,
-    width: 250, 
-    height: 80, 
-    marginBottom: 15, 
+    width: 250,
+    height: 80,
+    marginBottom: 15,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#016A70',
@@ -188,7 +177,7 @@ const styles = StyleSheet.create({
   },
   buttonText1: {
     color: 'white',
-    fontSize: 20, 
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -209,7 +198,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    width: '100%',
     textAlign: 'center',
   },
 });

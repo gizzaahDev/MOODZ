@@ -11,11 +11,9 @@ const DASAbout2 = ({ navigation }: { navigation: any }) => {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.replace('/Components/DAS/DASTracker');
+    router.replace('/Components/DAS/DASProg');
   };
-  const handleLogin1 = () => {
-    router.replace('/Components/DAS/DASAbout');
-  };
+ 
 
   return (
     <FontLoader>
@@ -26,7 +24,7 @@ const DASAbout2 = ({ navigation }: { navigation: any }) => {
               STEP 2
             </Text>
             <Text style={[styles.textTitle, { color: theme.title }]}>
-            Track The Activity Count
+            Track Your Progress
             </Text>
             <Text style={[styles.textParagraph, { color: theme.textSecondary }]}>
               Smaller steps leads to bigger Changers over TIME
@@ -44,14 +42,7 @@ const DASAbout2 = ({ navigation }: { navigation: any }) => {
               View
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.startButton2, { backgroundColor: theme.buttonBackground }]}
-            onPress={handleLogin1}
-          >
-            <Text style={[styles.startButtonText, { color: theme.buttonText }]}>
-              Back
-            </Text>
-          </TouchableOpacity>
+          
         </View>
 
         <View style={styles.imageContainer}>

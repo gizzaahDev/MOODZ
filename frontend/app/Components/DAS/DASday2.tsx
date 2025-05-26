@@ -15,29 +15,23 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
   };
 
   const activitiesRef = firestore().collection('activities');
-  
+
   const updateActivityCount = async (activityName: string) => {
     try {
       const dayDoc = activitiesRef.doc('Day 2');
-    
       const doc = await dayDoc.get();
       const currentActivities = doc.exists ? doc.data()?.activities || [] : [];
-
       const activityIndex = currentActivities.findIndex((a: any) => a.name === activityName);
-      
+
       if (activityIndex === -1) {
         await dayDoc.set({
           activities: [...currentActivities, { name: activityName, count: 1 }]
         }, { merge: true });
       } else {
-        
         const updatedCount = currentActivities[activityIndex].count + 1;
         const newActivities = [...currentActivities];
         newActivities[activityIndex].count = updatedCount;
-
-        await dayDoc.update({
-          activities: newActivities
-        });
+        await dayDoc.update({ activities: newActivities });
       }
     } catch (error) {
       console.error("Error updating activity count:", error);
@@ -48,29 +42,21 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
     await updateActivityCount('Music Player 2');
     router.replace("/Components/DAS/Music2");
   };
- 
-  const handleLovePress = async () => {
+
+  const handleMemoPress = async () => {
     await updateActivityCount('Memo Love Board');
     router.replace("/Components/DAS/Date1");
   };
 
-  const handleSmilePress = async () => {
-    await updateActivityCount('Smile Goal');
+  const handleMoodPress = async () => {
+    await updateActivityCount('Mood Calender');
     router.replace("/Components/DAS/DASMood");
   };
 
   const animateButton = () => {
     Animated.sequence([
-      Animated.timing(buttonScale, {
-        toValue: 0.95,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(buttonScale, {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true,
-      }),
+      Animated.timing(buttonScale, { toValue: 0.95, duration: 100, useNativeDriver: true }),
+      Animated.timing(buttonScale, { toValue: 1, duration: 100, useNativeDriver: true }),
     ]).start();
   };
 
@@ -78,15 +64,9 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
     <FontLoader>
       <View style={[styles.startcontainer, { backgroundColor: '#F3FAF4' }]}>
         <View style={styles.textcontainer}>
-          <Text style={[styles.text_welcome, { color: "#016A70" }]}>
-            Choose as you Prefered
-          </Text>
-
+          <Text style={[styles.text_welcome, { color: "#016A70" }]}>Choose as you Prefered</Text>
           <View style={styles.imgcontainerday1}>
-            <Image
-              source={require('../../../assets/images/gettingstart.png')}
-              style={[styles.startImage1, theme.imageStyle]}
-            />
+            <Image source={require('../../../assets/images/gettingstart.png')} style={[styles.startImage1, theme.imageStyle]} />
           </View>
         </View>
 
@@ -98,19 +78,17 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleLovePress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleMemoPress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
                 <Text style={styles.buttonText1}>Memo Love{'\n'}Board</Text>
               </Animated.View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleSmilePress} onPressIn={animateButton}>
+            <TouchableOpacity onPress={handleMoodPress} onPressIn={animateButton}>
               <Animated.View style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}>
                 <Text style={styles.buttonText1}>Mood{'\n'}Calender</Text>
               </Animated.View>
             </TouchableOpacity>
-
-            
           </View>
 
           <View style={styles.buttonContainer}>
@@ -127,12 +105,11 @@ const DASday2 = ({ navigation }: { navigation: any }) => {
 const styles = StyleSheet.create({
   startcontainer: {
     flex: 1,
-    backgroundColor: '#F3FAF4', // Updated background color
+    backgroundColor: '#F3FAF4',
   },
   textcontainer: {
     marginTop: 70,
     padding: 16,
-    marginBottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -163,9 +140,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontWeight: 'bold',
   },
-  scrollView1: {
-    marginTop: 0,
-  },
+  scrollView1: {},
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -173,9 +148,9 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     borderRadius: 20,
-    width: 250, 
-    height: 80, 
-    marginBottom: 15, 
+    width: 250,
+    height: 80,
+    marginBottom: 15,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#016A70',
@@ -187,7 +162,7 @@ const styles = StyleSheet.create({
   },
   buttonText1: {
     color: 'white',
-    fontSize: 20, 
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -198,17 +173,12 @@ const styles = StyleSheet.create({
     width: 350,
     alignItems: 'center',
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
     elevation: 5,
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    width: '100%',
     textAlign: 'center',
   },
 });
