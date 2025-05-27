@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import LottieView from "lottie-react-native";
 import { Audio } from "expo-av";
 import BreathExercises from "./BreathExercises";
 import { useTheme } from "../../../../ThemeContext";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontLoader from "@/FontLoader";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { router, useLocalSearchParams, useRouter } from "expo-router";
+import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 
 const Breathing = () => {
     const { theme } = useTheme();
 
     const { aid } = useLocalSearchParams();
-    console.log(aid)
+    console.log(aid);
 
     const [isBreathing, setIsBreathing] = useState(false);
     const [sound, setSound] = useState<Audio.Sound | null>(null);
@@ -20,6 +22,7 @@ const Breathing = () => {
     const [isFinished, setIsFinished] = useState(false);
     const [position, setPosition] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [userId, setUserId] = useState<string | null>(null);
 
     // Find the selected exercise
     const exercise = BreathExercises.find((ex) => ex.id === aid);
@@ -124,6 +127,24 @@ const Breathing = () => {
             }
         };
     }, [sound]);
+
+    // Fetch logged-in user's UID
+    useEffect(() => {
+        const fetchUser = () => {
+            const user = auth().currentUser;
+            if (user) {
+                setUserId(user.uid);
+            } else {
+                Alert.alert("Error", "User not authenticated");
+            }
+        };
+        fetchUser();
+    }, []);
+
+    // handle complte button
+    const handleComplete = () => {
+        alert("complete");
+    };
 
     return (
         <FontLoader>
@@ -239,7 +260,10 @@ const Breathing = () => {
                         { backgroundColor: theme.title },
                     ]}
                 >
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleComplete}
+                    >
                         <Text style={styles.buttonText}>Complete</Text>
                     </TouchableOpacity>
                 </View>

@@ -8,6 +8,7 @@ import {
     ScrollView,
     ToastAndroid,
     BackHandler,
+    Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -30,13 +31,50 @@ export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(
         null
     );
+    const [userId, setUserId] = useState<string | null>(null);
+    const [childSubmit, setChildSubmit] = useState(false);
 
     const depressionCollection = firestore().collection("DepressionType");
+
+    // Fetch logged-in user's UID
+    useEffect(() => {
+        const fetchUser = () => {
+            const user = auth().currentUser;
+            if (user) {
+                setUserId(user.uid);
+            } else {
+                Alert.alert("Error", "User not authenticated");
+            }
+        };
+        fetchUser();
+    }, []);
+
+    // retrieving the isCompletion of assestments from firestore
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await firestore()
+                .collection("UserChilds")
+                .doc(userId as any)
+                .collection("QuestionnaireChilds")
+                .orderBy("timestamp", "desc")
+                .limit(1)
+                .get();
+
+            if (!result.empty) {
+                const data = result.docs[0].get("isComplete") as boolean;
+                setChildSubmit(data);
+            }
+        };
+
+        fetchData();
+    }, [userId]);
 
     const getQuestionnaireRoute = (category: string) => {
         switch (category) {
             case "child":
-                return "/Components/Child/UploadPhoto";
+                return childSubmit
+                    ? "/Components/Child/DepressionLanding"
+                    : "/Components/Child/Landing";
             case "marital":
                 return "/Components/DAS/Questionnaire";
             case "postpartum":
@@ -97,7 +135,9 @@ export default function Home() {
                 dasQuery,
             ]);
 
-            return !epdsSnapshot.empty || !gdsSnapshot.empty || !dasSnapshot.empty; // Returns true if at least one document exists in either collection
+            return (
+                !epdsSnapshot.empty || !gdsSnapshot.empty || !dasSnapshot.empty
+            ); // Returns true if at least one document exists in either collection
         } catch (error) {
             console.error("Error checking questionnaire submission:", error);
             return false;

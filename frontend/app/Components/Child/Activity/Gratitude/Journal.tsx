@@ -118,12 +118,12 @@ const Journal = () => {
                     { backgroundColor: theme.background },
                 ]}
             >
-                {/* <TouchableOpacity>
+                <TouchableOpacity onPress={router.back}>
                     <MaterialCommunityIcons
                         name="chevron-left"
                         style={{ color: theme.title, fontSize: 50 }}
                     />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
 
                 <Text style={[styles.dateText]}>New Diary: {getDate()}</Text>
 

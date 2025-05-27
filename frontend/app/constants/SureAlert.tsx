@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
     },
     btnContainer: {
-        flexDirection: "row",
+        flexDirection: "row-reverse",
         gap: 35,
         marginTop: 35,
     },
