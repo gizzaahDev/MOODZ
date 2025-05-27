@@ -45,8 +45,10 @@ export default {
     landingListItem: "#555",
     childLottieCircle: "rgba(1, 106, 112, 0.1)",
     childModal: "#F3FAF4",
-    childModalContent: "",
+    childModalContent: "#F3FAF4",
     ChildMidShadow: 5,
     smallBtnBg: "#fff",
     loadingModalBg: "rgba(0, 0, 0, 0.5)",
+    camerabg: "#a9bee7",
+    gallerybg: "#aacdcf",
 };

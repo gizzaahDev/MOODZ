@@ -51,4 +51,6 @@ export default {
     ChildMidShadow: 0,
     smallBtnBg: "rgba(176, 176, 176, 0.2)",
     loadingModalBg: "rgba(0, 0, 0, 0.8)",
+    camerabg: "#7f9cdb",
+    gallerybg: "#71a9ad",
 };
