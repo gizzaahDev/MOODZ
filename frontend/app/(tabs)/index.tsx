@@ -18,6 +18,7 @@ import LottieView from "lottie-react-native";
 import Article1 from "../Articles/EPDSArticle1";
 import Article2 from "../Articles/GDSArticle1";
 import firestore from "@react-native-firebase/firestore";
+import Article3 from "../Articles/DASArticle1";
 
 export default function Home() {
     const router = useRouter();
@@ -461,6 +462,7 @@ export default function Home() {
                             styles.articleBox,
                             { backgroundColor: theme.semi_container },
                         ]}
+                        onPress={() => setModalVisible(true)}
                     >
                         <View style={styles.articleContent}>
                             <Text
@@ -469,7 +471,7 @@ export default function Home() {
                                     { color: theme.textPrimary },
                                 ]}
                             >
-                                Article 2
+                                 Marital Depression :{" "}
                             </Text>
                             <Text
                                 style={[
@@ -477,8 +479,8 @@ export default function Home() {
                                     { color: theme.dimText },
                                 ]}
                             >
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit.
+                                A Comprehensive Overview of Causes, Symptoms,
+                                Diagnosis, and Treatment
                             </Text>
                         </View>
                         <Image
@@ -486,6 +488,11 @@ export default function Home() {
                             style={styles.articleImage}
                         />
                     </TouchableOpacity>
+                    <Article3
+                        modalVisible={modalVisible}
+                        setModalVisible={setModalVisible}
+                    />
+
                     <TouchableOpacity
                         style={[
                             styles.articleBox,
@@ -499,7 +506,7 @@ export default function Home() {
                                     { color: theme.textPrimary },
                                 ]}
                             >
-                                Article 2
+                                Child Depression
                             </Text>
                             <Text
                                 style={[
@@ -512,7 +519,7 @@ export default function Home() {
                             </Text>
                         </View>
                         <Image
-                            source={require("../../assets/images/marital.png")}
+                            source={require("../../assets/images/child.png")}
                             style={styles.articleImage}
                         />
                     </TouchableOpacity>

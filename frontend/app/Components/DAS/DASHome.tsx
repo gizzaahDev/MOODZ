@@ -1,148 +1,221 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router'; // Import useRouter from expo-router
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 const DASHome = () => {
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
+  const scrollRef = useRef<ScrollView>(null);
+  const screenWidth = Dimensions.get('window').width;
+
   const images = [
     require('../../../assets/images/gettingstart.png'),
-    require('../../../assets/images/EPDSwel04.png'),
+    //require('../../../assets/images/EPDSwel04.png'),
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [scrollIndex, setScrollIndex] = useState(0);
 
-  // Function to handle day button press
   const handleDayPress = (day: number) => {
     switch (day) {
       case 1:
         router.replace('/Components/DAS/DASday1');
         break;
       case 2:
-        router.replace('/Components/DAS/DASday2'); 
+        router.replace('/Components/DAS/DASday2');
         break;
       case 3:
-        router.replace('/Components/DAS/DASday3'); 
+        router.replace('/Components/DAS/DASday3');
         break;
       case 4:
-        router.replace('/Components/DAS/DASact4'); 
+        router.replace('/Components/DAS/DASact4');
         break;
       case 5:
-        router.replace('/Components/DAS/DASday5'); 
+        router.replace('/Components/DAS/DASday5');
         break;
       case 6:
-        router.replace('/Components/DAS/DASday6'); 
+        router.replace('/Components/DAS/DASday6');
         break;
       case 7:
-        router.replace('/Components/DAS/DASday7'); 
+        router.replace('/Components/DAS/DASday7');
         break;
       default:
-        console.log('Invalid day');
+        console.warn('Invalid day selected');
     }
   };
-
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 2000);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
-    return () => clearInterval(interval); // Cleanup the interval on unmount
-  }, [images.length]);
+  const handleScrollLeft = () => {
+    if (scrollRef.current) {
+      const newIndex = Math.max(scrollIndex - 1, 0);
+      scrollRef.current.scrollTo({ x: newIndex * 180, animated: true });
+      setScrollIndex(newIndex);
+    }
+  };
+
+  const handleScrollRight = () => {
+    if (scrollRef.current) {
+      const newIndex = Math.min(scrollIndex + 1, 6);
+      scrollRef.current.scrollTo({ x: newIndex * 180, animated: true });
+      setScrollIndex(newIndex);
+    }
+  };
 
   return (
-    <View style={styles.startcontainer}>
-      <View style={styles.textcontainer}>
-        <Text style={styles.text_welcome}>WELCOME</Text>
-
-        <View style={styles.imgcontainer}>
-          <Image
-            source={images[currentImageIndex]}
-            style={styles.startImage}
-          />
+    <View style={styles.container}>
+      <View style={styles.textContainer}>
+        <Text style={styles.textWelcome}>WELCOME</Text>
+        <View style={styles.imageContainer}>
+          <Image source={images[currentImageIndex]} style={styles.image} />
         </View>
       </View>
 
-      <ScrollView style={styles.scrollView1}>
-        {[1, 2, 3, 4, 5, 6, 7].map((day) => (
-          <TouchableOpacity
-            key={day}
-            onPress={() => handleDayPress(day)}
-            style={styles.buttonWrapper}
-          >
-            <Text style={styles.buttonText1}>Day {day}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      <Text style={styles.sectionTitle}>      Start Your Healing Journey</Text>
+      <View style={styles.dayScrollContainer}>
+        <TouchableOpacity onPress={handleScrollLeft} style={styles.scrollArrow}>
+          <Ionicons name="chevron-back" size={28} color="#016A70" />
+        </TouchableOpacity>
+
+        <ScrollView
+          ref={scrollRef}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.dayButtons}
+        >
+          {[1, 2, 3, 4, 5, 6, 7].map((day) => (
+            <TouchableOpacity
+              key={day}
+              style={styles.dayButton}
+              onPress={() => handleDayPress(day)}
+            >
+              <Text style={styles.dayText}>Day {day}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        <TouchableOpacity onPress={handleScrollRight} style={styles.scrollArrow}>
+          <Ionicons name="chevron-forward" size={28} color="#016A70" />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.bottomContainer}>
+        <TouchableOpacity
+          style={styles.progressButton}
+          onPress={() => router.replace('/Components/DAS/DASAbout2')}
+        >
+          <Ionicons name="bar-chart-outline" size={24} color="white" style={{ marginRight: 10 }} />
+          <Text style={styles.progressText}>Your Progress</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  startcontainer: {
+  container: {
     flex: 1,
-    backgroundColor: '#F3FAF4', // Background color for the entire screen
+    backgroundColor: '#F3FAF4',
   },
-  textcontainer: {
-    marginTop: 70,
-    padding: 16,
-    marginBottom: 0,
-    justifyContent: 'center',
+  textContainer: {
+    marginTop: 60,
+    paddingHorizontal: 16,
     alignItems: 'center',
   },
-  imgcontainer: {
+  textWelcome: {
+    fontFamily: 'asul',
+    fontSize: 36,
+    color: '#016A70',
+    marginBottom: 16,
+    fontWeight: 'bold',
+  },
+  imageContainer: {
     width: '90%',
-    height: 220,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
+    height: 380,
+    borderRadius: 20,
     overflow: 'hidden',
-    borderRadius: 15,
+    backgroundColor: '#FFF',
     borderColor: '#016A70',
     borderWidth: 1,
     shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
     elevation: 5,
   },
-  startImage: {
+  image: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
   },
-  text_welcome: {
-    fontFamily: 'asul',
-    fontSize: 35,
-    marginBottom: 20,
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: '600',
     color: '#016A70',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
+    marginLeft: 20,
+    marginTop: 20,
   },
-  scrollView1: {
-    marginTop: 0,
-    paddingHorizontal: 16,
+  dayScrollContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 15,
+    paddingHorizontal: 8,
   },
-  buttonWrapper: {
-    borderRadius: 15,
-    width: '100%',
-    height: 80,
+  scrollArrow: {
+    padding: 10,
+  },
+  dayButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: 10,
+  },
+  dayButton: {
+    width: 160,
+    height: 100,
+    backgroundColor: '#016A70',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#016A70',
-    marginBottom: 15,
+    borderRadius: 20,
+    marginHorizontal: 5,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
     elevation: 3,
   },
-  buttonText1: {
+  dayText: {
     color: 'white',
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
+  },
+  bottomContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: 30,
+    paddingHorizontal: 16,
+  },
+  progressButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#016A70',
+    paddingVertical: 16,
+    borderRadius: 18,
+    justifyContent: 'center',
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 4,
+  },
+  progressText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 

@@ -47,12 +47,12 @@ const updatedCount = currentActivities[activityIndex].count + 1;
   };
 
   const handleAct1Press = async () => {
-    await updateActivityCount('MOODZ Challenge');
+    await updateActivityCount('MOODZ Yoga Challenge');
     router.replace("/Components/DAS/DYoga1");
   };
  
   const handleAct2Press = async () => {
-    await updateActivityCount('Partner Yoga - Intermediate');
+    await updateActivityCount('Partner Yoga - Beginners');
     router.replace("/Components/DAS/DYoga2");
   };
   const handleAct3Press = async () => {
@@ -60,7 +60,7 @@ const updatedCount = currentActivities[activityIndex].count + 1;
     router.replace("/Components/DAS/DYoga3");
   };
   const handleAct4Press = async () => {
-    await updateActivityCount('Fitness Yoga');
+    await updateActivityCount('Fitness Based Yoga');
     router.replace("/Components/DAS/DYoga4");
   };
   const handleAct5Press = async () => {
@@ -139,9 +139,7 @@ const updatedCount = currentActivities[activityIndex].count + 1;
               <Text style={styles.buttonText}>BACK</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button1} onPress={handleCompPress} onPressIn={animateButton}>
-              <Text style={styles.buttonText}>CONTINUE</Text>
-            </TouchableOpacity>
+            
           </View>
         </ScrollView>
       </View>

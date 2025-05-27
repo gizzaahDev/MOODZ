@@ -44,17 +44,17 @@ const updatedCount = currentActivities[activityIndex].count + 1;
   };
   
   const handleLeaderPress = async () => {
-    await updateActivityCount('Quito 1');
+    await updateActivityCount('Leadership & Responsibility');
     router.replace("/Components/DAS/Husband1");
   };
  
   const handleLovePress = async () => {
-    await updateActivityCount('Quito 2');
+    await updateActivityCount('Love & Commitment');
     router.replace("/Components/DAS/Husband2");
   };
 
   const handleGrowthPress = async () => {
-    await updateActivityCount('Quito 3');
+    await updateActivityCount('Growth & Resilience');
     router.replace("/Components/DAS/Husband3");
   };
 

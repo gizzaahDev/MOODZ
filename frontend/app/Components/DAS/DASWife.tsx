@@ -44,17 +44,17 @@ const updatedCount = currentActivities[activityIndex].count + 1;
   };
 
   const handleSelfPress = async () => {
-    await updateActivityCount('Quito 1');
+    await updateActivityCount('Self-Love & Empowerment');
     router.replace("/Components/DAS/Wife1");
   };
  
   const handleMarryPress = async () => {
-    await updateActivityCount('Quito 2');
+    await updateActivityCount('Marriage & Partnership');
     router.replace("/Components/DAS/Wife2");
   };
 
   const handleStrengthPress = async () => {
-    await updateActivityCount('Quito 3');
+    await updateActivityCount('Strenght & Resillience');
     router.replace("/Components/DAS/Wife3");
   };
   
