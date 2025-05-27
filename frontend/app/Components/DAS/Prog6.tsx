@@ -41,7 +41,7 @@ const Prog6 = () => {
       </View>
       <Text style={styles.countText}>Completed: {count} time(s)</Text>
       <View style={styles.progressBarContainer}>
-        <View style={[styles.progressBar, { width: `${Math.min(count * 20, 100)}%`, backgroundColor: color }]} />
+        <View style={[styles.progressBar, { width: `${Math.min((count / 15) * 100, 100)}%`, backgroundColor: color }]} />
       </View>
     </View>
   );
