@@ -6,8 +6,7 @@ import {
     TouchableOpacity,
     Alert,
     StyleSheet,
-    ActivityIndicator,
-    Modal,
+    ImageBackground,
 } from "react-native";
 import { useTheme } from "../../ThemeContext";
 import { useRouter } from "expo-router";
@@ -15,6 +14,10 @@ import LottieView from "lottie-react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
+import LoadingAlert from "../../constants/LoadingAlert";
+import SuccessAlert from "../../constants/SuccessAlert";
+import FailedAlert from "../../constants/FailedAlert";
+import SureAlert from "@/app/constants/SureAlert";
 
 const Photo = () => {
     const { theme } = useTheme() as { theme: any };
@@ -22,6 +25,9 @@ const Photo = () => {
 
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [failed, setFailed] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     // Request permissions for camera and gallery
     const requestPermissions = async () => {
@@ -81,6 +87,8 @@ const Photo = () => {
         }
 
         setLoading(true);
+        setSuccess(false);
+        setFailed(false);
 
         try {
             const formData = new FormData();
@@ -101,8 +109,14 @@ const Photo = () => {
             const result = response.data;
             console.log("API Response:", result);
 
+            setLoading(false);
+
             if (result.status === "success") {
+                setSuccess(true);
+
                 setTimeout(() => {
+                    setSuccess(false);
+
                     router.push({
                         pathname: "/Components/Child/QuestionIntro",
                         params: {
@@ -110,23 +124,17 @@ const Photo = () => {
                             faceImg: selectedImage,
                         },
                     });
-                }, 3001);
+                }, 5000);
             } else {
-                Alert.alert(
-                    "Error",
-                    result.detail || "Failed to classify image"
-                );
+                setLoading(false);
+                setFailed(true);
+                setErrorMsg("Please upload a child's face image!");
             }
         } catch (error: any) {
             console.error("Error uploading image:", error);
-            Alert.alert(
-                "Upload failed",
-                "Something went wrong. Please try again."
-            );
-        } finally {
-            setTimeout(() => {
-                setLoading(false);
-            }, 3000);
+            setLoading(false);
+            setFailed(true);
+            setErrorMsg("Something went wrong. Try again!");
         }
     };
 
@@ -181,142 +189,123 @@ const Photo = () => {
                     </View>
                 </View>
             ) : (
-                <View style={styles.wrapper}>
-                    <LottieView
-                        source={require("../../../assets/lottie/Bird.json")}
-                        autoPlay
-                        loop
-                        style={styles.lottie}
-                    />
-                    <View
-                        style={[
-                            styles.modalContent,
-                            { backgroundColor: theme.childModalContent },
-                        ]}
-                    >
-                        <Text
+                <ImageBackground
+                    source={require("../../../assets/images/ChildBG.png")}
+                    style={{ height: "100%" }}
+                >
+                    <View style={styles.wrapper}>
+                        <LottieView
+                            source={require("../../../assets/lottie/Upload.json")}
+                            autoPlay
+                            loop
+                            style={styles.lottie}
+                        />
+                        <View
                             style={[
-                                styles.modalText,
-                                { color: theme.landingInstruction },
+                                styles.modalContent,
+                                {
+                                    backgroundColor: theme.childModalContent,
+                                    borderWidth: 1,
+                                    borderStyle: "dashed",
+                                    borderColor: theme.textTernary,
+                                },
                             ]}
                         >
-                            Upload Photo
-                        </Text>
-                        <View style={styles.iconContainer}>
-                            <TouchableOpacity
-                                style={{
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                                onPress={openCamera}
+                            <Text
+                                style={[
+                                    styles.modalText,
+                                    { color: theme.landingInstruction },
+                                ]}
                             >
-                                <MaterialCommunityIcons
-                                    name="camera-outline"
-                                    style={[
-                                        styles.icons,
-                                        {
-                                            backgroundColor: theme.selectedTab,
-                                        },
-                                    ]}
-                                />
-                                <Text
+                                Upload Photo
+                            </Text>
+                            <View style={styles.iconContainer}>
+                                <TouchableOpacity
                                     style={{
-                                        marginLeft: 8,
-                                        marginTop: 10,
-                                        color: theme.landingInstruction,
+                                        alignItems: "center",
+                                        justifyContent: "center",
                                     }}
+                                    onPress={openCamera}
                                 >
-                                    Take Photo
-                                </Text>
-                            </TouchableOpacity>
+                                    <MaterialCommunityIcons
+                                        name="camera-outline"
+                                        style={[
+                                            styles.icons,
+                                            {
+                                                backgroundColor: theme.camerabg,
+                                            },
+                                        ]}
+                                    />
+                                    <Text
+                                        style={{
+                                            marginLeft: 8,
+                                            marginTop: 10,
+                                            color: theme.landingInstruction,
+                                        }}
+                                    >
+                                        Take Photo
+                                    </Text>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity
-                                style={{
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                                onPress={openGallery}
-                            >
-                                <MaterialCommunityIcons
-                                    name="image-outline"
-                                    style={[
-                                        styles.icons,
-                                        {
-                                            backgroundColor: theme.selectedTab,
-                                        },
-                                    ]}
-                                />
-                                <Text
+                                <TouchableOpacity
                                     style={{
-                                        marginLeft: 8,
-                                        marginTop: 10,
-                                        color: theme.landingInstruction,
+                                        alignItems: "center",
+                                        justifyContent: "center",
                                     }}
+                                    onPress={openGallery}
                                 >
-                                    From Gallery
-                                </Text>
-                            </TouchableOpacity>
+                                    <MaterialCommunityIcons
+                                        name="image-outline"
+                                        style={[
+                                            styles.icons,
+                                            {
+                                                backgroundColor:
+                                                    theme.gallerybg,
+                                            },
+                                        ]}
+                                    />
+                                    <Text
+                                        style={{
+                                            marginLeft: 8,
+                                            marginTop: 10,
+                                            color: theme.landingInstruction,
+                                        }}
+                                    >
+                                        From Gallery
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
-                </View>
+                </ImageBackground>
             )}
 
-            <Image
-                style={styles.leaveImg}
-                source={require("../../../assets/images/leafBGA.png")}
+            <LoadingAlert
+                loading={loading}
+                setLoading={setLoading}
+                lottie={require("../../../assets/lottie/LoadingElepGre.json")}
+                title="LOADING!"
+                text="Uploading image... Please wait!"
             />
+            {success && (
+                <SuccessAlert
+                    success={success}
+                    setSuccess={setSuccess}
+                    lottie={require("../../../assets/lottie/succesfullyDone.json")}
+                    title="SUCCESS"
+                    text="Image has been uploaded successfully!"
+                />
+            )}
 
-            <Modal
-                animationType="fade"
-                transparent={true}
-                visible={loading}
-                onRequestClose={() => setLoading(false)}
-            >
-                <View
-                    style={[
-                        styles.modalWrapper,
-                        { backgroundColor: theme.loadingModalBg },
-                    ]}
-                >
-                    <View
-                        style={[
-                            styles.loadingContent,
-                            {
-                                backgroundColor: theme.loadingModalBackground,
-                            },
-                        ]}
-                    >
-                        <LottieView
-                            source={require("../../../assets/lottie/succesfullyDone.json")} // Add your Lottie animation file here
-                            autoPlay
-                            loop
-                            style={styles.animation}
-                        />
-                        <Text
-                            style={[
-                                styles.loadingTextTitle,
-                                { color: theme.textPrimary },
-                            ]}
-                        >
-                            SUCCESSFUL!
-                        </Text>
-                        <Text
-                            style={[
-                                styles.loadingText,
-                                { color: theme.dimText },
-                            ]}
-                        >
-                            Image Uploaded Successfully!
-                        </Text>
-                        <LottieView
-                            source={require("../../../assets/lottie/LoadAnime.json")} // Add your Lottie animation file here
-                            autoPlay
-                            loop
-                            style={styles.animationLoading}
-                        />
-                    </View>
-                </View>
-            </Modal>
+            {failed && (
+                <FailedAlert
+                    failed={failed}
+                    setFailed={setFailed}
+                    lottie={require("../../../assets/lottie/failedLottie.json")}
+                    title="FAILED"
+                    text={errorMsg}
+                />
+            )}
         </View>
     );
 };
@@ -328,12 +317,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     lottie: {
-        width: 300,
-        height: 300,
+        width: 400,
+        height: 400,
     },
     wrapper: {
         display: "flex",
-        gap: 50,
     },
     modalContent: {
         alignItems: "center",
@@ -354,7 +342,7 @@ const styles = StyleSheet.create({
         gap: 50,
     },
     icons: {
-        color: "#016A70",
+        color: "#fff",
         fontSize: 35,
         borderRadius: 10,
         padding: 8,
