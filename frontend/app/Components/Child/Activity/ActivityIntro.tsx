@@ -2,15 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import {
     View,
     Text,
-    Image,
     StyleSheet,
     TouchableOpacity,
     Dimensions,
     Animated,
     Easing,
+    Alert,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useTheme } from "../../../ThemeContext";
+import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 
 const { width } = Dimensions.get("window");
 
@@ -49,19 +51,393 @@ const data = [
     },
 ];
 
+const activityData = [
+    {
+        id: "da1.1",
+        day: 1,
+        activityId: "ca11",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca11" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da1.2",
+        day: 1,
+        activityId: "ca1",
+        title: "Breathing Exercise",
+        subtitle: "Practice deep breathing for relaxation",
+        pathname: "/Components/Child/Activity/Breath/Breathing",
+        params: { aid: "ca1" },
+        circleColor: "#ceb500",
+        status: "pending",
+    },
+    {
+        id: "da1.3",
+        day: 1,
+        activityId: "ca8",
+        title: "Sound Scaping",
+        subtitle: "Soothing waves, peaceful mind, relaxed soul",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca8" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da2.1",
+        day: 2,
+        activityId: "ca12",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca12" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da2.2",
+        day: 2,
+        activityId: "ca21",
+        title: "Story Time",
+        subtitle: "Relax your mind with calming stories",
+        pathname: "/Components/Child/Activity/StoryTime/StoryTelling",
+        params: { aid: "ca21" },
+        circleColor: "#ceb500",
+        status: "pending",
+    },
+    {
+        id: "da2.3",
+        day: 2,
+        activityId: "ca6",
+        title: "Breathing Exercise",
+        subtitle: "Practice deep breathing for relaxation",
+        pathname: "/Components/Child/Activity/Breath/Breathing",
+        params: { aid: "ca6" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da3.1",
+        day: 3,
+        activityId: "ca13",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca13" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da3.2",
+        day: 3,
+        activityId: "ca2",
+        title: "Breathing Exercise",
+        subtitle: "Practice deep breathing for relaxation",
+        pathname: "/Components/Child/Activity/Breath/Breathing",
+        params: { aid: "ca2" },
+        circleColor: "#ceb500",
+        status: "pending",
+    },
+    {
+        id: "da3.3",
+        day: 3,
+        activityId: "ca7",
+        title: "Sound Scaping",
+        subtitle: "Soothing waves, peaceful mind, relaxed soul",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca7" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da4.1",
+        day: 4,
+        activityId: "ca14",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca14" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da4.2",
+        day: 4,
+        activityId: "ca22",
+        title: "Sound Scaping 3",
+        subtitle: "Spend 10 minutes soothing",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca22" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da4.3",
+        day: 4,
+        activityId: "ca7",
+        title: "Sound Scaping 3",
+        subtitle: "Spend 10 minutes soothing",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca7" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da5.1",
+        day: 5,
+        activityId: "ca15",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca15" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da5.2",
+        day: 5,
+        activityId: "ca3",
+        title: "Breathing Exercise",
+        subtitle: "Practice deep breathing for relaxation",
+        pathname: "/Components/Child/Activity/Breath/Breathing",
+        params: { aid: "ca3" },
+        circleColor: "#ceb500",
+        status: "pending",
+    },
+    {
+        id: "da5.3",
+        day: 5,
+        activityId: "ca10",
+        title: "Sound Scaping",
+        subtitle: "Spend 10 minutes soothing",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca10" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da6.1",
+        day: 6,
+        activityId: "ca16",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca16" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da6.2",
+        day: 6,
+        activityId: "ca23",
+        title: "Breathing Exercise",
+        subtitle: "Practice deep breathing for relaxation",
+        pathname: "/Components/Child/Activity/Breath/Breathing",
+        params: { aid: "ca23" },
+        circleColor: "#ceb500",
+        status: "pending",
+    },
+    {
+        id: "da6.3",
+        day: 6,
+        activityId: "ca8",
+        title: "Sound Scaping",
+        subtitle: "Spend 10 minutes soothing",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca8" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da7.1",
+        day: 7,
+        activityId: "ca17",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca11" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da7.2",
+        day: 7,
+        activityId: "ca4",
+        title: "Breathing Exercise",
+        subtitle: "Practice deep breathing for relaxation",
+        pathname: "/Components/Child/Activity/Breath/Breathing",
+        params: { aid: "ca4" },
+        circleColor: "#ceb500",
+        status: "pending",
+    },
+    {
+        id: "da7.3",
+        day: 7,
+        activityId: "ca6",
+        title: "Sound Scaping",
+        subtitle: "Spend 10 minutes soothing",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca6" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da8.1",
+        day: 8,
+        activityId: "ca18",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca18" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da8.2",
+        day: 8,
+        activityId: "ca24",
+        title: "Breathing Exercise",
+        subtitle: "Practice deep breathing for relaxation",
+        pathname: "/Components/Child/Activity/Breath/Breathing",
+        params: { aid: "ca24" },
+        circleColor: "#ceb500",
+        status: "pending",
+    },
+    {
+        id: "da8.3",
+        day: 8,
+        activityId: "ca9",
+        title: "Sound Scaping",
+        subtitle: "Spend 10 minutes soothing",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca9" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da9.1",
+        day: 9,
+        activityId: "ca19",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca19" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da9.2",
+        day: 9,
+        activityId: "ca5",
+        title: "Breathing Exercise",
+        subtitle: "Practice deep breathing for relaxation",
+        pathname: "/Components/Child/Activity/Breath/Breathing",
+        params: { aid: "ca5" },
+        circleColor: "#ceb500",
+        status: "pending",
+    },
+    {
+        id: "da9.3",
+        day: 9,
+        activityId: "ca7",
+        title: "Sound Scaping",
+        subtitle: "Spend 10 minutes soothing",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca7" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+    {
+        id: "da10.1",
+        day: 10,
+        activityId: "ca20",
+        title: "Gratitude Journaling",
+        subtitle: "Write down anything you're grateful for today",
+        pathname: "Components/Child/Activity/Gratitude/Journal",
+        params: { aid: "ca20" },
+        circleColor: "green",
+        status: "pending",
+    },
+    {
+        id: "da10.2",
+        day: 10,
+        activityId: "ca25",
+        title: "Breathing Exercise",
+        subtitle: "Practice deep breathing for relaxation",
+        pathname: "/Components/Child/Activity/Breath/Breathing",
+        params: { aid: "ca25" },
+        circleColor: "#ceb500",
+        status: "pending",
+    },
+    {
+        id: "da10.3",
+        day: 10,
+        activityId: "ca10",
+        title: "Sound Scaping",
+        subtitle: "Spend 10 minutes soothing",
+        pathname: "/Components/Child/Activity/SoundScape/Intro",
+        params: { aid: "ca10" },
+        circleColor: "#8612b7",
+        status: "pending",
+    },
+];
+
 const ActivityIntro = () => {
     const { theme } = useTheme() as { theme: any };
     const [currentScreen, setCurrentScreen] = useState(0);
     const router = useRouter();
     const { depLevel } = useLocalSearchParams();
+    const [userId, setUserId] = useState<string | null>(null);
+    const [activity, setActivity] = useState(activityData);
 
-    const handleNext = () => {
+    // slice activities
+    useEffect(() => {
+        if (depLevel === "low") {
+            const activityPlan = activityData.slice(0, 15);
+            setActivity(activityPlan);
+        }
+    }, [depLevel]);
+
+    // Fetch logged-in user's UID
+    useEffect(() => {
+        const fetchUser = () => {
+            const user = auth().currentUser;
+            if (user) {
+                setUserId(user.uid);
+            } else {
+                Alert.alert("Error", "User not authenticated");
+            }
+        };
+        fetchUser();
+    }, []);
+
+    const handleNext = async () => {
         if (currentScreen === data.length - 1) {
-            router.replace("/Components/Child/Activity/ActivityView");
+            try {
+                const user: any = auth().currentUser;
+                if (user) {
+                    await firestore()
+                        .collection("UserChilds")
+                        .doc(userId as string)
+                        .collection("ChildActivity")
+                        .add({
+                            activity,
+                            timestamp: firestore.FieldValue.serverTimestamp(),
+                        });
+                }
+            } catch (error) {
+                console.error("Error saving game:", error);
+                Alert.alert("Error", "Failed to save game data.");
+            }
+            router.push("/Components/Child/Activity/ActivityView");
         } else {
             setCurrentScreen(currentScreen + 1);
         }
     };
+
+    console.log(activity);
 
     const currentData = data[currentScreen];
 

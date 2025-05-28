@@ -10,14 +10,21 @@ import {
 interface DateBoxesProps {
     pressDay: number;
     setPressDay: (day: number) => void;
+    depression: string;
 }
 
-const DateBoxes: React.FC<DateBoxesProps> = ({ pressDay, setPressDay }) => {
+const DateBoxes: React.FC<DateBoxesProps> = ({
+    pressDay,
+    setPressDay,
+    depression = "moderate",
+}) => {
     // Function to generate dates for the next 10 days
     const generateDates = () => {
         const dates = [];
         const today = new Date();
-        for (let i = 0; i < 10; i++) {
+        const totalDays = depression === "low" ? 5 : 10;
+
+        for (let i = 0; i < totalDays; i++) {
             const date = new Date(today);
             date.setDate(today.getDate() + i); // Add 'i' days to the current date
             dates.push({ date, day: i + 1 }); // Store date and day number

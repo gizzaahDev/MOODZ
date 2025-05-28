@@ -219,6 +219,7 @@ const Questionnaire = () => {
     const [success, setSuccess] = useState(false);
     const [failed, setFailed] = useState(false);
     const [depLevel, setDepLevel] = useState("unknown");
+    const [isComplete, setIsComplete] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const { theme } = useTheme() as { theme: any };
@@ -371,6 +372,7 @@ const Questionnaire = () => {
                     prediction,
                     depLevel: newDepLevel, // Use the updated value directly
                     timestamp: firestore.FieldValue.serverTimestamp(),
+                    isComplete: true,
                 };
 
                 await firestore()
