@@ -143,7 +143,7 @@ const Breathing = () => {
 
     // handle complte button
     const handleComplete = () => {
-        alert("complete");
+        router.back()
     };
 
     return (
