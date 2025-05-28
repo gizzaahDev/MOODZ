@@ -106,7 +106,7 @@ References
                 return <Text key={index} style={[styles.sectionTitle, { color: theme.title }]}>{line}</Text>;
             }
             // Regular text (not headings)
-            return <Text key={index} style={[styles.pageText, { color: theme.textPopup }]}>{line}</Text>;
+            return <Text key={index} style={[styles.pageText, { color: theme.textPrimary }]}>{line}</Text>;
         });
     };
 
@@ -119,7 +119,7 @@ References
         >
             <BlurView intensity={10} tint="dark" style={[styles.modalContainer,{backgroundColor:theme.bgColorPopup}]}>
                 <Text style={[styles.titleText,{ color: theme.textPrimary }]}>Elderly depression Article</Text>
-                <View style={[styles.modalContent, { backgroundColor: theme.modalBackground }]}>
+                <View style={[styles.modalContent, { backgroundColor: theme.bgColorPopup }]}>
                     <ScrollView showsVerticalScrollIndicator={true}>
                         {formatContent(articleContent)}
                     </ScrollView>

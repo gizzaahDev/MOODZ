@@ -25,6 +25,7 @@ export default function Home() {
     const [userName, setUserName] = useState("User");
     const { theme } = useTheme() as { theme: any };
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisibleA2, setModalVisibleA2] = useState(false);
     const [modalVisibleAct, setModalVisibleAct] = useState(false);
     const [loading, setLoading] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string | null>(
@@ -424,7 +425,7 @@ export default function Home() {
                             styles.articleBox,
                             { backgroundColor: theme.semi_container },
                         ]}
-                        onPress={() => setModalVisible(true)}
+                        onPress={() => setModalVisibleA2(true)}
                     >
                         <View style={styles.articleContent}>
                             <Text
@@ -451,8 +452,8 @@ export default function Home() {
                         />
                     </TouchableOpacity>
                     <Article2
-                        modalVisible={modalVisible}
-                        setModalVisible={setModalVisible}
+                        modalVisible={modalVisibleA2}
+                        setModalVisible={setModalVisibleA2}
                     />
 
                     {/* Article 3 */}

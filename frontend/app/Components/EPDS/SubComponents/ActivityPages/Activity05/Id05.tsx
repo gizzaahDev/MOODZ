@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { router } from 'expo-router';
+import firestore from '@react-native-firebase/firestore';
 import { Calendar } from 'react-native-calendars';
 import { useTheme } from '../../../../../ThemeContext';
-
+import { router } from 'expo-router';
 
 const MeditationHome = () => {
   const [totalDays, setTotalDays] = useState(0);
@@ -68,7 +67,6 @@ const MeditationHome = () => {
     }
   };
 
-
   const recordMeditation = async () => {
     router.push('/Components/EPDS/SubComponents/ActivityPages/Activity05/SleepRelaxationAudio');
   };
@@ -95,51 +93,23 @@ const MeditationHome = () => {
             </Text>
           </View>
 
-
-
-          {/* <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
-            Session Durations
-          </Text>
-          <View style={styles.durationsContainer}>
-          {sessionDurations.length > 0 ? (
-        <View style={styles.durationsWrapper}>
-            {sessionDurations.map((duration, index) => (
-                <View key={index} style={styles.subContainer}>
-                    <Text style={[styles.durationsText, { color: theme.textPrimary }]}>
-                        {duration} Min
-                    </Text>
-                </View>
-            ))}
-        </View>
-    ) : (
-        <Text style={[styles.noRecordsText, ]}>
-            No records available...
-        </Text>
-    )}
-          </View> */}
-
-        </View>
-
-        {/* Start Meditation Button */}
-
-
-        {/* Calendar */}
-        <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
-            Activity Completed Days
-          </Text>
-        <View style={styles.calendarContainer}>
-          <Calendar
-            markedDates={meditationDates}
-            theme={{
-              // calendarBackground: theme.background,
-              calendarBackground: "#fff",
-              selectedDayBackgroundColor: '#016A70', // Primary color
-              selectedDayTextColor: '#ffffff',
-              todayTextColor: '#016A70', // Primary color
-              dayTextColor: theme.textPrimary,
-              textDisabledColor: "#ccc",
-            }}
-          />
+          {/* Calendar */}
+          <Text style={[styles.progressSubTitle, { color: theme.textPrimary }]}>
+              Activity Completed Days
+            </Text>
+          <View style={styles.calendarContainer}>
+            <Calendar
+              markedDates={meditationDates}
+              theme={{
+                calendarBackground: "#fff",
+                selectedDayBackgroundColor: '#016A70',
+                selectedDayTextColor: '#ffffff',
+                todayTextColor: '#016A70',
+                dayTextColor: theme.textPrimary,
+                textDisabledColor: "#ccc",
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
@@ -157,7 +127,6 @@ const MeditationHome = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -211,9 +180,8 @@ const styles = StyleSheet.create({
     height: 'auto',
     padding:10,
     margin:5,
-    
     borderRadius: 8,
-    backgroundColor: '#ffffff', // Add a background color to the container
+    backgroundColor: '#ffffff',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3.5,
@@ -231,33 +199,28 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
-    backgroundColor: '#f0f0f0', // Add a background color to the sub-containers
+    backgroundColor: '#f0f0f0',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3.5,
-    
-    elevation: 2, // for Android
+    elevation: 2,
   },
-
   durationsText: {
     fontSize: 14,
     fontWeight: 'normal',
   },
   noRecordsText: {
     fontSize: 14,
-    
-    color: '#888', // Light gray to indicate no records
-    
-    
-},
+    color: '#888',
+  },
   buttonContainer: {
     width: '100%',
     marginBottom: 10,
     borderRadius: 50,
   },
   button: {
-    backgroundColor: '#016A70',  // Primary color
+    backgroundColor: '#016A70',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 50,
@@ -265,7 +228,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3.5,
-    elevation: 5, // for Android
+    elevation: 5,
   },
   buttonText: {
     color: '#fff',
@@ -276,7 +239,6 @@ const styles = StyleSheet.create({
   calendarContainer: {
     width: '100%',
     marginBottom: 40,
-    // elevation: 5,
   },
 });
 

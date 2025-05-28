@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing, FlatList } from 'react-native';
 import { Audio } from 'expo-av';
 import { FontAwesome6 } from '@expo/vector-icons';
-import LottieView from 'lottie-react-native'; // Import Lottie for animations
+import LottieView from 'lottie-react-native';
 import { router } from 'expo-router';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -12,9 +12,9 @@ export default function SleepRelaxationAudio() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [showSongList, setShowSongList] = useState(false);
+  const [position, setPosition] = useState(0); // Added position state
   const drawerAnimation = useRef(new Animated.Value(-100)).current;
 
-  // List of songs
   const songs = [
     { id: '1', title: '1. The Little Power Nap Series. Sleep and Relaxation', url: 'https://firebasestorage.googleapis.com/v0/b/testdb-8ea15.firebasestorage.app/o/MOODZ%2FVideo%2FEPDS%2F10%20minutes.%20The%20Little%20Power%20Nap%20Series.%20Sleep%20and%20Relaxation%20Music%203%20%5BIhq64W33cyo%5D.mp3?alt=media&token=41217a4d-b413-46c7-8f70-5b3991dcf152' },
     { id: '2', title: '2. Sleep Music, Relaxing Music', url: 'https://firebasestorage.googleapis.com/v0/b/testdb-8ea15.firebasestorage.app/o/MOODZ%2FVideo%2FEPDS%2FDeep%20Sleep%20in%2010%20Minutes.Sleep%20Music.%20Relaxing%20Music.Peaceful%20Music.%20Sivananda%20Yoga%2C%20Kapalbhati%20%5BZJpt_bRTC6g%5D.mp3?alt=media&token=336d316a-565d-4a27-bb20-dc537e5bc9fc' },
@@ -24,10 +24,9 @@ export default function SleepRelaxationAudio() {
     { id: '6', title: '6. Relaxing Ocean Waves', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
   ];
 
-  // Function to load and play a song
   async function playSong(songUrl: string) {
     if (sound) {
-      await sound.unloadAsync(); // Stop previous sound
+      await sound.unloadAsync();
     }
 
     const { sound: newSound } = await Audio.Sound.createAsync(
@@ -39,7 +38,6 @@ export default function SleepRelaxationAudio() {
     setIsPlaying(true);
   }
 
-  // Function to toggle play/pause
   async function togglePlayPause() {
     if (sound) {
       if (isPlaying) {
@@ -51,30 +49,34 @@ export default function SleepRelaxationAudio() {
     }
   }
 
-  // Function to skip 5s forward
   async function skipForward() {
     if (sound) {
       const status = await sound.getStatusAsync();
-      await sound.setPositionAsync(status.positionMillis + 5000);
+      if (status.isLoaded) {
+        const newPosition = status.positionMillis + 5000;
+        await sound.setPositionAsync(newPosition);
+        setPosition(newPosition);
+      }
     }
   }
 
-  // Function to skip 5s backward
   async function skipBackward() {
     if (sound) {
       const status = await sound.getStatusAsync();
-      await sound.setPositionAsync(Math.max(0, status.positionMillis - 5000));
+      if (status.isLoaded) {
+        const newPosition = Math.max(0, status.positionMillis - 5000);
+        await sound.setPositionAsync(newPosition);
+        setPosition(newPosition);
+      }
     }
   }
 
-  // Function to mute/unmute
   async function toggleMute() {
     if (sound) {
       await sound.setIsMutedAsync(!isMuted);
       setIsMuted(!isMuted);
     }
   }
-
 
   const handleDone = async () => {
     try {
@@ -91,7 +93,7 @@ export default function SleepRelaxationAudio() {
       const userDoc = await userRef.get();
       const data = userDoc.data() || { sleepRelaxation: {}, hearts: 0, leaves: 0, activityType: {}, completedActivities: [] };
 
-      const sessionDuration = typeof position !== 'undefined' ? position : 0;
+      const sessionDuration = position;
 
       let updatedHearts = (data.hearts || 0) + 10;
       let updatedLeaves = data.leaves || 0;
@@ -102,7 +104,6 @@ export default function SleepRelaxationAudio() {
 
       const todayHistory = data.sleepRelaxation?.[today] || {};
 
-      // Add the current activity to the completed activities array
       const completedActivity = {
         category: 'Meditation and Relaxation',
         title: 'Sleep Relaxation Music',
@@ -130,7 +131,7 @@ export default function SleepRelaxationAudio() {
               sessionDurations: [...(todayHistory.sessionDurations || []), sessionDuration],
             },
           },
-          completedActivities: [...(data.completedActivities || []), completedActivity], // Update completed activities
+          completedActivities: [...(data.completedActivities || []), completedActivity],
         },
         { merge: true }
       );
@@ -145,8 +146,6 @@ export default function SleepRelaxationAudio() {
     }
   };
 
-
-  // Function to open song list with animation
   const openDrawer = () => {
     Animated.timing(drawerAnimation, {
       toValue: -20,
@@ -157,7 +156,6 @@ export default function SleepRelaxationAudio() {
     setShowSongList(true);
   };
 
-  // Function to close song list with animation
   const closeDrawer = () => {
     Animated.timing(drawerAnimation, {
       toValue: 0,
@@ -175,13 +173,10 @@ export default function SleepRelaxationAudio() {
     };
   }, [sound]);
 
-
   return (
     <View style={styles.container}>
-      {/* Title */}
       <Text style={styles.title}>Sleep Relaxation Music</Text>
 
-      {/* Lottie Animation in Center */}
       <LottieView
         source={require('../../../../../../assets/lottie/MediYogaEPDS.json')}
         autoPlay
@@ -189,16 +184,12 @@ export default function SleepRelaxationAudio() {
         style={styles.animation}
       />
 
-      {/* Top Navigation */}
       <View style={styles.header}>
         <TouchableOpacity onPress={openDrawer}>
           <Text style={styles.songButton}>Songs ▶</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Song Controls */}
-      // frontend/app/Components/EPDS/SubComponents/ActivityPages/Activity05/SleepRelaxationAudio.tsx
-      // ... existing code ...
       <View style={[styles.controls, { position: 'absolute', bottom: 120 }]}>
         <TouchableOpacity style={styles.controlButton} onPress={skipBackward}>
           <FontAwesome6 name="backward" size={20} style={styles.controlIcon} />
