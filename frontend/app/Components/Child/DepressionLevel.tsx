@@ -13,6 +13,7 @@ import { useTheme } from "../../ThemeContext";
 import LottieView from "lottie-react-native";
 import FontLoader from "@/FontLoader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const DepressionLevel = () => {
     const { theme } = useTheme();
@@ -99,6 +100,18 @@ const DepressionLevel = () => {
                     { backgroundColor: theme.background },
                 ]}
             >
+                {/* Home Button */}
+                <TouchableOpacity
+                    style={styles.homeButton}
+                    onPress={() => router.push("/(tabs)")}
+                >
+                    <MaterialCommunityIcons
+                        name="home"
+                        size={24}
+                        color={theme.textPrimary}
+                    />
+                </TouchableOpacity>
+
                 <Animated.View
                     style={[
                         styles.lottieContainer,
@@ -207,6 +220,15 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 14,
         fontFamily: "poppinsSemiBold",
+    },
+    homeButton: {
+        position: 'absolute',
+        top: 40,
+        left: 20,
+        zIndex: 1,
+        padding: 10,
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        borderRadius: 20,
     },
 });
 

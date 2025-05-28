@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Alert } from "react-native";
+import { View, Text, StyleSheet, Image, Alert, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import DailyActivity from "./DailyActivity";
 import DateBoxes from "./DateBoxes";
@@ -6,12 +6,15 @@ import FontLoader from "../../../../FontLoader";
 import { useTheme } from "../../../ThemeContext";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
+import { useRouter } from "expo-router";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const ActivityView = () => {
     const { theme } = useTheme();
     const [userId, setUserId] = useState<string | null>(null);
     const [depression, setDepression] = useState("");
     const [pressDay, setPressDay] = useState(1);
+    const router = useRouter();
 
     // Fetch logged-in user's UID
     useEffect(() => {
@@ -56,6 +59,17 @@ const ActivityView = () => {
                     { backgroundColor: theme.background },
                 ]}
             >
+                <TouchableOpacity
+                    style={styles.homeButton}
+                    onPress={() => router.push("/(tabs)")}
+                >
+                    <MaterialCommunityIcons
+                        name="home"
+                        size={28}
+                        style={{ color: theme.iconColor }}
+                    />
+                </TouchableOpacity>
+
                 <Text style={styles.title}>
                     🌿 day {pressDay} of wellness journey !
                 </Text>
@@ -106,6 +120,12 @@ const styles = StyleSheet.create({
     },
     dayWrapper: { flex: 0.2 },
     actWrapper: { flex: 0.8 },
+    homeButton: {
+        position: "absolute",
+        top: 20,
+        right: 20,
+        zIndex: 1,
+    },
 });
 
 export default ActivityView;

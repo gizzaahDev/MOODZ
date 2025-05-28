@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+
 
 interface CommercializationDrawerProps {
   visible: boolean;
@@ -16,9 +17,9 @@ const CommercializationDrawer: React.FC<CommercializationDrawerProps> = ({
   const router = useRouter(); // Use the router for navigation
 
   const plans = [
-    { duration: '1 month', price: 1000, discount: '' },
-    { duration: '6 months', price: 4800, discount: '6% off' },
-    { duration: '12 months', price: 5200, discount: '9% off' },
+    { duration: '1 month', price: 10, discount: '' },
+    { duration: '6 months', price: 49, discount: '6% off' },
+    { duration: '12 months', price: 100, discount: '9% off' },
   ];
 
   const handlePlanSelection = (plan: string, price: number) => {
@@ -59,7 +60,10 @@ const CommercializationDrawer: React.FC<CommercializationDrawerProps> = ({
 
           {/* Illustration Placeholder */}
           <View style={styles.illustrationPlaceholder}>
-            <Text style={styles.illustrationText}>[Illustration Placeholder]</Text>
+            <Image
+              source={require('../../../../assets/images/Moodz.png')} // Replace with the actual path to your image
+              style={styles.illustrationImage}
+            />
           </View>
 
           {/* Title */}
@@ -77,7 +81,7 @@ const CommercializationDrawer: React.FC<CommercializationDrawerProps> = ({
                 {plan.discount && (
                   <Text style={styles.planDiscount}>{plan.discount}</Text>
                 )}
-                <Text style={styles.planPrice}>₹{plan.price}</Text>
+                <Text style={styles.planPrice}>${plan.price}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -138,10 +142,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  illustrationText: {
-    fontSize: 14,
-    color: '#024950',
-    textAlign: 'center',
+  illustrationImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 100,
   },
   title: {
     fontSize: 22,
