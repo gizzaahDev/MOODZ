@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import FontLoader from "@/FontLoader";
 
@@ -8,7 +8,7 @@ type ActivityType = {
     title: string;
     subtitle: string;
     onPress: () => void;
-    circleColor: string
+    circleColor: string;
 };
 
 const Activity = ({ title, subtitle, onPress, circleColor }: ActivityType) => {
@@ -18,12 +18,17 @@ const Activity = ({ title, subtitle, onPress, circleColor }: ActivityType) => {
                 <View style={styles.wrapper}>
                     <View style={styles.textContainer}>
                         <View style={styles.titleContainer}>
-                            <View style={[styles.circle, {backgroundColor: circleColor}]} />
+                            <View
+                                style={[
+                                    styles.circle,
+                                    { backgroundColor: circleColor },
+                                ]}
+                            />
                             <Text style={styles.mainText}>{title}</Text>
                         </View>
                         <Text style={styles.subText}>{subtitle}</Text>
                         <View style={styles.dateContainer}>
-                            <Text style={styles.dateText}>Complete</Text>
+                            <Text style={styles.dateText}>Pending</Text>
                         </View>
                     </View>
                 </View>
