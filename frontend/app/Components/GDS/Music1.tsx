@@ -15,18 +15,24 @@ const Music1 = () => {
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const musicUrl = 'https://firebasestorage.googleapis.com/v0/b/testdb-8ea15.firebasestorage.app/o/Moodz%20Web%2FGDS_1.mp3?alt=media&token=8a8d39e6-c5f4-4dc8-a80c-1ac52cdbbc08';
+
   async function playSound() {
     if (sound) {
       await sound.playAsync();
       setIsPlaying(true);
       return;
     }
-    const { sound: newSound } = await Audio.Sound.createAsync(
-      require('../../../assets/songs/GDS1.mp3'),
-      { shouldPlay: true }
-    );
-    setSound(newSound);
-    setIsPlaying(true);
+    try {
+      const { sound: newSound } = await Audio.Sound.createAsync(
+        { uri: musicUrl },
+        { shouldPlay: true }
+      );
+      setSound(newSound);
+      setIsPlaying(true);
+    } catch (error) {
+      console.error('Error loading or playing sound:', error);
+    }
   }
 
   async function stopSound() {
@@ -47,15 +53,15 @@ const Music1 = () => {
   const handleGDSHomePress = async () => {
     const userId = auth().currentUser?.uid;
     if (!userId) return;
-    
+
     try {
       const userRef = firestore().collection('UsersGDS').doc(userId);
       const userDoc = await userRef.get();
       const data = userDoc.data() || { points: 0 };
-      
+
       await userRef.set(
         {
-          points: (data.points || 0) + 1, // Increment points
+          points: (data.points || 0) + 1,
         },
         { merge: true }
       );
@@ -67,7 +73,7 @@ const Music1 = () => {
 
   return (
     <FontLoader>
-      <View style={[styles.startcontainer, { backgroundColor: theme.background }]}> 
+      <View style={[styles.startcontainer, { backgroundColor: theme.background }]}>
         <View style={styles.textcontainer}>
           <Text style={[styles.text_welcome, { color: theme.textPrimary }]}>Music Therapy</Text>
           <LottieView source={require('../../../assets/lottie/MusicTheraphy.json')} autoPlay loop style={styles.animation} />
@@ -81,7 +87,7 @@ const Music1 = () => {
             <Text style={styles.buttonText1}>{isPlaying ? 'Stop' : 'Play'}</Text>
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.backButtonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleGDSHomePress}>
             <Text style={styles.backButtonText}>NEXT</Text>
