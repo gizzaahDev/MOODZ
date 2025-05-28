@@ -119,7 +119,6 @@ const ColoringTask = () => {
 
       const todayHistory = data.coloringTask?.[today] || {};
 
-      // Add the current activity to the completed activities array
       const completedActivity = {
         category: 'Creative and Cognitive Activities',
         title: 'Creative Art',
@@ -145,14 +144,14 @@ const ColoringTask = () => {
               playCount: (todayHistory.playCount || 0) + 1,
             },
           },
-          completedActivities: [...(data.completedActivities || []), completedActivity], // Update completed activities
+          completedActivities: [...(data.completedActivities || []), completedActivity],
         },
         { merge: true }
       );
 
       router.push('/Components/EPDS/SubComponents/EPDSMyActivity');
     } catch (error) {
-      console.error('Error saving meditation session:', error);
+      console.error('Error saving coloring task:', error);
     }
   };
 
@@ -215,9 +214,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3FAF4',
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: '700',
-    marginBottom: 24,
+    marginBottom: 5,
     color: '#016A70',
     letterSpacing: 1,
     textTransform: 'uppercase',
@@ -226,15 +225,14 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
   },
   buttonContainer: {
-    flexDirection: 'row', // Arrange buttons in a row
-    justifyContent: 'space-around', // Distribute space evenly
-    alignItems: 'center', // Align items vertically
-    position: 'absolute', // Position the container
-    bottom: 20, // At the bottom of the screen
-    marginTop:20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
     left: 0,
     right: 0,
-    paddingHorizontal: 20, // Add some horizontal padding
+    paddingHorizontal: 20,
   },
   svgContainer: {
     width: 400,
@@ -264,7 +262,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    bottom:40,
+    bottom: 40,
   },
   colorPalette: {
     flexGrow: 1,
